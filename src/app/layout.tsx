@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
-import { Manrope } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans, Manrope } from 'next/font/google';
 import '@/styles/variables.css';
 import { CurrencyProvider } from '@/context/CurrencyContext';
 
@@ -10,6 +10,20 @@ export const viewport: Viewport = {
   maximumScale: 5,
   themeColor: '#0B172A',
 };
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
+});
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -113,7 +127,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={manrope.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${jakarta.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://images.unsplash.com" />
         <script
