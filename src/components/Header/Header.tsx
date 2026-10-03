@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCurrency } from '@/context/CurrencyContext';
-import { NotificationBell } from '../NotificationBell/NotificationBell';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -57,7 +56,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
                 ₹ INR
               </button>
             </div>
-            {loggedInUser && <NotificationBell />}
           </div>
         </div>
       </div>
