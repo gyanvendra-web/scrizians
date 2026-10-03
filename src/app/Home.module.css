@@ -8,6 +8,8 @@
   padding: 4.5rem 1.5rem 5.5rem;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .heroGlowOne {
@@ -43,6 +45,8 @@
   align-items: center;
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .slogan {
@@ -55,6 +59,7 @@
   letter-spacing: 1.8px;
   text-transform: uppercase;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .sloganSpan {
@@ -65,12 +70,14 @@
 }
 
 .heroTitle {
-  font-size: 3.3rem;
+  font-size: clamp(1.95rem, 5.2vw, 3.3rem);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 1.15;
   margin-bottom: 1.2rem;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.6px;
   color: #ffffff;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .heroTitle span, .heroTitle em {
@@ -85,10 +92,10 @@
 }
 
 .heroSubtitle {
-  font-size: 1.1rem;
-  color: #94A3B8;
-  margin-bottom: 2.2rem;
-  line-height: 1.65;
+  font-size: 1.08rem;
+  color: #CBD5E1;
+  margin-bottom: 2rem;
+  line-height: 1.6;
   max-width: 580px;
 }
 
@@ -99,18 +106,22 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  margin-bottom: 2.2rem;
+  margin-bottom: 2rem;
   max-width: 580px;
+  width: 100%;
+  box-sizing: border-box;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
 .searchIcon {
-  color: #64748B;
+  color: #475569;
   font-size: 1.1rem;
+  flex-shrink: 0;
 }
 
 .searchInput {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   color: #0F172A;
@@ -127,12 +138,14 @@
   background: #0F1E36;
   color: #ffffff;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.4rem;
   border-radius: 6px;
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
+  white-space: nowrap;
   transition: background 0.2s ease;
+  flex-shrink: 0;
 }
 
 .searchSubmit:hover {
@@ -142,6 +155,8 @@
 .heroCtas {
   display: flex;
   gap: 1.2rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .btnPrimary {
@@ -154,6 +169,10 @@
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .btnPrimary:hover {
@@ -169,6 +188,9 @@
   font-weight: 700;
   text-decoration: none;
   transition: background 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btnWhite:hover {
@@ -187,13 +209,6 @@
   box-sizing: border-box;
   margin-left: auto;
   flex-shrink: 0;
-  animation: floatCard 4s ease-in-out infinite;
-}
-
-@keyframes floatCard {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
 }
 
 .previewHead {
@@ -201,7 +216,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: 0.85rem;
-  color: #94A3B8;
+  color: #CBD5E1;
   margin-bottom: 1.2rem;
   padding-bottom: 0.8rem;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -259,7 +274,7 @@
   font-weight: 700;
   display: block;
   color: #ffffff;
-  line-height: 1.2;
+  line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -267,7 +282,7 @@
 
 .previewSub {
   font-size: 0.78rem;
-  color: #94A3B8;
+  color: #CBD5E1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -281,7 +296,7 @@
   white-space: nowrap;
   flex-shrink: 0;
   text-align: right;
-  min-width: 90px;
+  min-width: 80px;
 }
 
 .btnBrowseAll {
@@ -297,19 +312,22 @@
   font-size: 0.88rem;
   text-decoration: none;
   transition: background 0.2s ease;
+  box-sizing: border-box;
 }
 
 .btnBrowseAll:hover {
   background: #3A4D6C;
 }
 
-/* Trust Bar BELOW HERO: WHITE BACKGROUND (#FFFFFF) */
+/* Trust Bar BELOW HERO */
 .trustBar {
   background: #ffffff;
   border-top: 1px solid #E2E8F0;
   border-bottom: 1px solid #E2E8F0;
   padding: 2rem 1.5rem;
   color: #0F172A;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .trustGrid {
@@ -344,20 +362,22 @@
 
 .trustItem p {
   font-size: 0.83rem;
-  color: #64748B;
+  color: #475569;
   line-height: 1.45;
 }
 
 /* General Section Layout */
 .section {
-  padding: 5rem 0;
+  padding: 4.5rem 0;
   max-width: var(--max-width);
   margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 @media (max-width: 1228px) {
   .section {
-    padding: 5rem 1.5rem;
+    padding: 4.5rem 1.5rem;
   }
 }
 
@@ -365,7 +385,9 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .eyebrow {
@@ -379,15 +401,15 @@
 }
 
 .sectionTitle {
-  font-size: 2.3rem;
+  font-size: clamp(1.6rem, 3.8vw, 2.3rem);
   font-weight: 800;
   color: #0F172A;
   line-height: 1.2;
 }
 
 .sectionSubtitle {
-  font-size: 1rem;
-  color: #64748B;
+  font-size: 0.98rem;
+  color: #475569;
   margin-top: 0.5rem;
   max-width: 600px;
 }
@@ -415,7 +437,7 @@
   white-space: nowrap;
 }
 
-/* HIRE BY ROLE 3x3 GRID */
+/* HIRE BY ROLE GRID */
 .rolesGridContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -426,13 +448,13 @@
 
 .roleCell {
   background: #ffffff;
-  padding: 2.2rem 2rem;
+  padding: 2rem 1.8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-decoration: none;
   transition: background-color 0.25s ease, color 0.25s ease;
-  min-height: 220px;
+  min-height: 210px;
 }
 
 .roleCellNum {
@@ -440,30 +462,30 @@
   font-size: 0.9rem;
   font-weight: 800;
   color: #E52B2B;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   display: block;
 }
 
 .roleCellTitle {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #0F172A;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
   transition: color 0.25s ease;
 }
 
 .roleCellDesc {
   font-size: 0.88rem;
-  color: #64748B;
-  line-height: 1.55;
-  margin-bottom: 1.5rem;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 1.4rem;
   transition: color 0.25s ease;
 }
 
 .roleCellSkills {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #64748B;
+  color: #475569;
   transition: color 0.25s ease;
 }
 
@@ -476,11 +498,11 @@
 }
 
 .roleCell:hover .roleCellDesc {
-  color: #94A3B8 !important;
+  color: #CBD5E1 !important;
 }
 
 .roleCell:hover .roleCellSkills {
-  color: #CBD5E1 !important;
+  color: #E2E8F0 !important;
 }
 
 .featuredCardsGrid {
@@ -490,28 +512,18 @@
   align-items: stretch;
 }
 
-@media (max-width: 1024px) {
-  .featuredCardsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .featuredCardsGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* HOW IT WORKS SECTION */
 .howItWorksSection {
   background: #0A172A;
   color: #ffffff;
-  padding: 5rem 1.5rem;
+  padding: 4.5rem 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .stepsGrid {
   max-width: var(--max-width);
-  margin: 3rem auto 0;
+  margin: 2.5rem auto 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid rgba(255,255,255,0.1);
@@ -532,20 +544,20 @@
   font-weight: 900;
   color: #E52B2B;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .stepTitle {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .stepText {
   font-size: 0.88rem;
-  color: #94A3B8;
-  line-height: 1.6;
+  color: #CBD5E1;
+  line-height: 1.55;
 }
 
 /* ENGAGEMENT MODELS SECTION */
@@ -553,14 +565,14 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 1.2rem;
-  margin-top: 2.5rem;
+  margin-top: 2.2rem;
 }
 
 .modelCard {
   background: #ffffff;
   border: 1px solid #E2E8F0;
   border-radius: 12px;
-  padding: 1.6rem 1.4rem;
+  padding: 1.5rem 1.3rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -574,20 +586,20 @@
 }
 
 .modelTitle {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #0F172A;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .modelDesc {
   font-size: 0.84rem;
-  color: #64748B;
-  line-height: 1.5;
+  color: #475569;
+  line-height: 1.48;
 }
 
 .modelPriceBox {
-  margin-top: 1.8rem;
+  margin-top: 1.6rem;
   padding-top: 0.8rem;
   border-top: 1px solid #F1F5F9;
 }
@@ -595,7 +607,7 @@
 .startingLabel {
   font-size: 0.72rem;
   font-weight: 700;
-  color: #94A3B8;
+  color: #64748B;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: block;
@@ -603,7 +615,7 @@
 }
 
 .priceVal {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: #0F172A;
 }
@@ -612,8 +624,8 @@
 .caseGrid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-top: 2.5rem;
+  gap: 1.8rem;
+  margin-top: 2.2rem;
 }
 
 .caseCard {
@@ -653,32 +665,32 @@
 }
 
 .caseBody {
-  padding: 1.8rem;
+  padding: 1.6rem;
 }
 
 .caseTitle {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #0F172A;
   margin-bottom: 0.5rem;
 }
 
 .caseDesc {
-  font-size: 0.9rem;
-  color: #64748B;
-  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  color: #475569;
+  margin-bottom: 1.4rem;
 }
 
 .metricsRow {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 0.8rem;
   border-top: 1px solid #F1F5F9;
   padding-top: 1rem;
 }
 
 .metricNumRed {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 900;
   color: #E52B2B;
   display: block;
@@ -686,7 +698,7 @@
 
 .metricLabel {
   font-size: 0.78rem;
-  color: #64748B;
+  color: #475569;
 }
 
 /* INSIGHTS SECTION */
@@ -694,7 +706,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.8rem;
-  margin-top: 2.5rem;
+  margin-top: 2.2rem;
 }
 
 .articleCard {
@@ -717,7 +729,7 @@
 }
 
 .articleBody {
-  padding: 1.5rem;
+  padding: 1.4rem;
 }
 
 .articleCatRed {
@@ -727,11 +739,11 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .articleTitle {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #0F172A;
   margin-bottom: 0.5rem;
@@ -740,18 +752,18 @@
 
 .articleExcerpt {
   font-size: 0.88rem;
-  color: #64748B;
+  color: #475569;
   margin-bottom: 1rem;
   line-height: 1.5;
 }
 
 .articleMeta {
   font-size: 0.78rem;
-  color: #94A3B8;
+  color: #64748B;
   font-weight: 500;
 }
 
-/* FAQ SECTION matching media_1790938954724.png */
+/* FAQ SECTION */
 .faqGrid2 {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -790,17 +802,19 @@
 
 .faqContent {
   font-size: 0.9rem;
-  color: #64748B;
+  color: #475569;
   margin-top: 0.6rem;
   line-height: 1.6;
 }
 
-/* CTA RED BAND WITH DIAGONAL STRIPES matching media_1790938954724.png */
+/* CTA RED BAND */
 .ctaRedBand {
   background-color: #E52B2B;
   background-image: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(0,0,0,0.06) 12px, rgba(0,0,0,0.06) 24px);
   color: #ffffff;
-  padding: 4.5rem 1.5rem;
+  padding: 4rem 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .ctaBandInner {
@@ -809,6 +823,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
 .btnDarkNavyCTA {
@@ -833,6 +849,10 @@
   display: inline-block;
 }
 
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES (DESKTOP -> TABLET -> MOBILE PHONES)
+   ========================================================================== */
+
 @media (max-width: 1100px) {
   .heroGrid {
     grid-template-columns: 1fr;
@@ -844,7 +864,13 @@
     max-width: 100%;
   }
   .heroTitle {
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+  }
+  .featuredCardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .modelsGrid5 {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -879,56 +905,66 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .heroSection {
     padding: 2.2rem 1rem 3rem;
   }
   .heroTitle {
-    font-size: 2.1rem;
-    line-height: 1.18;
+    font-size: 1.95rem;
+    line-height: 1.2;
   }
   .heroSubtitle {
-    font-size: 0.98rem;
-    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.4rem;
   }
   .searchForm {
     flex-direction: column;
     align-items: stretch;
     padding: 0.5rem;
     gap: 0.5rem;
+    width: 100%;
   }
   .searchSubmit {
     width: 100%;
     padding: 0.85rem;
+    text-align: center;
   }
   .heroCtas {
     flex-direction: column;
     width: 100%;
+    gap: 0.75rem;
   }
   .btnPrimary, .btnWhite {
     width: 100%;
     text-align: center;
     padding: 0.85rem 1rem;
+    box-sizing: border-box;
   }
-  .stepsGrid, .insightsGrid3, .modelsGrid5, .trustGrid, .rolesGridContainer {
+  .featuredCardsGrid, .stepsGrid, .insightsGrid3, .modelsGrid5, .trustGrid, .rolesGridContainer {
     grid-template-columns: 1fr;
   }
   .stepCol {
+    padding: 0 0 1.2rem 0;
     border-right: none;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding: 1rem 0;
   }
   .section {
-    padding: 3.5rem 1rem;
+    padding: 3.2rem 1rem;
   }
   .sectionTitle {
-    font-size: 1.7rem;
+    font-size: 1.65rem;
   }
   .ctaRedBand {
     padding: 3rem 1rem;
   }
+  .ctaBandInner div:last-child {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
   .btnDarkNavyCTA, .btnWhiteCall {
     width: 100%;
     text-align: center;
+    box-sizing: border-box;
   }
 }
