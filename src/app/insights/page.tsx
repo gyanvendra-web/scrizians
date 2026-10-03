@@ -13,8 +13,8 @@ export default function InsightsPage() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 3;
   const [dynamicInsights, setDynamicInsights] = useState<any[]>([]);
+  const ITEMS_PER_PAGE = 6;
 
   React.useEffect(() => {
     const refreshData = () => {
@@ -46,17 +46,32 @@ export default function InsightsPage() {
     return source.filter(item => item.filterKey === activeFilter || item.cat === activeFilter.toUpperCase());
   }, [activeFilter, dynamicInsights]);
 
+  const showFeaturedHeader = activeFilter === 'All' && currentPage === 1;
   const featuredCard = filteredArticles[0];
   const secondaryCard = filteredArticles[1];
-  const gridCards = filteredArticles.slice(activeFilter === 'All' ? 2 : 1);
 
-  const currentGridList = activeFilter === 'All' ? gridCards : filteredArticles;
-  const totalPages = Math.max(1, Math.ceil(currentGridList.length / ITEMS_PER_PAGE));
-  const paginatedGridList = currentGridList.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const gridArticles = useMemo(() => {
+    if (showFeaturedHeader) {
+      return filteredArticles.slice(2, 2 + ITEMS_PER_PAGE);
+    }
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredArticles.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredArticles, showFeaturedHeader, currentPage]);
+
+  const totalPages = Math.max(1, Math.ceil(
+    showFeaturedHeader 
+      ? Math.max(0, filteredArticles.length - 2) / ITEMS_PER_PAGE 
+      : filteredArticles.length / ITEMS_PER_PAGE
+  ));
 
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
     setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 400, behavior: 'smooth' });
   };
 
   return (
@@ -101,8 +116,8 @@ export default function InsightsPage() {
           ))}
         </div>
 
-        {/* Top Featured Section */}
-        {activeFilter === 'All' && featuredCard && (
+        {/* Top Featured Section (Shown only on Page 1 when filter is 'All') */}
+        {showFeaturedHeader && featuredCard && (
           <div className={styles.topSection}>
             <Link href={`/insights/${featuredCard.id}`} className={styles.featuredBigCard}>
               <div 
@@ -138,9 +153,9 @@ export default function InsightsPage() {
           </div>
         )}
 
-        {/* 3-Column Grid for Remaining Articles or Filtered Articles */}
+        {/* 3-Column Grid for Articles */}
         <div className={styles.insightsGrid3}>
-          {paginatedGridList.map(article => (
+          {gridArticles.map(article => (
             <Link key={article.id} href={`/insights/${article.id}`} className={styles.articleCard}>
               <div 
                 className={styles.articleMedia} 
@@ -161,8 +176,8 @@ export default function InsightsPage() {
         <Pagination 
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          totalItems={currentGridList.length}
+          onPageChange={handlePageChange}
+          totalItems={filteredArticles.length}
           itemsPerPage={ITEMS_PER_PAGE}
           itemLabel="articles"
         />
