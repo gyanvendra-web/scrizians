@@ -1,0 +1,249 @@
+.hero {
+  background-color: #0A172A;
+  background-image: radial-gradient(circle at 90% 30%, rgba(229, 43, 43, 0.15) 0%, transparent 45%);
+  color: #ffffff;
+  padding: 3.5rem 1.5rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroRingWrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heroRing {
+  position: absolute;
+  right: -140px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  border: 45px solid rgba(180, 40, 50, 0.22);
+}
+
+.heroInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.breadcrumb {
+  font-size: 0.88rem;
+  color: #94A3B8;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumbLink {
+  color: #94A3B8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbLink:hover {
+  color: #ffffff;
+}
+
+.eyebrow {
+  color: #F87171;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.6px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #94A3B8;
+  line-height: 1.65;
+  max-width: 640px;
+  margin-bottom: 2.2rem;
+}
+
+.btnShareReq {
+  background-color: #E52B2B;
+  color: #ffffff;
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btnShareReq:hover {
+  background-color: #C52222;
+}
+
+.mainContainer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4rem 0;
+}
+
+@media (max-width: 1228px) {
+  .mainContainer {
+    padding: 4rem 1.5rem;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.sidebar {
+  background: #ffffff;
+  border-right: 1px solid #F1F5F9;
+  padding-right: 1.5rem;
+  position: sticky;
+  top: 90px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+
+.filterSection {
+  margin-bottom: 2.5rem;
+}
+
+.filterSectionTitle {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 1rem;
+}
+
+.roleList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.roleBtn {
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.roleBtn:hover {
+  color: #0F172A;
+  background: #F8FAFC;
+}
+
+.roleBtnActive {
+  color: #E52B2B !important;
+  font-weight: 800 !important;
+  background: #FEF2F2 !important;
+  border-left: 3px solid #E52B2B !important;
+  border-radius: 0 6px 6px 0 !important;
+}
+
+.techGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.techPill {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.techPill:hover {
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+.techPillActive {
+  border: 1.5px solid #E52B2B !important;
+  color: #E52B2B !important;
+  background: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(229,43,43,0.12) !important;
+}
+
+.contentArea {
+  width: 100%;
+}
+
+.contentHeader {
+  margin-bottom: 2rem;
+}
+
+.profilesLabel {
+  color: #E52B2B;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.sectionHeading {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.talentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+}
+
+.resetBtn {
+  background: #0B172A;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+@media (max-width: 992px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .talentGrid {
+    grid-template-columns: 1fr;
+  }
+}

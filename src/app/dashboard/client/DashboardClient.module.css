@@ -1,0 +1,137 @@
+.container {
+  margin-left: 280px;
+  min-height: 100vh;
+  padding: 2.5rem;
+  background-color: #F8FAFC;
+  width: calc(100% - 280px);
+}
+
+.header {
+  background: #0B172A;
+  color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  box-shadow: 0 4px 15px rgba(11, 23, 42, 0.15);
+}
+
+.title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.subTitle {
+  font-size: 0.9rem;
+  color: #CBD5E1;
+  margin-top: 0.3rem;
+}
+
+.btnLogout {
+  background: #ffffff;
+  color: #0F172A;
+  border: 2px solid #0F172A;
+  padding: 0.45rem 1rem;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnLogout:hover {
+  background: #E52B2B;
+  color: #ffffff;
+  border-color: #E52B2B;
+}
+
+.card {
+  background: #ffffff;
+  border: 2px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0B172A;
+  margin-bottom: 0.4rem;
+}
+
+.cardSub {
+  font-size: 0.9rem;
+  color: #334155;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
+
+.tableContainer {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.table th, .table td {
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid #CBD5E1;
+  text-align: left;
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+
+.table th {
+  background: #0B172A;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.table td {
+  color: #0F172A;
+  font-weight: 700;
+}
+
+.btnPrimary {
+  background: #E52B2B;
+  color: #ffffff;
+  border: none;
+  padding: 0.65rem 1.3rem;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.btnPrimary:hover {
+  background: #cc2222;
+}
+
+.btnSecondary {
+  background: #ffffff;
+  color: #0F172A;
+  border: 2px solid #0F172A;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.btnSecondary:hover {
+  background: #0F172A;
+  color: #ffffff;
+}

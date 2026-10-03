@@ -1,0 +1,189 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.topbar {
+  background: #0B172A;
+  color: #94A3B8;
+  padding: 0.4rem 1.5rem;
+  font-size: 0.8rem;
+}
+
+.topbarInner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topRight {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.phoneLink {
+  color: #CBD5E1;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+
+.currencyToggle {
+  background: #071120;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.currBtn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.currBtnActive {
+  background: #ffffff;
+  color: #0F172A;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.mainNav {
+  background: #ffffff;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 0 1.5rem;
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  flex-shrink: 0;
+  margin-right: 1.25rem;
+}
+
+.brandImg {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.brand:hover .brandImg {
+  transform: scale(1.02);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin: 0 auto;
+  flex: 1;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.navLink {
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 0.35rem 0.3rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.navLink:hover {
+  color: #E52B2B;
+}
+
+.navLinkActive {
+  color: #E52B2B;
+  font-weight: 700;
+}
+
+.navLinkActiveRedText {
+  color: #E52B2B !important;
+  font-weight: 700 !important;
+  border: none !important;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.btnBecome {
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  padding: 0.55rem 0.6rem;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.btnBecome:hover {
+  color: #E52B2B;
+}
+
+.btnHire {
+  background-color: #E52B2B;
+  color: #ffffff;
+  padding: 0.6rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: 1px solid #E52B2B;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 25px rgba(229, 43, 43, 0.22);
+}
+
+.btnHire:hover {
+  background-color: #C52222;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(229, 43, 43, 0.32);
+}
+
+@media (max-width: 992px) {
+  .nav {
+    display: none;
+  }
+}
