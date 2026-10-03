@@ -13,13 +13,15 @@
   bottom: 0;
   z-index: 100;
   overflow-y: auto;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
 .logoBox {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
   padding-bottom: 1.2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -50,7 +52,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.8rem;
 }
 
 .userAvatar {
@@ -82,7 +84,7 @@
 
 .userSub {
   font-size: 0.78rem;
-  color: #94A3B8;
+  color: #CBD5E1;
   margin-top: 0.2rem;
 }
 
@@ -115,7 +117,7 @@
   border-radius: 10px;
   background: transparent;
   border: none;
-  color: #94A3B8;
+  color: #CBD5E1;
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
@@ -185,4 +187,76 @@
 
 .btnLogout:hover {
   background: #B91C1C;
+}
+
+/* Mobile Dashboard Header Bar */
+.mobileBar {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background: #0B172A;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobileBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.mobileLogo {
+  height: 28px;
+  width: auto;
+}
+
+.mobilePortalName {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #E52B2B;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.mobileToggleBtn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+}
+
+.mobileBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 99;
+}
+
+@media (max-width: 992px) {
+  .mobileBar {
+    display: flex;
+  }
+  .sidebar {
+    transform: translateX(-100%);
+    width: 290px;
+  }
+  .sidebarOpen {
+    transform: translateX(0) !important;
+  }
+  .mobileBackdropShow {
+    display: block !important;
+  }
 }

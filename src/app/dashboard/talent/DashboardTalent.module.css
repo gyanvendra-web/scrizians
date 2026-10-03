@@ -66,8 +66,24 @@
 }
 
 @media (max-width: 992px) {
+  .container {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 1.25rem 0.85rem !important;
+  }
   .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 1.25rem 1rem !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .card {
+    padding: 1.2rem 1rem !important;
   }
 }
 

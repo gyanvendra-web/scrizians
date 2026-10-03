@@ -382,8 +382,49 @@
   gap: 0.8rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 850px) {
+  .loginSection {
+    padding: 1rem 0.75rem 2rem !important;
+    min-height: auto !important;
+  }
+  .headerContainer {
+    margin-bottom: 0.8rem !important;
+  }
+  .mainTitle {
+    font-size: 1.6rem !important;
+  }
+  .subTitle {
+    font-size: 0.85rem !important;
+  }
   .cardWrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    padding: 0.4rem !important;
+    border-radius: 12px !important;
+  }
+  .leftPanel {
+    padding: 1.25rem 1rem !important;
+    border-radius: 10px !important;
+  }
+  .rightPanel {
+    padding: 1rem 0.75rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .brand {
+    margin-bottom: 1rem !important;
+  }
+  .headline {
+    font-size: 1.35rem !important;
+  }
+  .formTitle {
+    font-size: 1.35rem !important;
+  }
+  .formSub {
+    font-size: 0.85rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .input, .selectInput, .passwordInput {
+    padding: 0.65rem 0.8rem !important;
+    font-size: 0.88rem !important;
   }
 }
