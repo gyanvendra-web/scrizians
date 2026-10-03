@@ -8,7 +8,7 @@
 .topbar {
   background: #0B172A;
   color: #94A3B8;
-  padding: 0.4rem 1.5rem;
+  padding: 0.4rem 1.25rem;
   font-size: 0.8rem;
 }
 
@@ -18,6 +18,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+}
+
+.topbarslogan {
+  display: inline-block;
 }
 
 .topRight {
@@ -33,6 +38,7 @@
   align-items: center;
   gap: 0.4rem;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .currencyToggle {
@@ -42,6 +48,7 @@
   padding: 2px;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .currBtn {
@@ -65,7 +72,9 @@
 .mainNav {
   background: #ffffff;
   border-bottom: 1px solid #E2E8F0;
-  padding: 0 1.5rem;
+  padding: 0 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .inner {
@@ -75,6 +84,8 @@
   align-items: center;
   justify-content: space-between;
   height: 68px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .brand {
@@ -88,8 +99,9 @@
 }
 
 .brandImg {
-  height: 42px;
+  height: 40px;
   width: auto;
+  max-width: 160px;
   object-fit: contain;
   display: block;
   transition: transform 0.2s ease;
@@ -137,9 +149,9 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
   flex-shrink: 0;
-  margin-left: 1.5rem;
+  margin-left: auto;
 }
 
 .btnBecome {
@@ -159,8 +171,8 @@
 .btnHire {
   background-color: #E52B2B;
   color: #ffffff;
-  padding: 0.6rem 1.4rem;
-  border-radius: 12px;
+  padding: 0.55rem 1.2rem;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 0.88rem;
   border: 1px solid #E52B2B;
@@ -171,13 +183,12 @@
   text-decoration: none;
   white-space: nowrap;
   transition: all 0.2s ease;
-  box-shadow: 0 10px 25px rgba(229, 43, 43, 0.22);
+  box-shadow: 0 8px 20px rgba(229, 43, 43, 0.2);
 }
 
 .btnHire:hover {
   background-color: #C52222;
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(229, 43, 43, 0.32);
 }
 
 /* Hamburger Toggle Button */
@@ -186,14 +197,15 @@
   background: transparent;
   border: 1px solid #CBD5E1;
   color: #0F172A;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .hamburgerBtn:hover {
@@ -221,7 +233,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 320px;
+  width: 310px;
   max-width: 85vw;
   background: #ffffff;
   z-index: 1002;
@@ -252,7 +264,7 @@
 }
 
 .drawerLogo {
-  height: 34px;
+  height: 32px;
   width: auto;
   object-fit: contain;
 }
@@ -338,24 +350,41 @@
 }
 
 @media (max-width: 600px) {
-  .topbarSlogan {
-    display: none;
+  .topbar {
+    padding: 0.3rem 0.75rem;
+  }
+  .topbarslogan {
+    display: none !important;
   }
   .topbarInner {
-    justify-content: center;
+    justify-content: flex-end;
+  }
+  .topRight {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .phoneLink {
+    font-size: 0.75rem;
   }
   .mainNav {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
   .inner {
-    height: 60px;
+    height: 58px;
   }
   .brandImg {
-    height: 34px;
+    height: 32px;
+    max-width: 125px;
   }
   .btnHire {
-    padding: 0.5rem 0.9rem;
-    font-size: 0.8rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.78rem;
     border-radius: 8px;
+  }
+  .hamburgerBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
   }
 }
