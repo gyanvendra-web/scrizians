@@ -85,11 +85,10 @@
   outline: none !important;
   box-shadow: none !important;
   flex-shrink: 0;
-  margin-right: 2.5rem;
 }
 
 .brandImg {
-  height: 44px;
+  height: 42px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -103,10 +102,9 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 1.1rem;
-  margin: 0 2rem;
-  flex: 1;
-  justify-content: center;
+  gap: 1.5rem;
+  margin-left: 2.5rem;
+  margin-right: auto;
   flex-wrap: nowrap;
 }
 
@@ -116,7 +114,7 @@
   font-weight: 600;
   text-decoration: none;
   transition: color 0.2s ease;
-  padding: 0.35rem 0.4rem;
+  padding: 0.35rem 0.2rem;
   border-radius: 6px;
   white-space: nowrap;
 }
@@ -139,9 +137,9 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.25rem;
   flex-shrink: 0;
-  margin-left: 2.5rem;
+  margin-left: 1.5rem;
 }
 
 .btnBecome {
@@ -180,6 +178,16 @@
   background-color: #C52222;
   transform: translateY(-2px);
   box-shadow: 0 14px 30px rgba(229, 43, 43, 0.32);
+}
+
+@media (max-width: 1200px) {
+  .nav {
+    gap: 1.1rem;
+    margin-left: 1.5rem;
+  }
+  .navLink {
+    font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 992px) {
