@@ -409,9 +409,9 @@ export default function HomePage() {
         </div>
 
         <div className={styles.caseGrid2}>
-          <Link href="/case-studies/uk-health-tech-app-launched-in-14-weeks" className={styles.caseCard}>
+          <Link href="/case-studies/uk-health-tech-app-launched-in-14-weeks" className={styles.caseCard} aria-label="Case Study: UK Health-Tech App Launched in 14 Weeks">
             <div>
-              <div className={styles.caseMedia} style={{ backgroundImage: `url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=70')` }}>
+              <div className={styles.caseMedia} style={{ backgroundImage: `url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=75&fm=webp')` }}>
                 <span className={styles.caseTagOverlay}>Healthcare · United Kingdom</span>
               </div>
               <div className={styles.caseBody}>
@@ -438,9 +438,9 @@ export default function HomePage() {
             </div>
           </Link>
 
-          <Link href="/case-studies/uae-retailer-cuts-qa-cycle-from-5-days-to-6-hours" className={styles.caseCard}>
+          <Link href="/case-studies/uae-retailer-cuts-qa-cycle-from-5-days-to-6-hours" className={styles.caseCard} aria-label="Case Study: UAE Retailer Cuts QA Cycle from 5 Days to 6 Hours">
             <div>
-              <div className={styles.caseMedia} style={{ backgroundImage: `url('https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=70')` }}>
+              <div className={styles.caseMedia} style={{ backgroundImage: `url('https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=600&q=75&fm=webp')` }}>
                 <span className={styles.caseTagOverlay}>Retail & E-commerce · UAE</span>
               </div>
               <div className={styles.caseBody}>
@@ -483,8 +483,8 @@ export default function HomePage() {
 
         <div className={styles.insightsGrid3}>
           {dynamicInsights.slice(0, 3).map(art => (
-            <Link key={art.id} href="/insights" className={styles.articleCard}>
-              <div className={styles.articleMedia} style={{ backgroundImage: `url('${art.coverImageUrl || art.image || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=70'}')` }} />
+            <Link key={art.id} href="/insights" className={styles.articleCard} aria-label={`Read insight: ${art.title}`}>
+              <div className={styles.articleMedia} style={{ backgroundImage: `url('${art.coverImageUrl || art.image || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=75&fm=webp'}')` }} />
               <div className={styles.articleBody}>
                 <span className={styles.articleCatRed}>{String(art.category || art.cat || 'HIRING GUIDES').toUpperCase()}</span>
                 <h3 className={styles.articleTitle}>{art.title}</h3>
@@ -496,7 +496,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAQ SECTION matching media_1790938954724.png */}
+      {/* FAQ SECTION */}
       <section className={styles.section} style={{ borderTop: '1px solid #E2E8F0' }}>
         <div className={styles.faqGrid2}>
           <div>
@@ -529,13 +529,18 @@ export default function HomePage() {
                 <div 
                   key={idx} 
                   className={styles.faqItem}
-                  onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
                 >
-                  <div className={styles.faqSummary}>
-                    <span className={styles.faqArrow}>{isOpen ? '▼' : '▶'}</span> {faq.q}
-                  </div>
+                  <button 
+                    type="button"
+                    className={styles.faqSummary}
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${idx}`}
+                  >
+                    <span className={styles.faqArrow} aria-hidden="true">{isOpen ? '▼' : '▶'}</span> {faq.q}
+                  </button>
                   {isOpen && (
-                    <p className={styles.faqContent}>
+                    <p id={`faq-answer-${idx}`} className={styles.faqContent}>
                       {faq.a}
                     </p>
                   )}

@@ -764,14 +764,19 @@
 }
 
 .faqSummary {
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 0;
   font-size: 1.05rem;
   font-weight: 800;
   color: #0F172A;
   cursor: pointer;
-  list-style: none;
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  font-family: inherit;
 }
 
 .faqSummary::-webkit-details-marker {
