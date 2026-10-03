@@ -9,10 +9,10 @@
   --color-bg-card: #FFFFFF;
   --color-border: #E2E8F0;
   
-  /* Text Colors */
+  /* Text Colors with WCAG AAA / AA contrast ratios */
   --color-text-dark: #0F172A;
-  --color-text-muted: #64748B;
-  --color-text-light: #94A3B8;
+  --color-text-muted: #475569;
+  --color-text-light: #CBD5E1;
 
   /* Typography - Clean Modern Sans-Serif */
   --font-sans: var(--font-manrope), var(--font-jakarta), var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -35,6 +35,9 @@ html, body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 100vw;
+  overflow-x: hidden;
+  touch-action: manipulation;
 }
 
 h1, h2, h3, h4, h5, h6, button, input, select, textarea, a {

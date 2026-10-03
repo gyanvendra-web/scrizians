@@ -55,19 +55,23 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
         <div className={styles.topbarInner}>
           <span className={styles.topbarslogan}>Talent. Technology. Together.</span>
           <div className={styles.topRight}>
-            <a href="tel:+919119112999" className={styles.phoneLink}>
+            <a href="tel:+919119112999" className={styles.phoneLink} aria-label="Call Scrizians customer support at +91 91191 12999">
               📞 +91 91191 12999
             </a>
-            <div className={styles.currencyToggle}>
+            <div className={styles.currencyToggle} role="group" aria-label="Currency Switcher">
               <button 
+                type="button"
                 className={`${styles.currBtn} ${currency === 'USD' ? styles.currBtnActive : ''}`}
                 onClick={() => toggleCurrency('USD')}
+                aria-label="Switch currency to USD"
               >
                 $ USD
               </button>
               <button 
+                type="button"
                 className={`${styles.currBtn} ${currency === 'INR' ? styles.currBtnActive : ''}`}
                 onClick={() => toggleCurrency('INR')}
+                aria-label="Switch currency to INR"
               >
                 ₹ INR
               </button>
@@ -79,12 +83,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
       {/* Main Nav */}
       <div className={styles.mainNav}>
         <div className={styles.inner}>
-          <Link href="/" className={styles.brand}>
-            <img src="/images/logo.png" alt="Scrizians Logo" className={styles.brandImg} />
+          <Link href="/" className={styles.brand} aria-label="Scrizians Homepage">
+            <img src="/images/logo.png" alt="Scrizians Logo" className={styles.brandImg} width={180} height={42} />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className={styles.nav}>
+          <nav className={styles.nav} aria-label="Main Navigation">
             {navLinks.map(link => (
               <Link 
                 key={link.href}
@@ -104,6 +108,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
 
             {onOpenLeadModal ? (
               <button 
+                type="button"
                 className={styles.btnHire} 
                 onClick={onOpenLeadModal}
               >
@@ -117,9 +122,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
 
             {/* Mobile Hamburger Toggle Button */}
             <button 
+              type="button"
               className={styles.hamburgerBtn}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle Mobile Menu"
+              aria-label="Toggle Mobile Navigation Drawer"
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? '✕' : '☰'}
             </button>
@@ -133,13 +140,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
           <div 
             className={styles.mobileBackdrop} 
             onClick={() => setIsMobileMenuOpen(false)} 
+            aria-hidden="true"
           />
-          <div className={styles.mobileDrawer}>
+          <div className={styles.mobileDrawer} role="dialog" aria-label="Mobile Navigation Menu">
             <div className={styles.drawerHeader}>
-              <img src="/images/logo.png" alt="Scrizians Logo" className={styles.drawerLogo} />
+              <img src="/images/logo.png" alt="Scrizians Logo" className={styles.drawerLogo} width={150} height={34} />
               <button 
+                type="button"
                 className={styles.drawerCloseBtn}
                 onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close Mobile Navigation Drawer"
               >
                 ✕
               </button>
@@ -184,6 +194,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
             <div className={styles.drawerFooter}>
               {onOpenLeadModal ? (
                 <button 
+                  type="button"
                   className={styles.btnHire} 
                   style={{ width: '100%', padding: '0.75rem' }}
                   onClick={() => {
@@ -207,6 +218,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
               <a 
                 href="tel:+919119112999" 
                 className={styles.phoneLink} 
+                aria-label="Call Scrizians support at +91 91191 12999"
                 style={{ justifyContent: 'center', color: '#0F172A', fontWeight: 700, fontSize: '0.9rem', marginTop: '0.4rem' }}
               >
                 📞 Call: +91 91191 12999

@@ -61,22 +61,25 @@ export default function HomePage() {
               className={styles.searchForm} 
               onSubmit={(e) => { e.preventDefault(); window.location.href = `/talent?q=${encodeURIComponent(searchQuery)}`; }}
             >
-              <span className={styles.searchIcon}>🔍</span>
+              <span className={styles.searchIcon} aria-hidden="true">🔍</span>
               <input 
                 type="text"
+                id="search-skills-hero"
+                name="q"
+                aria-label="Search skills e.g. React, DevOps, Flutter"
                 className={styles.searchInput}
                 placeholder="Search skills e.g. React, DevOps, Flutter..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button type="submit" className={styles.searchSubmit}>Find talent</button>
+              <button type="submit" aria-label="Submit search for talent" className={styles.searchSubmit}>Find talent</button>
             </form>
 
             <div className={styles.heroCtas}>
-              <button className={styles.btnPrimary} onClick={() => handleOpenModal()}>
+              <button type="button" aria-label="Hire Scrizians Talent" className={styles.btnPrimary} onClick={() => handleOpenModal()}>
                 Hire Talent
               </button>
-              <Link href="/become-a-scrizian" className={styles.btnWhite}>
+              <Link href="/become-a-scrizian" aria-label="Join Scrizians Talent Network" className={styles.btnWhite}>
                 Join as a Scrizian
               </Link>
             </div>
