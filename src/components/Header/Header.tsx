@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCurrency } from '@/context/CurrencyContext';
@@ -13,9 +13,10 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
   const { currency, toggleCurrency } = useCurrency();
   const pathname = usePathname();
-  const [loggedInUser, setLoggedInUser] = React.useState<any>(null);
+  const [loggedInUser, setLoggedInUser] = useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const stored = localStorage.getItem('scrizians_user');
     if (stored) {
       try {
@@ -23,6 +24,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
       } catch (e) {}
     }
   }, []);
+
+  // Auto close mobile drawer on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const getDashboardHref = () => {
     if (!loggedInUser) return '/login';
@@ -32,12 +38,22 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
     return '/dashboard/talent';
   };
 
+  const navLinks = [
+    { href: '/hire-talent', label: 'Hire Talent' },
+    { href: '/talent', label: 'Talent Network' },
+    { href: '/solutions', label: 'Solutions' },
+    { href: '/technologies', label: 'Technologies' },
+    { href: '/case-studies', label: 'Case Studies' },
+    { href: '/jobs', label: 'Jobs' },
+    { href: '/insights', label: 'Insights' }
+  ];
+
   return (
     <header className={styles.header}>
       {/* Top Bar */}
       <div className={styles.topbar}>
         <div className={styles.topbarInner}>
-          <span>Talent. Technology. Together.</span>
+          <span className={styles.topbarslogan}>Talent. Technology. Together.</span>
           <div className={styles.topRight}>
             <a href="tel:+919119112999" className={styles.phoneLink}>
               📞 +91 91191 12999
@@ -67,16 +83,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
             <img src="/images/logo.png" alt="Scrizians Logo" className={styles.brandImg} />
           </Link>
 
+          {/* Desktop Navigation Links */}
           <nav className={styles.nav}>
-            {[
-              { href: '/hire-talent', label: 'Hire Talent' },
-              { href: '/talent', label: 'Talent Network' },
-              { href: '/solutions', label: 'Solutions' },
-              { href: '/technologies', label: 'Technologies' },
-              { href: '/case-studies', label: 'Case Studies' },
-              { href: '/jobs', label: 'Jobs' },
-              { href: '/insights', label: 'Insights' }
-            ].map(link => (
+            {navLinks.map(link => (
               <Link 
                 key={link.href}
                 href={link.href} 
@@ -87,10 +96,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
             ))}
           </nav>
 
+          {/* Action Buttons */}
           <div className={styles.actions}>
             <Link href="/become-a-scrizian" className={styles.btnBecome}>
               Become a Scrizian
             </Link>
+
             {onOpenLeadModal ? (
               <button 
                 className={styles.btnHire} 
@@ -103,9 +114,107 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
                 Hire Talent
               </Link>
             )}
+
+            {/* Mobile Hamburger Toggle Button */}
+            <button 
+              className={styles.hamburgerBtn}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle Mobile Menu"
+            >
+              {isMobileMenuOpen ? '✕' : '☰'}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Slide-Over Drawer Navigation */}
+      {isMobileMenuOpen && (
+        <>
+          <div 
+            className={styles.mobileBackdrop} 
+            onClick={() => setIsMobileMenuOpen(false)} 
+          />
+          <div className={styles.mobileDrawer}>
+            <div className={styles.drawerHeader}>
+              <img src="/images/logo.png" alt="Scrizians Logo" className={styles.drawerLogo} />
+              <button 
+                className={styles.drawerCloseBtn}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className={styles.drawerBody}>
+              {navLinks.map(link => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`${styles.drawerNavLink} ${pathname === link.href ? styles.drawerNavLinkActive : ''}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span>{link.label}</span>
+                  <span style={{ fontSize: '0.8rem', opacity: 0.6 }}>→</span>
+                </Link>
+              ))}
+
+              <div className={styles.drawerDivider} />
+
+              <Link 
+                href="/become-a-scrizian" 
+                className={styles.drawerNavLink}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span>Become a Scrizian</span>
+                <span>💼</span>
+              </Link>
+
+              {loggedInUser && (
+                <Link 
+                  href={getDashboardHref()} 
+                  className={styles.drawerNavLink}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span>Dashboard</span>
+                  <span>👤</span>
+                </Link>
+              )}
+            </div>
+
+            <div className={styles.drawerFooter}>
+              {onOpenLeadModal ? (
+                <button 
+                  className={styles.btnHire} 
+                  style={{ width: '100%', padding: '0.75rem' }}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onOpenLeadModal();
+                  }}
+                >
+                  Hire Talent Now
+                </button>
+              ) : (
+                <Link 
+                  href="/hire-talent" 
+                  className={styles.btnHire}
+                  style={{ width: '100%', textAlign: 'center', padding: '0.75rem' }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Hire Talent Now
+                </Link>
+              )}
+
+              <a 
+                href="tel:+919119112999" 
+                className={styles.phoneLink} 
+                style={{ justifyContent: 'center', color: '#0F172A', fontWeight: 700, fontSize: '0.9rem', marginTop: '0.4rem' }}
+              >
+                📞 Call: +91 91191 12999
+              </a>
+            </div>
+          </div>
+        </>
+      )}
     </header>
   );
 };

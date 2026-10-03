@@ -137,7 +137,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-shrink: 0;
   margin-left: 1.5rem;
 }
@@ -180,6 +180,141 @@
   box-shadow: 0 14px 30px rgba(229, 43, 43, 0.32);
 }
 
+/* Hamburger Toggle Button */
+.hamburgerBtn {
+  display: none;
+  background: transparent;
+  border: 1px solid #CBD5E1;
+  color: #0F172A;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hamburgerBtn:hover {
+  background: #F1F5F9;
+  border-color: #0F172A;
+}
+
+/* Mobile Drawer Overlay */
+.mobileBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1001;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mobileDrawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 85vw;
+  background: #ffffff;
+  z-index: 1002;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #E2E8F0;
+  background: #0F172A;
+  color: #ffffff;
+}
+
+.drawerLogo {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+}
+
+.drawerCloseBtn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  line-height: 1;
+}
+
+.drawerBody {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.drawerNavLink {
+  color: #1E293B;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawerNavLink:hover {
+  background: #F8FAFC;
+  color: #E52B2B;
+}
+
+.drawerNavLinkActive {
+  background: #FEF2F2;
+  color: #E52B2B;
+  font-weight: 800;
+}
+
+.drawerDivider {
+  height: 1px;
+  background: #E2E8F0;
+  margin: 0.8rem 0;
+}
+
+.drawerFooter {
+  padding: 1.2rem;
+  background: #F8FAFC;
+  border-top: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* Media Queries */
 @media (max-width: 1200px) {
   .nav {
     gap: 1.1rem;
@@ -193,5 +328,34 @@
 @media (max-width: 992px) {
   .nav {
     display: none;
+  }
+  .btnBecome {
+    display: none;
+  }
+  .hamburgerBtn {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .topbarSlogan {
+    display: none;
+  }
+  .topbarInner {
+    justify-content: center;
+  }
+  .mainNav {
+    padding: 0 1rem;
+  }
+  .inner {
+    height: 60px;
+  }
+  .brandImg {
+    height: 34px;
+  }
+  .btnHire {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8rem;
+    border-radius: 8px;
   }
 }
