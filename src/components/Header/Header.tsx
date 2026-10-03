@@ -84,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
       <div className={styles.mainNav}>
         <div className={styles.inner}>
           <Link href="/" className={styles.brand} aria-label="Scrizians Homepage">
-            <img src="/images/logo.png" alt="Scrizians Logo" className={styles.brandImg} width={180} height={42} />
+            <img src="/images/logo.png" alt="Scrizians Logo" className={styles.brandImg} width={180} height={42} fetchPriority="high" />
           </Link>
 
           {/* Desktop Navigation Links */}

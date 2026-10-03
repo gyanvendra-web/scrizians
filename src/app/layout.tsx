@@ -129,7 +129,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preload" href="/images/logo.png" as="image" type="image/png" fetchPriority="high" />
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrgSchema) }}

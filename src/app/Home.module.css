@@ -849,6 +849,12 @@
 }
 
 @media (max-width: 992px) {
+  .heroGlowOne, .heroGlowTwo {
+    display: none !important;
+  }
+  .previewWidget {
+    animation: none !important;
+  }
   .heroSection {
     padding: 3rem 1.25rem 4rem;
   }
