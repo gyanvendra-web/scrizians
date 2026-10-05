@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://gyanvendra_db:Ramayan%239026@cluster0.lmd3dvm.mongodb.net/seahawk?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://gyanvendra_db:Ramayan%239026@cluster0.lmd3dvm.mongodb.net/scrizians?retryWrites=true&w=majority&appName=Cluster0';
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable in .env.local');
@@ -25,6 +25,7 @@ export async function connectToDatabase() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      dbName: 'scrizians',
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
