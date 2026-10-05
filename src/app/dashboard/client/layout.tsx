@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://scrizians.com'),
   title: 'Client & Company Hiring Portal | Scrizians',
   description: 'Manage active hiring requirements, review shortlisted tech talent, schedule video interviews, and track billing statements with Scrizians.',
+  alternates: {
+    canonical: 'https://scrizians.com/dashboard/client',
+  },
   robots: {
     index: true,
     follow: true,
