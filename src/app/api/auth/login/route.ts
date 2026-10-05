@@ -13,56 +13,16 @@ const initialUsersList = [
     scrizianId: 'SZN-ADMIN-00001',
     company: 'Scriza Private Limited',
   },
-  {
-    id: 'talent-101',
-    name: 'Aarav M. (Senior Architect)',
-    email: 'talent@scrizians.com',
-    password: 'Talent@123456',
-    role: 'talent',
-    scrizianId: 'SZN-DEV-00001',
-    company: 'Scrizians Talent Network',
-  },
-  {
-    id: 'client-101',
-    name: 'Michael R. (VP Engineering)',
-    email: 'client@scrizians.com',
-    password: 'Client@123456',
-    role: 'client',
-    scrizianId: 'SZN-CLIENT-00001',
-    company: 'CloudScale Inc (USA)',
-  },
-  {
-    id: 'contributor-101',
-    name: 'Technical Contributor Desk',
-    email: 'contributor@scrizians.com',
-    password: 'Contributor@123456',
-    role: 'contributor',
-    scrizianId: 'SZN-CONTRIB-00001',
-    company: 'Scrizians Editorial Desk',
-  },
-  {
-    id: 'candidate-101',
-    name: 'Aarav Sharma (Candidate)',
-    email: 'candidate@scrizians.com',
-    password: 'Candidate@123456',
-    role: 'candidate',
-    scrizianId: 'SZN-CAND-00001',
-    company: 'Candidate Pool',
-  },
 ];
 
 export async function POST(request: Request) {
   try {
     await connectToDatabase();
 
-    // Auto-seed default 5 portal users into MongoDB if not present
-    const isSeeded = await SeedMarkerModel.findOne({ key: 'users' });
-    if (!isSeeded) {
-      const existingCount = await UserModel.countDocuments();
-      if (existingCount === 0) {
-        await UserModel.insertMany(initialUsersList as any);
-      }
-      await SeedMarkerModel.create({ key: 'users' });
+    // Auto-seed default Super Admin if not present
+    const adminExists = await UserModel.findOne({ role: 'admin' });
+    if (!adminExists) {
+      await UserModel.create(initialUsersList[0] as any);
     }
 
     const { email, password, role } = await request.json();
