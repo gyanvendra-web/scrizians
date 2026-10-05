@@ -306,7 +306,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                     placeholder="e.g. Aarav Sharma"
                     value={applicantName}
                     onChange={e => setApplicantName(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }}
                   />
                 </div>
 
@@ -318,7 +318,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                     placeholder="aarav@example.com"
                     value={applicantEmail}
                     onChange={e => setApplicantEmail(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }}
                   />
                 </div>
 
@@ -328,6 +328,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                     value={applicantPhone}
                     onChange={(val) => setApplicantPhone(val)}
                     placeholder="98765 43210"
+                    variant="underline"
                     required
                   />
                 </div>
@@ -339,7 +340,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                     placeholder="e.g. SCR-8841"
                     value={scrizianId}
                     onChange={e => setScrizianId(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }}
                   />
                 </div>
 
@@ -351,7 +352,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
                     placeholder="https://linkedin.com/in/... or drive link"
                     value={resumeUrl}
                     onChange={e => setResumeUrl(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.9rem', outline: 'none' }}
+                    style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }}
                   />
                 </div>
 

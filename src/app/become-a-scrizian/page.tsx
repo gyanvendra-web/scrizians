@@ -98,12 +98,12 @@ export default function BecomeAScrizianPage() {
                 <>
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Full Legal Name *</label>
-                    <input required type="text" style={{ width: '100%', padding: '0.7rem', border: '1px solid #CBD5E1', borderRadius: '6px', outline: 'none' }} placeholder="Aarav Sharma" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                    <input required type="text" style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }} placeholder="Aarav Sharma" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                     <span style={{ fontSize: '0.75rem', color: '#64748B' }}>🔒 Kept private; not shown on public profile.</span>
                   </div>
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Personal Email *</label>
-                    <input required type="email" style={{ width: '100%', padding: '0.7rem', border: '1px solid #CBD5E1', borderRadius: '6px', outline: 'none' }} placeholder="aarav@gmail.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                    <input required type="email" style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }} placeholder="aarav@gmail.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Phone / WhatsApp *</label>
@@ -111,6 +111,7 @@ export default function BecomeAScrizianPage() {
                       value={phone}
                       onChange={(val) => setPhone(val)}
                       placeholder="98765 43210"
+                      variant="underline"
                       required
                     />
                   </div>
@@ -121,15 +122,15 @@ export default function BecomeAScrizianPage() {
                 <>
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Professional Title *</label>
-                    <input required type="text" style={{ width: '100%', padding: '0.7rem', border: '1px solid #CBD5E1', borderRadius: '6px', outline: 'none' }} placeholder="e.g. Senior Next.js & Full-Stack Architect" value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} />
+                    <input required type="text" style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }} placeholder="e.g. Senior Next.js & Full-Stack Architect" value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Years of Professional Experience *</label>
-                    <input required type="number" style={{ width: '100%', padding: '0.7rem', border: '1px solid #CBD5E1', borderRadius: '6px', outline: 'none' }} value={formData.experienceYears} onChange={e => setFormData({ ...formData, experienceYears: e.target.value })} />
+                    <input required type="number" style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }} value={formData.experienceYears} onChange={e => setFormData({ ...formData, experienceYears: e.target.value })} />
                   </div>
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Primary Skills (Comma Separated) *</label>
-                    <input required type="text" style={{ width: '100%', padding: '0.7rem', border: '1px solid #CBD5E1', borderRadius: '6px', outline: 'none' }} value={formData.skills} onChange={e => setFormData({ ...formData, skills: e.target.value })} />
+                    <input required type="text" style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }} value={formData.skills} onChange={e => setFormData({ ...formData, skills: e.target.value })} />
                   </div>
                 </>
               )}
@@ -138,7 +139,7 @@ export default function BecomeAScrizianPage() {
                 <>
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Expected Hourly Rate ($ USD / hr)</label>
-                    <input required type="number" style={{ width: '100%', padding: '0.7rem', border: '1px solid #CBD5E1', borderRadius: '6px', outline: 'none' }} value={formData.expectedRateUSD} onChange={e => setFormData({ ...formData, expectedRateUSD: e.target.value })} />
+                    <input required type="number" style={{ width: '100%', padding: '0.55rem 0', border: 'none', borderBottom: '2px solid #E2E8F0', borderRadius: 0, fontSize: '0.92rem', fontWeight: 600, color: '#0F172A', outline: 'none', background: 'transparent' }} value={formData.expectedRateUSD} onChange={e => setFormData({ ...formData, expectedRateUSD: e.target.value })} />
                   </div>
                   <div style={{ background: '#F8FAFC', padding: '1rem', borderRadius: '6px', fontSize: '0.85rem', color: '#475569' }}>
                     By clicking submit, you confirm that your submitted profile and portfolio declarations are truthful and consent to Scrizians Privacy Policy & Talent Terms.

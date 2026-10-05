@@ -20,12 +20,12 @@ function TalentNetworkContent() {
   const [selectedAvailability, setSelectedAvailability] = useState('');
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [selectedScrizianId, setSelectedScrizianId] = useState<string | undefined>(undefined);
-  const [talentList, setTalentList] = useState<any[]>([]);
+  const [talentList, setTalentList] = useState<any[]>(initialTalentList);
 
   React.useEffect(() => {
     const refreshData = () => {
       const data = getStoredData('scrizians_talent_list', initialTalentList);
-      setTalentList(Array.isArray(data) ? data : initialTalentList);
+      setTalentList(Array.isArray(data) && data.length > 0 ? data : initialTalentList);
     };
     refreshData();
     syncFromMongoDB('scrizians_talent_list');
@@ -77,7 +77,7 @@ function TalentNetworkContent() {
 
       return matchesSearch && matchesCategory && matchesAvailability;
     });
-  }, [searchQuery, selectedCategory, selectedAvailability]);
+  }, [searchQuery, selectedCategory, selectedAvailability, talentList]);
 
   const handleOpenLeadModal = (scrizianId?: string) => {
     setSelectedScrizianId(scrizianId);

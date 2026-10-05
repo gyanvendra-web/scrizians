@@ -181,6 +181,7 @@ export default function ContactPage() {
                     value={phone}
                     onChange={(val) => setPhone(val)}
                     placeholder="98765 43210"
+                    variant="underline"
                   />
                 </div>
               </div>

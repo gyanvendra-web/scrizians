@@ -121,6 +121,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose, prefilled
                 value={formData.phone}
                 onChange={(val) => setFormData({ ...formData, phone: val })}
                 placeholder="98765 43210"
+                variant="underline"
               />
             </div>
 

@@ -173,20 +173,21 @@
 
 .input, .selectInput {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1.5px solid #CBD5E1;
-  border-radius: 8px;
+  padding: 0.55rem 0;
+  border: none;
+  border-bottom: 2px solid #E2E8F0;
+  border-radius: 0;
   font-size: 0.92rem;
   font-weight: 600;
   color: #0F172A;
-  background: #ffffff;
+  background: transparent;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
 }
 
 .input:focus, .selectInput:focus {
-  border-color: #E52B2B;
+  border-bottom-color: #E52B2B;
 }
 
 .passwordWrapper {
@@ -197,20 +198,21 @@
 
 .passwordInput {
   width: 100%;
-  padding: 0.75rem 2.5rem 0.75rem 1rem;
-  border: 1.5px solid #CBD5E1;
-  border-radius: 8px;
+  padding: 0.55rem 2.2rem 0.55rem 0;
+  border: none;
+  border-bottom: 2px solid #E2E8F0;
+  border-radius: 0;
   font-size: 0.92rem;
   font-weight: 600;
   color: #0F172A;
-  background: #ffffff;
+  background: transparent;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
 }
 
 .passwordInput:focus {
-  border-color: #E52B2B;
+  border-bottom-color: #E52B2B;
 }
 
 .eyeToggleBtn {

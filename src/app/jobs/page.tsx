@@ -14,12 +14,12 @@ export default function JobsPage() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const { currency, toggleCurrency } = useCurrency();
-  const [dynamicJobs, setDynamicJobs] = useState<any[]>([]);
+  const [dynamicJobs, setDynamicJobs] = useState<any[]>(initialJobsList);
 
   React.useEffect(() => {
     const refreshData = () => {
       const data = getStoredData('scrizians_jobs_list', initialJobsList);
-      setDynamicJobs(Array.isArray(data) ? data : initialJobsList);
+      setDynamicJobs(Array.isArray(data) && data.length > 0 ? data : initialJobsList);
     };
     refreshData();
     syncFromMongoDB('scrizians_jobs_list');
