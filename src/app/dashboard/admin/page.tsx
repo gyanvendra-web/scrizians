@@ -320,6 +320,7 @@ export default function AdminDashboardPage() {
               <input 
                 type="text" 
                 placeholder="Search leads..." 
+                aria-label="Search inbound hiring leads CRM"
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 className={styles.formInput}
@@ -358,6 +359,7 @@ export default function AdminDashboardPage() {
                       <td>
                         <select 
                           value={lead.stage}
+                          aria-label={`Update pipeline stage for lead ${lead.name}`}
                           onChange={e => handleUpdateLeadStage(lead._id, e.target.value)}
                           className={styles.selectStatus}
                         >
@@ -370,10 +372,10 @@ export default function AdminDashboardPage() {
                       </td>
                       <td>
                         <div className={styles.actionBtnGroup}>
-                          <button onClick={() => setSelectedLead(lead)} className={styles.btnActionView} title="View Details">
+                          <button onClick={() => setSelectedLead(lead)} className={styles.btnActionView} title="View Details" aria-label={`View details for lead ${lead.name}`}>
                             👁️
                           </button>
-                          <button onClick={() => handleDeleteLead(lead._id)} className={styles.btnActionDelete} title="Delete Lead">
+                          <button onClick={() => handleDeleteLead(lead._id)} className={styles.btnActionDelete} title="Delete Lead" aria-label={`Delete lead ${lead.name}`}>
                             🗑️
                           </button>
                         </div>
