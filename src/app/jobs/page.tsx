@@ -17,18 +17,15 @@ export default function JobsPage() {
   const [dynamicJobs, setDynamicJobs] = useState<any[]>(initialJobsList);
 
   React.useEffect(() => {
-    const refreshData = () => {
-      const data = getStoredData('scrizians_jobs_list', initialJobsList);
-      setDynamicJobs(Array.isArray(data) && data.length > 0 ? data : initialJobsList);
-    };
-    refreshData();
-    syncFromMongoDB('scrizians_jobs_list');
-    window.addEventListener('scrizians_storage_updated', refreshData);
-    window.addEventListener('storage', refreshData);
-    return () => {
-      window.removeEventListener('scrizians_storage_updated', refreshData);
-      window.removeEventListener('storage', refreshData);
-    };
+    fetch('/api/jobs')
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success && Array.isArray(resData.data)) {
+          setDynamicJobs(resData.data);
+          localStorage.setItem('scrizians_jobs_list', JSON.stringify(resData.data));
+        }
+      })
+      .catch(err => console.warn('Jobs API fetch error:', err));
   }, []);
 
   const filteredJobs = useMemo(() => {

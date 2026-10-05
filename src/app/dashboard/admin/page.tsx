@@ -82,21 +82,20 @@ export default function AdminDashboardPage() {
       } catch (e) {}
     }
 
-    const refreshData = () => {
-      setLeads(getStoredData('scrizians_leads_list', initialLeadsList));
-      setTalents(getStoredData('scrizians_talent_list', initialTalentList));
-      setJobs(getStoredData('scrizians_jobs_list', initialJobsList));
-      setInsights(getStoredData('scrizians_insights_list', initialArticlesList));
+    const loadFromApi = () => {
+      fetch('/api/leads').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setLeads(res.data); }).catch(e => console.warn(e));
+      fetch('/api/talent').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setTalents(res.data); }).catch(e => console.warn(e));
+      fetch('/api/jobs').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setJobs(res.data); }).catch(e => console.warn(e));
+      fetch('/api/insights').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setInsights(res.data); }).catch(e => console.warn(e));
     };
 
-    refreshData();
-    syncAllFromMongoDB();
-    window.addEventListener('scrizians_storage_updated', refreshData);
-    window.addEventListener('storage', refreshData);
+    loadFromApi();
+    window.addEventListener('scrizians_storage_updated', loadFromApi);
+    window.addEventListener('storage', loadFromApi);
 
     return () => {
-      window.removeEventListener('scrizians_storage_updated', refreshData);
-      window.removeEventListener('storage', refreshData);
+      window.removeEventListener('scrizians_storage_updated', loadFromApi);
+      window.removeEventListener('storage', loadFromApi);
     };
   }, []);
 

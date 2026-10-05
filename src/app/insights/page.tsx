@@ -17,18 +17,15 @@ export default function InsightsPage() {
   const ITEMS_PER_PAGE = 6;
 
   React.useEffect(() => {
-    const refreshData = () => {
-      const data = getStoredData('scrizians_insights_list', initialArticlesList);
-      setDynamicInsights(Array.isArray(data) ? data : initialArticlesList);
-    };
-    refreshData();
-    syncFromMongoDB('scrizians_insights_list');
-    window.addEventListener('scrizians_storage_updated', refreshData);
-    window.addEventListener('storage', refreshData);
-    return () => {
-      window.removeEventListener('scrizians_storage_updated', refreshData);
-      window.removeEventListener('storage', refreshData);
-    };
+    fetch('/api/insights')
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success && Array.isArray(resData.data)) {
+          setDynamicInsights(resData.data);
+          localStorage.setItem('scrizians_insights_list', JSON.stringify(resData.data));
+        }
+      })
+      .catch(err => console.warn('Insights API fetch error:', err));
   }, []);
 
   const filteredArticles = useMemo(() => {

@@ -23,18 +23,15 @@ function TalentNetworkContent() {
   const [talentList, setTalentList] = useState<any[]>(initialTalentList);
 
   React.useEffect(() => {
-    const refreshData = () => {
-      const data = getStoredData('scrizians_talent_list', initialTalentList);
-      setTalentList(Array.isArray(data) && data.length > 0 ? data : initialTalentList);
-    };
-    refreshData();
-    syncFromMongoDB('scrizians_talent_list');
-    window.addEventListener('scrizians_storage_updated', refreshData);
-    window.addEventListener('storage', refreshData);
-    return () => {
-      window.removeEventListener('scrizians_storage_updated', refreshData);
-      window.removeEventListener('storage', refreshData);
-    };
+    fetch('/api/talent')
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success && Array.isArray(resData.data)) {
+          setTalentList(resData.data);
+          localStorage.setItem('scrizians_talent_list', JSON.stringify(resData.data));
+        }
+      })
+      .catch(err => console.warn('Talent API fetch error:', err));
   }, []);
 
   const filteredTalents = useMemo(() => {
