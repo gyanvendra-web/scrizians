@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DashboardSidebar } from '@/components/DashboardSidebar/DashboardSidebar';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { NotificationBell } from '@/components/NotificationBell/NotificationBell';
@@ -9,8 +9,24 @@ import styles from '../client/DashboardClient.module.css';
 export default function CandidateDashboardPage() {
   const [activeTab, setActiveTab] = useState<'profile' | 'resume' | 'applications' | 'interview_status'>('profile');
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
-  const [resumeFileName, setResumeFileName] = useState('Aarav_Sharma_Senior_FullStack_Architect_2026.pdf (1.8 MB)');
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [resumeFileName, setResumeFileName] = useState('My_Updated_Resume_2026.pdf (1.8 MB)');
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('scrizians_user');
+    if (stored) {
+      try {
+        const u = JSON.parse(stored);
+        setCurrentUser(u);
+        setResumeFileName(`${(u.name || 'Candidate').replace(/\s+/g, '_')}_Resume_2026.pdf (1.8 MB)`);
+      } catch (e) {}
+    }
+  }, []);
+
+  const displayName = currentUser?.name || 'Job Candidate';
+  const displayEmail = currentUser?.email || 'candidate@scrizians.com';
+  const displayId = currentUser?.scrizianId || currentUser?.id || 'APP-901';
 
   const showToast = (msg: string) => {
     setToastMsg(msg);
@@ -52,7 +68,7 @@ export default function CandidateDashboardPage() {
         role="candidate" 
         activeTab={activeTab}
         onTabChange={(tab: any) => setActiveTab(tab)}
-        user={{ name: 'Aarav Sharma', role: 'candidate', email: 'aarav.candidate@scrizians.com' }} 
+        user={currentUser || { name: displayName, role: 'candidate', email: displayEmail, scrizianId: displayId }} 
       />
 
       <div className={styles.container}>
@@ -84,7 +100,7 @@ export default function CandidateDashboardPage() {
           <div>
             <h1 className={styles.title}>Candidate Portal</h1>
             <p className={styles.subTitle}>
-              Logged in as: <strong style={{ color: '#ffffff' }}>Aarav Sharma</strong> | Job Applicant ID: APP-901
+              Logged in as: <strong style={{ color: '#ffffff' }}>{displayName}</strong> | Job Applicant ID: {displayId}
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -103,8 +119,8 @@ export default function CandidateDashboardPage() {
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginTop: '1rem' }}>
               <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1rem', borderRadius: '8px' }}>
-                <p><strong>Full Name:</strong> Aarav Sharma</p>
-                <p><strong>Email:</strong> aarav.candidate@scrizians.com</p>
+                <p><strong>Full Name:</strong> {displayName}</p>
+                <p><strong>Email:</strong> {displayEmail}</p>
                 <p><strong>Phone:</strong> +91 98765 43210</p>
                 <p><strong>Primary Skill:</strong> Next.js, Node.js, React, AWS</p>
               </div>

@@ -14,10 +14,18 @@ export default function ContributorDashboardPage() {
   const [activeTab, setActiveTab] = useState<'profile' | 'submissions' | 'comments' | 'analytics'>('submissions');
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [toastMsg, setToastMsg] = useState<string | null>(null);
-
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [articles, setArticles] = useState<any[]>([]);
 
   React.useEffect(() => {
+    const stored = localStorage.getItem('scrizians_user');
+    if (stored) {
+      try {
+        const u = JSON.parse(stored);
+        setCurrentUser(u);
+      } catch (e) {}
+    }
+
     const refreshData = () => {
       setArticles(getStoredData('scrizians_insights_list', initialArticlesList));
     };
@@ -30,6 +38,10 @@ export default function ContributorDashboardPage() {
       window.removeEventListener('storage', refreshData);
     };
   }, []);
+
+  const displayName = currentUser?.name || 'Technical Contributor Desk';
+  const displayEmail = currentUser?.email || 'contributor@scrizians.com';
+  const displayId = currentUser?.scrizianId || currentUser?.id || 'SZN-CONTRIB-00001';
 
   const [newArticle, setNewArticle] = useState({
     title: '',
@@ -53,8 +65,8 @@ export default function ContributorDashboardPage() {
       filterKey: newArticle.category,
       title: newArticle.title,
       excerpt: newArticle.content || `Technical article on ${newArticle.title}`,
-      meta: 'SZN-DEV-00001 · Just now · 5 min read',
-      author: 'SZN-DEV-00001 (Technical Contributor)',
+      meta: `${displayId} · Just now · 5 min read`,
+      author: `${displayName} (${displayId})`,
       publishedDate: 'Just now',
       readTime: '5 min read',
       coverImageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=70',
@@ -90,7 +102,7 @@ export default function ContributorDashboardPage() {
         role="contributor" 
         activeTab={activeTab}
         onTabChange={(tab: any) => setActiveTab(tab)}
-        user={{ name: 'Technical Contributor Desk', role: 'contributor', email: 'contributor@scrizians.com' }} 
+        user={currentUser || { name: displayName, role: 'contributor', email: displayEmail, scrizianId: displayId }} 
       />
 
       <div className={styles.container}>
@@ -115,7 +127,7 @@ export default function ContributorDashboardPage() {
           <div>
             <h1 className={styles.title}>Knowledge Hub Contributor Portal</h1>
             <p className={styles.subTitle}>
-              Logged in as: <strong style={{ color: '#ffffff' }}>Technical Contributor Desk</strong> | Scrizian Author Attribution
+              Logged in as: <strong style={{ color: '#ffffff' }}>{displayName}</strong> | Scrizian Author Attribution
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -133,9 +145,10 @@ export default function ContributorDashboardPage() {
             <p className={styles.cardSub}>Manage your public author attribution details displayed on published Insights articles.</p>
 
             <div style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', padding: '1.2rem', borderRadius: '10px', marginTop: '1rem' }}>
-              <p><strong>Author Display Name:</strong> Technical Contributor Desk</p>
-              <p><strong>Primary Attribution ID:</strong> <span style={{ fontFamily: 'monospace', color: '#E52B2B', fontWeight: 800 }}>SZN-DEV-00001</span></p>
-              <p><strong>Bio:</strong> Senior Full-Stack Architect with 8+ years specializing in Next.js, Node.js, and high-traffic cloud systems.</p>
+              <p><strong>Author Display Name:</strong> {displayName}</p>
+              <p><strong>Primary Email:</strong> {displayEmail}</p>
+              <p><strong>Primary Attribution ID:</strong> <span style={{ fontFamily: 'monospace', color: '#E52B2B', fontWeight: 800 }}>{displayId}</span></p>
+              <p><strong>Bio:</strong> Technical Contributor on Scrizians Knowledge Platform.</p>
             </div>
           </div>
         )}

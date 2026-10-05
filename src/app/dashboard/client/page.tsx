@@ -15,6 +15,21 @@ export default function ClientDashboardPage() {
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [selectedScrizian, setSelectedScrizian] = useState<string | undefined>();
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  React.useEffect(() => {
+    const stored = localStorage.getItem('scrizians_user');
+    if (stored) {
+      try {
+        const u = JSON.parse(stored);
+        setCurrentUser(u);
+      } catch (e) {}
+    }
+  }, []);
+
+  const displayName = currentUser?.name || 'Michael R. (VP Engineering)';
+  const displayEmail = currentUser?.email || 'client@scrizians.com';
+  const displayCompany = currentUser?.company || 'CloudScale Inc (USA)';
 
   const [shortlist, setShortlist] = useState([
     {
@@ -68,7 +83,7 @@ BT
 50 720 Td (SCRIZA PRIVATE LIMITED - INVOICE STATEMENT) Tj
 0 -30 Td /F1 12 Tf (Invoice ID: ${invoiceId}) Tj
 0 -20 Td (Billing Period: September 2026) Tj
-0 -20 Td (Client: CloudScale Inc \(USA\)) Tj
+0 -20 Td (Client: ${displayCompany}) Tj
 0 -20 Td (Amount Paid: $5,120.00 / INR 4,27,520) Tj
 0 -20 Td (Status: PAID - Verified by Scriza Billing Desk) Tj
 0 -30 Td (Thank you for partnering with Scrizians!) Tj
@@ -106,7 +121,7 @@ startxref
         role="client" 
         activeTab={activeTab}
         onTabChange={(tab: any) => setActiveTab(tab)}
-        user={{ name: 'Michael R. (VP Engineering)', role: 'client', email: 'm.ross@techus.com' }} 
+        user={currentUser || { name: displayName, role: 'client', email: displayEmail, company: displayCompany }} 
       />
 
       <div className={styles.container}>
@@ -138,7 +153,7 @@ startxref
           <div>
             <h1 className={styles.title}>Client & Company Portal</h1>
             <p className={styles.subTitle}>
-              Logged in as: <strong style={{ color: '#ffffff' }}>Michael R. (VP Engineering)</strong> | CloudScale Inc (USA)
+              Logged in as: <strong style={{ color: '#ffffff' }}>{displayName}</strong> | {displayCompany}
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

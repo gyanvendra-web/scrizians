@@ -57,7 +57,17 @@ export default function AdminDashboardPage() {
     id: '', title: '', category: 'Hiring Guides', coverImageUrl: '/images/logo.png', readTime: '5 min read', author: 'Scrizians Editorial', status: 'Published' 
   });
 
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
   useEffect(() => {
+    const stored = localStorage.getItem('scrizians_user');
+    if (stored) {
+      try {
+        const u = JSON.parse(stored);
+        setCurrentUser(u);
+      } catch (e) {}
+    }
+
     const refreshData = () => {
       setLeads(getStoredData('scrizians_leads_list', initialLeadsList));
       setTalents(getStoredData('scrizians_talent_list', initialTalentList));
@@ -75,6 +85,9 @@ export default function AdminDashboardPage() {
       window.removeEventListener('storage', refreshData);
     };
   }, []);
+
+  const displayName = currentUser?.name || 'Scriza Super Admin';
+  const displayEmail = currentUser?.email || 'admin@scrizians.com';
 
   const showToast = (msg: string) => {
     setNotification(msg);
@@ -314,7 +327,7 @@ export default function AdminDashboardPage() {
         role="admin" 
         activeTab={activeTab} 
         onTabChange={(t: any) => setActiveTab(t)} 
-        user={{ name: 'Scriza Super Admin', role: 'admin', email: 'admin@scrizians.com' }} 
+        user={currentUser || { name: displayName, role: 'admin', email: displayEmail }} 
       />
 
       <div className={styles.container}>
@@ -334,7 +347,7 @@ export default function AdminDashboardPage() {
           <div>
             <h1 className={styles.headerTitle}>Scriza Admin & Operations Control Panel</h1>
             <p className={styles.headerSub}>
-              Logged in as: <strong style={{ color: '#ffffff' }}>Scriza Super Admin</strong> | Parent Entity: <strong style={{ color: '#ffffff' }}>Scriza Private Limited</strong>
+              Logged in as: <strong style={{ color: '#ffffff' }}>{displayName}</strong> | Parent Entity: <strong style={{ color: '#ffffff' }}>Scriza Private Limited</strong>
             </p>
           </div>
           <div className={styles.headerRight} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

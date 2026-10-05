@@ -10,6 +10,7 @@ import styles from './DashboardTalent.module.css';
 export default function TalentDashboardPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'profile' | 'portfolio' | 'availability' | 'opportunities' | 'jobs' | 'articles' | 'analytics'>('profile');
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [isAvailable, setIsAvailable] = useState(true);
   const [hourlyRate, setHourlyRate] = useState(42);
   const [skills, setSkills] = useState(['Next.js', 'React', 'Node.js', 'TypeScript', 'MongoDB', 'AWS', 'Redis']);
@@ -18,6 +19,14 @@ export default function TalentDashboardPage() {
   const [toastMsg, setToastMsg] = useState<string | null>(null);
 
   useEffect(() => {
+    const stored = localStorage.getItem('scrizians_user');
+    if (stored) {
+      try {
+        const u = JSON.parse(stored);
+        setCurrentUser(u);
+      } catch (e) {}
+    }
+
     const list = getStoredData('scrizians_talent_list', initialTalentList);
     const me = list.find((t: any) => t.id === 'SCR-8841' || t.scrizianId === 'SCR-8841' || t.scrizianId === 'SZN-DEV-00001');
     if (me) {
@@ -26,6 +35,10 @@ export default function TalentDashboardPage() {
       if (me.availability) setIsAvailable(me.availability.toLowerCase().includes('available'));
     }
   }, []);
+
+  const displayName = currentUser?.name || 'Aarav M.';
+  const displayEmail = currentUser?.email || 'talent@scrizians.com';
+  const displayId = currentUser?.scrizianId || currentUser?.id || 'SZN-DEV-00001';
 
   const persistProfileChange = (newSkills: string[], newAvailability: boolean, newRate: number) => {
     const list = getStoredData('scrizians_talent_list', initialTalentList);
@@ -48,8 +61,8 @@ export default function TalentDashboardPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         id: 'SCR-8841',
-        scrizianId: 'SCR-8841',
-        displayName: 'Aarav M.',
+        scrizianId: displayId,
+        displayName,
         title: 'Lead Full-Stack Architect (Next.js, Node.js & Cloud)',
         skills: newSkills,
         hourlyRateUSD: newRate,
@@ -102,7 +115,7 @@ export default function TalentDashboardPage() {
         role="talent" 
         activeTab={activeTab}
         onTabChange={(tab: any) => setActiveTab(tab)}
-        user={{ name: 'Aarav M. (Senior Architect)', role: 'talent', scrizianId: 'SZN-DEV-00001' }} 
+        user={currentUser || { name: displayName, role: 'talent', scrizianId: displayId, email: displayEmail }} 
       />
 
       <div className={styles.container}>
@@ -127,7 +140,7 @@ export default function TalentDashboardPage() {
           <div>
             <h1 className={styles.title}>Scrizian Talent Portal</h1>
             <p className={styles.subTitle}>
-              Logged in as: <strong style={{ color: '#ffffff' }}>SZN-DEV-00001</strong> | Aarav M. (Senior Full-Stack Architect)
+              Logged in as: <strong style={{ color: '#ffffff' }}>{displayId}</strong> | {displayName}
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
