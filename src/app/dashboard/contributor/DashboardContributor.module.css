@@ -158,9 +158,24 @@
   margin-bottom: 0.4rem;
 }
 
+.formInput, .formSelect, .formTextarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  font-weight: 700;
+  color: #0F172A;
+  background: #ffffff;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
 .formInput:focus, .formSelect:focus, .formTextarea:focus {
   outline: none;
   border-color: #E52B2B;
+  box-shadow: 0 0 0 3px rgba(229, 43, 43, 0.15);
 }
 
 .dashboardLayout {
