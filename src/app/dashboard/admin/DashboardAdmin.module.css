@@ -458,7 +458,17 @@
   box-shadow: 0 0 0 3px rgba(229, 43, 43, 0.15);
 }
 
+.dashboardLayout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
 @media (max-width: 992px) {
+  .dashboardLayout {
+    flex-direction: column !important;
+    min-height: auto !important;
+  }
   .container {
     margin-left: 0 !important;
     width: 100% !important;

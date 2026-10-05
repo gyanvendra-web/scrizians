@@ -101,7 +101,7 @@ startxref
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.dashboardLayout}>
       <DashboardSidebar 
         role="client" 
         activeTab={activeTab}

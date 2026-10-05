@@ -302,5 +302,27 @@
 @media (max-width: 900px) {
   .contactCardWrapper {
     grid-template-columns: 1fr;
+    padding: 0.4rem;
+  }
+  .leftPanel {
+    padding: 1.5rem 1.25rem;
+  }
+  .formPanel {
+    padding: 1.25rem 1rem;
+  }
+  .formGrid2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .mainTitle {
+    font-size: 1.6rem;
+  }
+  .headline {
+    font-size: 1.35rem;
+  }
+  .contactSection {
+    padding: 1.2rem 0.75rem 2rem;
   }
 }

@@ -85,7 +85,7 @@ export default function ContributorDashboardPage() {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.dashboardLayout}>
       <DashboardSidebar 
         role="contributor" 
         activeTab={activeTab}

@@ -47,7 +47,7 @@ export default function CandidateDashboardPage() {
   ]);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.dashboardLayout}>
       <DashboardSidebar 
         role="candidate" 
         activeTab={activeTab}

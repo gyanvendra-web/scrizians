@@ -197,6 +197,9 @@
 }
 
 @media (max-width: 992px) {
+  .hero {
+    padding: 2.5rem 1.25rem 3rem;
+  }
   .storySection {
     grid-template-columns: 1fr;
   }
@@ -206,7 +209,29 @@
 }
 
 @media (max-width: 600px) {
+  .hero {
+    padding: 2rem 1rem 2.5rem;
+    overflow: hidden;
+  }
+  .title {
+    font-size: 1.8rem;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    word-break: break-word;
+  }
+  .subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
   .valuesGrid4 {
     grid-template-columns: 1fr;
+  }
+  .statsSection {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 2rem 1rem;
   }
 }

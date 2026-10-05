@@ -302,6 +302,9 @@
 }
 
 @media (max-width: 992px) {
+  .hero {
+    padding: 2.5rem 1.25rem 3rem;
+  }
   .featuresGrid4 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -311,10 +314,30 @@
 }
 
 @media (max-width: 600px) {
+  .hero {
+    padding: 2rem 1rem 2.5rem;
+    overflow: hidden;
+  }
+  .title {
+    font-size: 1.8rem;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    word-break: break-word;
+  }
+  .subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .mainContainer {
+    padding: 2.5rem 1rem 3rem;
+  }
   .featuresGrid4 {
     grid-template-columns: 1fr;
   }
   .formGrid2 {
     grid-template-columns: 1fr;
+  }
+  .formCard {
+    padding: 1.25rem 1rem;
   }
 }

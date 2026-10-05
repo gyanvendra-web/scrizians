@@ -273,7 +273,7 @@ export default function AdminDashboardPage() {
   const paginatedInsights = insights.slice((insightsPage - 1) * INSIGHTS_PER_PAGE, insightsPage * INSIGHTS_PER_PAGE);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.dashboardLayout}>
       <DashboardSidebar 
         role="admin" 
         activeTab={activeTab} 

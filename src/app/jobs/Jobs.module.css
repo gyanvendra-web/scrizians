@@ -271,7 +271,47 @@
 }
 
 @media (max-width: 992px) {
+  .hero {
+    padding: 2.5rem 1.25rem 3rem;
+  }
   .jobsGrid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 2rem 1rem 2.5rem;
+    overflow: hidden;
+  }
+  .title {
+    font-size: 1.8rem;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    word-break: break-word;
+  }
+  .subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .mainContainer {
+    padding: 2.5rem 1rem 3rem;
+  }
+  .filterBarRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .filterCapsules {
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .jobCard {
+    padding: 1.25rem 1rem;
+  }
+  .salaryText {
+    font-size: 1.1rem;
   }
 }

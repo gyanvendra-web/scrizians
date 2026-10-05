@@ -245,13 +245,30 @@
   z-index: 99;
 }
 
+.dashboardLayout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
 @media (max-width: 992px) {
+  .dashboardLayout {
+    flex-direction: column !important;
+    min-height: auto !important;
+  }
   .mobileBar {
-    display: flex;
+    display: flex !important;
+    width: 100% !important;
   }
   .sidebar {
-    transform: translateX(-100%);
-    width: 290px;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 280px !important;
+    z-index: 1000 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
   .sidebarOpen {
     transform: translateX(0) !important;

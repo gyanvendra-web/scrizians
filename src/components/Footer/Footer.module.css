@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .policyLinks a {
@@ -124,12 +124,20 @@
 }
 
 @media (max-width: 576px) {
+  .footer {
+    padding: 2.5rem 1rem 0;
+  }
   .inner {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
   .bottomBar {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+  .policyLinks {
+    justify-content: center;
+    gap: 0.75rem 1rem;
   }
 }
