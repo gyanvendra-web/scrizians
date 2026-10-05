@@ -8,16 +8,6 @@ import { SeedMarkerModel } from '@/models/SeedMarker';
 export async function GET() {
   try {
     await connectToDatabase();
-
-    const isSeeded = await SeedMarkerModel.findOne({ key: 'jobs' });
-    if (!isSeeded) {
-      const existingCount = await JobModel.countDocuments();
-      if (existingCount === 0) {
-        await JobModel.insertMany(initialJobsList as any);
-      }
-      await SeedMarkerModel.create({ key: 'jobs' });
-    }
-
     const jobs = await JobModel.find();
     return NextResponse.json({ success: true, data: jobs });
   } catch (error: any) {

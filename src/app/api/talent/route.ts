@@ -8,16 +8,6 @@ import { SeedMarkerModel } from '@/models/SeedMarker';
 export async function GET() {
   try {
     await connectToDatabase();
-
-    const isSeeded = await SeedMarkerModel.findOne({ key: 'talent' });
-    if (!isSeeded) {
-      const existingCount = await TalentModel.countDocuments();
-      if (existingCount === 0) {
-        await TalentModel.insertMany(initialTalentList as any);
-      }
-      await SeedMarkerModel.create({ key: 'talent' });
-    }
-
     const talents = await TalentModel.find();
     return NextResponse.json({ success: true, data: talents });
   } catch (error: any) {

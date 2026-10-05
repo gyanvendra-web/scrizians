@@ -69,16 +69,6 @@ const initialPortfolioList = [
 export async function GET() {
   try {
     await connectToDatabase();
-
-    const isSeeded = await SeedMarkerModel.findOne({ key: 'portfolio' });
-    if (!isSeeded) {
-      const existingCount = await PortfolioModel.countDocuments();
-      if (existingCount === 0) {
-        await PortfolioModel.insertMany(initialPortfolioList as any);
-      }
-      await SeedMarkerModel.create({ key: 'portfolio' });
-    }
-
     const items = await PortfolioModel.find().sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data: items });
   } catch (error: any) {
