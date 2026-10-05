@@ -105,238 +105,238 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           {/* 1. Admin & Scriza Staff Panel */}
           {role === 'admin' && (
             <>
-              <button
-                type="button"
+              <a
+                href="#leads"
                 className={`${styles.navItem} ${activeTab === 'leads' || !activeTab ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('leads')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('leads'); }}
               >
                 <span className={styles.itemIcon}>📊</span>
                 <span>Assigned Leads & CRM</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#talent"
                 className={`${styles.navItem} ${activeTab === 'talent' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('talent')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('talent'); }}
               >
                 <span className={styles.itemIcon}>👥</span>
                 <span>Talent Review & Roster</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#insights"
                 className={`${styles.navItem} ${activeTab === 'insights' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('insights')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('insights'); }}
               >
                 <span className={styles.itemIcon}>📰</span>
                 <span>Content & Insights Review</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#jobs"
                 className={`${styles.navItem} ${activeTab === 'jobs' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('jobs')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('jobs'); }}
               >
                 <span className={styles.itemIcon}>💼</span>
                 <span>Job Workflows</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#config"
                 className={`${styles.navItem} ${activeTab === 'config' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('config')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('config'); }}
               >
                 <span className={styles.itemIcon}>⚙️</span>
                 <span>Platform Config & RBAC</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#audit"
                 className={`${styles.navItem} ${activeTab === 'audit' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('audit')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('audit'); }}
               >
                 <span className={styles.itemIcon}>🔍</span>
                 <span>SEO, Pricing & Audit</span>
-              </button>
+              </a>
             </>
           )}
 
           {/* 2. Client / Company Panel */}
           {role === 'client' && (
             <>
-              <button
-                type="button"
+              <a
+                href="#requirements"
                 className={`${styles.navItem} ${activeTab === 'requirements' || !activeTab ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('requirements')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('requirements'); }}
               >
                 <span className={styles.itemIcon}>📌</span>
                 <span>Hiring Requirements</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#shortlist"
                 className={`${styles.navItem} ${activeTab === 'shortlist' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('shortlist')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('shortlist'); }}
               >
                 <span className={styles.itemIcon}>⭐</span>
                 <span>Shortlisted Talent</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#interviews"
                 className={`${styles.navItem} ${activeTab === 'interviews' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('interviews')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('interviews'); }}
               >
                 <span className={styles.itemIcon}>📅</span>
                 <span>Interview Schedule</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#engagements"
                 className={`${styles.navItem} ${activeTab === 'engagements' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('engagements')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('engagements'); }}
               >
                 <span className={styles.itemIcon}>🤝</span>
                 <span>Active Engagements</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#invoices"
                 className={`${styles.navItem} ${activeTab === 'invoices' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('invoices')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('invoices'); }}
               >
                 <span className={styles.itemIcon}>🧾</span>
                 <span>Invoices & Billing</span>
-              </button>
+              </a>
             </>
           )}
 
           {/* 3. Scrizian / Talent Panel */}
           {role === 'talent' && (
             <>
-              <button
-                type="button"
+              <a
+                href="#profile"
                 className={`${styles.navItem} ${activeTab === 'profile' || !activeTab ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('profile')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('profile'); }}
               >
                 <span className={styles.itemIcon}>👤</span>
                 <span>Scrizian Profile</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#portfolio"
                 className={`${styles.navItem} ${activeTab === 'portfolio' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('portfolio')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('portfolio'); }}
               >
                 <span className={styles.itemIcon}>🎨</span>
                 <span>Portfolio Showcase</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#availability"
                 className={`${styles.navItem} ${activeTab === 'availability' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('availability')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('availability'); }}
               >
                 <span className={styles.itemIcon}>🟢</span>
                 <span>Availability & Rates</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#opportunities"
                 className={`${styles.navItem} ${activeTab === 'opportunities' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('opportunities')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('opportunities'); }}
               >
                 <span className={styles.itemIcon}>🎯</span>
                 <span>Opportunities</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#jobs"
                 className={`${styles.navItem} ${activeTab === 'jobs' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('jobs')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('jobs'); }}
               >
                 <span className={styles.itemIcon}>💼</span>
                 <span>Jobs Board</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#articles"
                 className={`${styles.navItem} ${activeTab === 'articles' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('articles')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('articles'); }}
               >
                 <span className={styles.itemIcon}>📝</span>
                 <span>My Articles</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#analytics"
                 className={`${styles.navItem} ${activeTab === 'analytics' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('analytics')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('analytics'); }}
               >
                 <span className={styles.itemIcon}>📊</span>
                 <span>Performance Analytics</span>
-              </button>
+              </a>
             </>
           )}
 
           {/* 4. Contributor / Author Panel */}
           {role === 'contributor' && (
             <>
-              <button
-                type="button"
+              <a
+                href="#profile"
                 className={`${styles.navItem} ${activeTab === 'profile' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('profile')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('profile'); }}
               >
                 <span className={styles.itemIcon}>👤</span>
                 <span>Author Profile</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#submissions"
                 className={`${styles.navItem} ${activeTab === 'submissions' || !activeTab ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('submissions')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('submissions'); }}
               >
                 <span className={styles.itemIcon}>📝</span>
                 <span>Drafts & Submissions</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#comments"
                 className={`${styles.navItem} ${activeTab === 'comments' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('comments')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('comments'); }}
               >
                 <span className={styles.itemIcon}>💬</span>
                 <span>Review Comments</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#analytics"
                 className={`${styles.navItem} ${activeTab === 'analytics' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('analytics')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('analytics'); }}
               >
                 <span className={styles.itemIcon}>📊</span>
                 <span>Content Analytics</span>
-              </button>
+              </a>
             </>
           )}
 
           {/* 5. Candidate Panel */}
           {role === 'candidate' && (
             <>
-              <button
-                type="button"
+              <a
+                href="#profile"
                 className={`${styles.navItem} ${activeTab === 'profile' || !activeTab ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('profile')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('profile'); }}
               >
                 <span className={styles.itemIcon}>👤</span>
                 <span>My Profile</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#resume"
                 className={`${styles.navItem} ${activeTab === 'resume' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('resume')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('resume'); }}
               >
                 <span className={styles.itemIcon}>📄</span>
                 <span>Resume & Credentials</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#applications"
                 className={`${styles.navItem} ${activeTab === 'applications' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('applications')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('applications'); }}
               >
                 <span className={styles.itemIcon}>💼</span>
                 <span>Job Applications</span>
-              </button>
-              <button
-                type="button"
+              </a>
+              <a
+                href="#interview_status"
                 className={`${styles.navItem} ${activeTab === 'interview_status' ? styles.navItemActive : ''}`}
-                onClick={() => handleItemClick('interview_status')}
+                onClick={(e) => { e.preventDefault(); handleItemClick('interview_status'); }}
               >
                 <span className={styles.itemIcon}>📅</span>
                 <span>Interview Status</span>
-              </button>
+              </a>
             </>
           )}
         </nav>
