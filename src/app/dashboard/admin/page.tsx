@@ -154,6 +154,42 @@ export default function AdminDashboardPage() {
     showToast(`🗑️ Scrizian ${id} deleted successfully`);
   };
 
+  const handleToggleVerifyTalent = (id: string) => {
+    const updated = talents.map(t => {
+      if (t.id === id || t.scrizianId === id || t._id === id) {
+        const nextStatus = t.status === 'Verified' ? 'Pending Review' : 'Verified';
+        fetch('/api/talent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...t, status: nextStatus })
+        }).catch(err => console.warn('Talent verify error:', err));
+        return { ...t, status: nextStatus };
+      }
+      return t;
+    });
+    setTalents(updated);
+    saveStoredData('scrizians_talent_list', updated);
+    showToast(`✓ Scrizian ${id} verification status updated!`);
+  };
+
+  const handleToggleApproveArticle = (id: string) => {
+    const updated = insights.map(art => {
+      if (art.id === id || art._id === id) {
+        const nextStatus = art.status === 'Published' ? 'Draft' : 'Published';
+        fetch('/api/insights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...art, status: nextStatus })
+        }).catch(err => console.warn('Insight verify error:', err));
+        return { ...art, status: nextStatus };
+      }
+      return art;
+    });
+    setInsights(updated);
+    saveStoredData('scrizians_insights_list', updated);
+    showToast(`✓ Article publication status updated!`);
+  };
+
   // --- JOBS ACTIONS ---
   const handleOpenAddJob = () => {
     setEditingJob(null);
@@ -459,6 +495,13 @@ export default function AdminDashboardPage() {
                       </td>
                       <td>
                         <div className={styles.actionBtnGroup}>
+                          <button 
+                            onClick={() => handleToggleVerifyTalent(talent.id)} 
+                            style={{ background: talent.status === 'Verified' ? '#DCFCE7' : '#FEF3C7', color: talent.status === 'Verified' ? '#166534' : '#92400E', padding: '0.35rem 0.65rem', borderRadius: '4px', border: 'none', fontSize: '0.78rem', fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                            title="Toggle Verification Status"
+                          >
+                            {talent.status === 'Verified' ? '✓ Verified' : '⚡ Verify'}
+                          </button>
                           <button onClick={() => handleOpenEditTalent(talent)} className={styles.btnActionEdit} title="Edit Talent">
                             ✏️
                           </button>
@@ -636,6 +679,13 @@ export default function AdminDashboardPage() {
                       </td>
                       <td>
                         <div className={styles.actionBtnGroup}>
+                          <button 
+                            onClick={() => handleToggleApproveArticle(art.id)} 
+                            style={{ background: art.status === 'Published' ? '#DCFCE7' : '#FEF3C7', color: art.status === 'Published' ? '#166534' : '#92400E', padding: '0.35rem 0.65rem', borderRadius: '4px', border: 'none', fontSize: '0.78rem', fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                            title="Toggle Publication Status"
+                          >
+                            {art.status === 'Published' ? '✓ Live' : '⚡ Publish'}
+                          </button>
                           <button onClick={() => handleOpenEditInsight(art)} className={styles.btnActionEdit} title="Edit Article">
                             ✏️
                           </button>

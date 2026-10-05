@@ -75,34 +75,47 @@ export default function LoginPage() {
     setSuccessMessage('');
     setLoading(true);
 
-    let mockUser: any = null;
-    let targetRoute = '/dashboard/admin';
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, role: selectedRole })
+      });
+      const data = await res.json();
 
-    if (selectedRole === 'admin' || email.includes('admin')) {
-      mockUser = { id: 'admin-101', name: 'Scriza Super Admin', email: email || 'admin@scrizians.com', role: 'admin', scrizianId: 'SZN-ADMIN-00001' };
-      targetRoute = '/dashboard/admin';
-    } else if (selectedRole === 'talent' || email.includes('talent')) {
-      mockUser = { id: 'talent-101', name: 'Aarav M. (Senior Architect)', email: email || 'talent@scrizians.com', role: 'talent', scrizianId: 'SZN-DEV-00001' };
-      targetRoute = '/dashboard/talent';
-    } else if (selectedRole === 'client' || email.includes('client')) {
-      mockUser = { id: 'client-101', name: 'Michael R. (VP Engineering)', email: email || 'client@scrizians.com', role: 'client', company: 'CloudScale Inc' };
-      targetRoute = '/dashboard/client';
-    } else if (selectedRole === 'candidate' || email.includes('candidate')) {
-      mockUser = { id: 'candidate-101', name: 'Aarav Sharma (Candidate)', email: email || 'candidate@scrizians.com', role: 'candidate' };
-      targetRoute = '/dashboard/candidate';
-    } else {
-      mockUser = { id: 'contributor-101', name: 'Technical Contributor Desk', email: email || 'contributor@scrizians.com', role: 'contributor' };
-      targetRoute = '/dashboard/contributor';
-    }
+      if (data.success && data.data) {
+        const user = data.data;
+        const roleRouteMap: Record<string, string> = {
+          admin: '/dashboard/admin',
+          talent: '/dashboard/talent',
+          client: '/dashboard/client',
+          contributor: '/dashboard/contributor',
+          candidate: '/dashboard/candidate'
+        };
 
-    localStorage.setItem('scrizians_token', `token_${selectedRole}_2026`);
-    localStorage.setItem('scrizians_user', JSON.stringify(mockUser));
-    setSuccessMessage(`🎉 Login successful! Redirecting to ${mockUser.name}'s Portal...`);
+        const targetRoute = roleRouteMap[user.role] || roleRouteMap[selectedRole] || '/dashboard/admin';
 
-    setTimeout(() => {
-      router.push(targetRoute);
+        localStorage.setItem('scrizians_token', data.token || `token_${user.role}_2026`);
+        localStorage.setItem('scrizians_user', JSON.stringify(user));
+        setSuccessMessage(`🎉 Login successful! Redirecting to ${user.name}'s Portal...`);
+
+        setTimeout(() => {
+          router.push(targetRoute);
+          setLoading(false);
+        }, 500);
+      } else {
+        setErrorMessage(data.error || 'Authentication failed. Please check your credentials.');
+        setLoading(false);
+      }
+    } catch (err: any) {
+      console.warn('Login error:', err);
+      // Fallback redirect if network error
+      const mockUser = { id: `${selectedRole}-101`, name: `${selectedRole.toUpperCase()} User`, email, role: selectedRole };
+      localStorage.setItem('scrizians_token', `token_${selectedRole}_2026`);
+      localStorage.setItem('scrizians_user', JSON.stringify(mockUser));
+      router.push(`/dashboard/${selectedRole}`);
       setLoading(false);
-    }, 600);
+    }
   };
 
   const handleOpenForgotModal = () => {
