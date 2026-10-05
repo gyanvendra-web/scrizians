@@ -35,19 +35,19 @@ export async function POST(request: Request) {
     let user = await UserModel.findOne({ email: email.toLowerCase().trim() });
 
     if (!user) {
-      // Create user on-the-fly in MongoDB for new credentials
-      const newUserId = `${role || 'user'}-${Date.now()}`;
-      user = await UserModel.create({
-        id: newUserId,
-        name: email.split('@')[0],
-        email: email.toLowerCase().trim(),
-        password: password || 'Default@123',
-        role: role || 'candidate',
-        scrizianId: `SZN-${(role || 'USER').toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`,
-      });
+      return NextResponse.json({
+        success: false,
+        error: 'Account not found in database. Please register a new account on the register page first.'
+      }, { status: 404 });
     }
 
-    // Verify role or fallback
+    if (password && user.password && user.password !== password) {
+      return NextResponse.json({
+        success: false,
+        error: 'Incorrect password. Please try again or reset your password.'
+      }, { status: 401 });
+    }
+
     const authenticatedUser = {
       id: user.id,
       name: user.name,
@@ -55,6 +55,10 @@ export async function POST(request: Request) {
       role: user.role,
       scrizianId: user.scrizianId,
       company: user.company,
+      phone: user.phone,
+      title: user.title,
+      skills: user.skills,
+      experience: user.experience
     };
 
     const token = `token_${user.role}_${Date.now()}`;

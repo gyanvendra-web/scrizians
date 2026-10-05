@@ -106,15 +106,8 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       console.warn('Login error:', err);
-      // Fallback redirect if network error
-      const mockUser = { id: `${selectedRole}-101`, name: `${selectedRole.toUpperCase()} User`, email, role: selectedRole };
-      localStorage.setItem('scrizians_token', `token_${selectedRole}_2026`);
-      localStorage.setItem('scrizians_user', JSON.stringify(mockUser));
-      showToast(`⚡ Login successful! Redirecting...`);
-      setTimeout(() => {
-        router.push(`/dashboard/${selectedRole}`);
-        setLoading(false);
-      }, 600);
+      setErrorMessage(err.message || 'Authentication error. Please check your credentials or register a new account.');
+      setLoading(false);
     }
   };
 
