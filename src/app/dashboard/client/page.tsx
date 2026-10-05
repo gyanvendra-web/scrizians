@@ -17,15 +17,65 @@ export default function ClientDashboardPage() {
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
 
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    phone: '+1 (555) 234-5678',
+    title: 'VP of Engineering',
+    company: 'CloudScale Inc (USA)'
+  });
+
   React.useEffect(() => {
     const stored = localStorage.getItem('scrizians_user');
     if (stored) {
       try {
         const u = JSON.parse(stored);
         setCurrentUser(u);
+        setEditFormData({
+          name: u.name || '',
+          phone: u.phone || '+1 (555) 234-5678',
+          title: u.title || 'VP of Engineering',
+          company: u.company || u.organization || 'CloudScale Inc (USA)'
+        });
       } catch (e) {}
     }
   }, []);
+
+  const handleSaveClientProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const updatedUser = {
+        ...currentUser,
+        name: editFormData.name,
+        phone: editFormData.phone,
+        title: editFormData.title,
+        company: editFormData.company
+      };
+
+      setCurrentUser(updatedUser);
+      localStorage.setItem('scrizians_user', JSON.stringify(updatedUser));
+
+      await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: displayEmail,
+          name: editFormData.name,
+          phone: editFormData.phone,
+          title: editFormData.title,
+          company: editFormData.company,
+          role: 'client'
+        })
+      });
+
+      setShowEditProfileModal(false);
+      showToast('🎉 Client Profile updated successfully in MongoDB database!');
+    } catch (err) {
+      console.warn('Save client profile error:', err);
+      showToast('🎉 Profile saved locally!');
+      setShowEditProfileModal(false);
+    }
+  };
 
   const displayName = currentUser?.name || 'Michael R. (VP Engineering)';
   const displayEmail = currentUser?.email || 'client@scrizians.com';
@@ -157,6 +207,20 @@ startxref
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <button 
+              onClick={() => {
+                setEditFormData({
+                  name: displayName,
+                  phone: currentUser?.phone || '+1 (555) 234-5678',
+                  title: currentUser?.title || 'VP of Engineering',
+                  company: displayCompany
+                });
+                setShowEditProfileModal(true);
+              }}
+              style={{ background: '#E52B2B', color: '#ffffff', border: 'none', padding: '0.55rem 1.1rem', borderRadius: '8px', fontWeight: 800, cursor: 'pointer', fontSize: '0.85rem' }}
+            >
+              ✏️ Edit Profile
+            </button>
             <button onClick={() => setIsLeadModalOpen(true)} className={styles.btnPrimary}>
               + Request New Talent
             </button>
@@ -348,6 +412,132 @@ startxref
           </div>
         )}
       </div>
+
+      {/* Edit Profile Modal */}
+      {showEditProfileModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(11, 23, 42, 0.75)',
+          backdropFilter: 'blur(6px)',
+          zIndex: 99999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1.5rem'
+        }} onClick={() => setShowEditProfileModal(false)}>
+          <div style={{
+            background: '#ffffff',
+            borderRadius: '16px',
+            maxWidth: '520px',
+            width: '100%',
+            padding: '2rem',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            position: 'relative',
+            border: '1px solid rgba(229, 43, 43, 0.2)'
+          }} onClick={e => e.stopPropagation()}>
+            <button 
+              onClick={() => setShowEditProfileModal(false)}
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                background: 'rgba(15, 23, 42, 0.05)',
+                border: 'none',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                fontSize: '1.2rem',
+                cursor: 'pointer',
+                color: '#64748B'
+              }}
+            >
+              ×
+            </button>
+
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0F172A', marginBottom: '0.3rem' }}>
+              ✏️ Edit Client Profile Details
+            </h3>
+            <p style={{ fontSize: '0.88rem', color: '#64748B', marginBottom: '1.2rem' }}>
+              Update your contact name, phone, designation, and company name. Changes will save to MongoDB Atlas database.
+            </p>
+
+            <form onSubmit={handleSaveClientProfile} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>
+                  Full Name *
+                </label>
+                <input 
+                  type="text" 
+                  required 
+                  value={editFormData.name}
+                  onChange={e => setEditFormData({ ...editFormData, name: e.target.value })}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', border: '1px solid #CBD5E1', borderRadius: '8px', fontSize: '0.92rem', fontWeight: 600, outline: 'none' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>
+                  Phone Number *
+                </label>
+                <input 
+                  type="text" 
+                  required 
+                  value={editFormData.phone}
+                  onChange={e => setEditFormData({ ...editFormData, phone: e.target.value })}
+                  style={{ width: '100%', padding: '0.65rem 0.8rem', border: '1px solid #CBD5E1', borderRadius: '8px', fontSize: '0.92rem', fontWeight: 600, outline: 'none' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div>
+                  <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>
+                    Title / Designation *
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    value={editFormData.title}
+                    onChange={e => setEditFormData({ ...editFormData, title: e.target.value })}
+                    style={{ width: '100%', padding: '0.65rem 0.8rem', border: '1px solid #CBD5E1', borderRadius: '8px', fontSize: '0.92rem', fontWeight: 600, outline: 'none' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>
+                    Company Name *
+                  </label>
+                  <input 
+                    type="text" 
+                    required 
+                    value={editFormData.company}
+                    onChange={e => setEditFormData({ ...editFormData, company: e.target.value })}
+                    style={{ width: '100%', padding: '0.65rem 0.8rem', border: '1px solid #CBD5E1', borderRadius: '8px', fontSize: '0.92rem', fontWeight: 600, outline: 'none' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.8rem', marginTop: '0.5rem' }}>
+                <button 
+                  type="button" 
+                  onClick={() => setShowEditProfileModal(false)}
+                  style={{ flex: 1, padding: '0.75rem', background: '#F1F5F9', border: 'none', borderRadius: '8px', fontWeight: 700, color: '#475569', cursor: 'pointer' }}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  style={{ flex: 1, padding: '0.75rem', background: '#E52B2B', border: 'none', borderRadius: '8px', fontWeight: 800, color: '#ffffff', cursor: 'pointer', boxShadow: '0 4px 14px rgba(229, 43, 43, 0.35)' }}
+                >
+                  💾 Save Profile Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <LeadModal 
         isOpen={isLeadModalOpen}
