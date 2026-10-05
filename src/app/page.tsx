@@ -21,17 +21,25 @@ export default function HomePage() {
   const [dynamicInsights, setDynamicInsights] = useState<any[]>([]);
 
   React.useEffect(() => {
-    const refreshData = () => {
-      setDynamicTalent(getStoredData('scrizians_talent_list', initialTalentList));
-      setDynamicInsights(getStoredData('scrizians_insights_list', initialArticlesList));
-    };
-    refreshData();
-    window.addEventListener('scrizians_storage_updated', refreshData);
-    window.addEventListener('storage', refreshData);
-    return () => {
-      window.removeEventListener('scrizians_storage_updated', refreshData);
-      window.removeEventListener('storage', refreshData);
-    };
+    fetch('/api/talent')
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success && Array.isArray(resData.data)) {
+          setDynamicTalent(resData.data);
+          localStorage.setItem('scrizians_talent_list', JSON.stringify(resData.data));
+        }
+      })
+      .catch(err => console.warn('Homepage talent fetch error:', err));
+
+    fetch('/api/insights')
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success && Array.isArray(resData.data)) {
+          setDynamicInsights(resData.data);
+          localStorage.setItem('scrizians_insights_list', JSON.stringify(resData.data));
+        }
+      })
+      .catch(err => console.warn('Homepage insights fetch error:', err));
   }, []);
 
   const handleOpenModal = (scrizianId?: string) => {

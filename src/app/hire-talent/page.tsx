@@ -44,16 +44,15 @@ function HireTalentContent() {
   const [rawTalent, setRawTalent] = useState<any[]>([]);
 
   useEffect(() => {
-    const refreshData = () => {
-      setRawTalent(getStoredData('scrizians_talent_list', initialTalentList));
-    };
-    refreshData();
-    window.addEventListener('scrizians_storage_updated', refreshData);
-    window.addEventListener('storage', refreshData);
-    return () => {
-      window.removeEventListener('scrizians_storage_updated', refreshData);
-      window.removeEventListener('storage', refreshData);
-    };
+    fetch('/api/talent')
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success && Array.isArray(resData.data)) {
+          setRawTalent(resData.data);
+          localStorage.setItem('scrizians_talent_list', JSON.stringify(resData.data));
+        }
+      })
+      .catch(err => console.warn('Hire Talent API fetch error:', err));
   }, []);
 
   const allTalentList: Talent[] = React.useMemo(() => {
