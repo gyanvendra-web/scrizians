@@ -26,11 +26,13 @@ export default function ClientDashboardPage() {
   });
 
   React.useEffect(() => {
+    let localEmail = '';
     const stored = localStorage.getItem('scrizians_user');
     if (stored) {
       try {
         const u = JSON.parse(stored);
         setCurrentUser(u);
+        localEmail = u.email || '';
         setEditFormData({
           name: u.name || '',
           phone: u.phone || '+1 (555) 234-5678',
@@ -39,6 +41,25 @@ export default function ClientDashboardPage() {
         });
       } catch (e) {}
     }
+
+    fetch('/api/users')
+      .then(r => r.json())
+      .then(res => {
+        if (res.success && Array.isArray(res.data)) {
+          const match = res.data.find((usr: any) => (localEmail && usr.email?.toLowerCase() === localEmail.toLowerCase()) || usr.role === 'client');
+          if (match) {
+            setCurrentUser(match);
+            localStorage.setItem('scrizians_user', JSON.stringify(match));
+            setEditFormData({
+              name: match.name || '',
+              phone: match.phone || '+1 (555) 234-5678',
+              title: match.title || 'VP of Engineering',
+              company: match.company || match.organization || 'CloudScale Inc (USA)'
+            });
+          }
+        }
+      })
+      .catch(e => console.warn('User sync error:', e));
   }, []);
 
   const handleSaveClientProfile = async (e: React.FormEvent) => {

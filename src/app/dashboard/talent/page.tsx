@@ -20,11 +20,13 @@ export default function TalentDashboardPage() {
   });
 
   useEffect(() => {
+    let localEmail = '';
     const stored = localStorage.getItem('scrizians_user');
     if (stored) {
       try {
         const u = JSON.parse(stored);
         setCurrentUser(u);
+        localEmail = u.email || '';
         setEditFormData({
           name: u.name || '',
           phone: u.phone || '+91 98765 43210',
@@ -34,6 +36,26 @@ export default function TalentDashboardPage() {
         });
       } catch (e) {}
     }
+
+    fetch('/api/users')
+      .then(r => r.json())
+      .then(res => {
+        if (res.success && Array.isArray(res.data)) {
+          const match = res.data.find((usr: any) => (localEmail && usr.email?.toLowerCase() === localEmail.toLowerCase()) || usr.role === 'talent');
+          if (match) {
+            setCurrentUser(match);
+            localStorage.setItem('scrizians_user', JSON.stringify(match));
+            setEditFormData({
+              name: match.name || '',
+              phone: match.phone || '+91 98765 43210',
+              skills: match.skills || 'Full-Stack Engineering, Next.js, Python, Cloud Architecture',
+              experience: match.experience || '8+ Years',
+              title: match.title || 'Senior Scrizian Talent'
+            });
+          }
+        }
+      })
+      .catch(e => console.warn('User sync error:', e));
   }, []);
 
   const displayName = currentUser?.name || editFormData.name || 'Verified Talent';

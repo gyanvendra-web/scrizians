@@ -26,11 +26,13 @@ export default function ContributorDashboardPage() {
   });
 
   React.useEffect(() => {
+    let localEmail = '';
     const stored = localStorage.getItem('scrizians_user');
     if (stored) {
       try {
         const u = JSON.parse(stored);
         setCurrentUser(u);
+        localEmail = u.email || '';
         setEditFormData({
           name: u.name || '',
           phone: u.phone || '+91 98765 43210',
@@ -39,6 +41,25 @@ export default function ContributorDashboardPage() {
         });
       } catch (e) {}
     }
+
+    fetch('/api/users')
+      .then(r => r.json())
+      .then(res => {
+        if (res.success && Array.isArray(res.data)) {
+          const match = res.data.find((usr: any) => (localEmail && usr.email?.toLowerCase() === localEmail.toLowerCase()) || usr.role === 'contributor');
+          if (match) {
+            setCurrentUser(match);
+            localStorage.setItem('scrizians_user', JSON.stringify(match));
+            setEditFormData({
+              name: match.name || '',
+              phone: match.phone || '+91 98765 43210',
+              title: match.title || 'Technical Writer & Contributor',
+              skills: match.skills || 'Technical Writing, System Architecture, Code Tutorials'
+            });
+          }
+        }
+      })
+      .catch(e => console.warn('User sync error:', e));
 
     const refreshData = () => {
       setArticles(getStoredData('scrizians_insights_list', initialArticlesList));

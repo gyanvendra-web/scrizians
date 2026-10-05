@@ -23,11 +23,13 @@ export default function CandidateDashboardPage() {
   });
 
   useEffect(() => {
+    let localEmail = '';
     const stored = localStorage.getItem('scrizians_user');
     if (stored) {
       try {
         const u = JSON.parse(stored);
         setCurrentUser(u);
+        localEmail = u.email || '';
         setResumeFileName('My_Updated_Resume_2026.pdf (1.8 MB)');
         setEditFormData({
           name: u.name || '',
@@ -38,6 +40,26 @@ export default function CandidateDashboardPage() {
         });
       } catch (e) {}
     }
+
+    fetch('/api/users')
+      .then(r => r.json())
+      .then(res => {
+        if (res.success && Array.isArray(res.data)) {
+          const match = res.data.find((usr: any) => (localEmail && usr.email?.toLowerCase() === localEmail.toLowerCase()) || usr.role === 'candidate');
+          if (match) {
+            setCurrentUser(match);
+            localStorage.setItem('scrizians_user', JSON.stringify(match));
+            setEditFormData({
+              name: match.name || '',
+              phone: match.phone || '+91 98765 43210',
+              skills: match.skills || 'Next.js, Node.js, React, AWS',
+              experience: match.experience || '7+ Years',
+              title: match.title || 'Senior Full-Stack Architect'
+            });
+          }
+        }
+      })
+      .catch(e => console.warn('User sync error:', e));
   }, []);
 
   const displayName = currentUser?.name || editFormData.name || 'Job Candidate';
