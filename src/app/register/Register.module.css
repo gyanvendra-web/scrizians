@@ -294,14 +294,37 @@
   margin-bottom: 0.9rem;
 }
 
-.successAlert {
-  background: #DCFCE7;
-  color: #166534;
-  padding: 0.65rem 0.9rem;
-  border-radius: 8px;
-  font-size: 0.85rem;
+.toastContainer {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 100000;
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toastCard {
+  background: #0B172A;
+  color: #ffffff;
+  padding: 0.95rem 1.4rem;
+  border-radius: 10px;
   font-weight: 700;
-  margin-bottom: 0.9rem;
+  font-size: 0.92rem;
+  border: 1px solid rgba(229, 43, 43, 0.5);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(229, 43, 43, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 900px) {

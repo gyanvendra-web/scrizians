@@ -51,10 +51,8 @@ const initialUsersList = [
   },
 ];
 
-export async function GET() {
+async function ensureSeeded() {
   try {
-    await connectToDatabase();
-
     const isSeeded = await SeedMarkerModel.findOne({ key: 'users' });
     if (!isSeeded) {
       const existingCount = await UserModel.countDocuments();
@@ -63,7 +61,15 @@ export async function GET() {
       }
       await SeedMarkerModel.create({ key: 'users' });
     }
+  } catch (e) {
+    console.warn('Auto-seed check skipped/failed:', e);
+  }
+}
 
+export async function GET() {
+  try {
+    await connectToDatabase();
+    await ensureSeeded();
     const users = await UserModel.find().select('-password').sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data: users });
   } catch (error: any) {
@@ -75,16 +81,41 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     await connectToDatabase();
+    await ensureSeeded();
+
     const body = await request.json();
+    const email = body.email ? body.email.toLowerCase().trim() : '';
 
-    const userId = body.id || `user-${Math.floor(1000 + Math.random() * 9000)}`;
-    const updatedUser = await UserModel.findOneAndUpdate(
-      { email: body.email },
-      { ...body, id: userId },
-      { upsert: true, new: true }
-    );
+    if (!email) {
+      return NextResponse.json({ success: false, error: 'Email address is required' }, { status: 400 });
+    }
 
-    return NextResponse.json({ success: true, data: updatedUser });
+    let existingUser = await UserModel.findOne({ email });
+
+    if (existingUser) {
+      existingUser.name = body.name || existingUser.name;
+      existingUser.password = body.password || existingUser.password;
+      existingUser.role = body.role || existingUser.role;
+      if (body.scrizianId) existingUser.scrizianId = body.scrizianId;
+      if (body.company) existingUser.company = body.company;
+      await existingUser.save();
+      return NextResponse.json({ success: true, data: existingUser, message: 'User profile updated' });
+    }
+
+    const userId = body.id || `user-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const newUser = await UserModel.create({
+      id: userId,
+      name: body.name || email.split('@')[0],
+      email,
+      password: body.password || 'Default@123',
+      role: body.role || 'candidate',
+      scrizianId: body.scrizianId || `SZN-${(body.role || 'CAND').toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`,
+      company: body.company || 'Scrizians Platform',
+    });
+
+    console.log(`✅ Registered new user in MongoDB Atlas: ${newUser.email} (${newUser.role})`);
+
+    return NextResponse.json({ success: true, data: newUser, message: 'Account created successfully in database' });
   } catch (error: any) {
     console.error('MongoDB User POST Error:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

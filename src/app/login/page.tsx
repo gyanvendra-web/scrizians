@@ -15,7 +15,6 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
 
   // Forgot Password Modal State
   const [showForgotModal, setShowForgotModal] = useState(false);
@@ -50,7 +49,6 @@ export default function LoginPage() {
   const handleRoleSelect = (role: 'admin' | 'talent' | 'client' | 'contributor' | 'candidate') => {
     setSelectedRole(role);
     setErrorMessage('');
-    setSuccessMessage('');
     if (role === 'admin') {
       setEmail('admin@scrizians.com');
       setPassword('Admin@123456');
@@ -72,7 +70,6 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
-    setSuccessMessage('');
     setLoading(true);
 
     try {
@@ -97,12 +94,12 @@ export default function LoginPage() {
 
         localStorage.setItem('scrizians_token', data.token || `token_${user.role}_2026`);
         localStorage.setItem('scrizians_user', JSON.stringify(user));
-        setSuccessMessage(`🎉 Login successful! Redirecting to ${user.name}'s Portal...`);
+        showToast(`🎉 Login successful! Redirecting to ${user.name}'s Portal...`);
 
         setTimeout(() => {
           router.push(targetRoute);
           setLoading(false);
-        }, 500);
+        }, 600);
       } else {
         setErrorMessage(data.error || 'Authentication failed. Please check your credentials.');
         setLoading(false);
@@ -113,8 +110,11 @@ export default function LoginPage() {
       const mockUser = { id: `${selectedRole}-101`, name: `${selectedRole.toUpperCase()} User`, email, role: selectedRole };
       localStorage.setItem('scrizians_token', `token_${selectedRole}_2026`);
       localStorage.setItem('scrizians_user', JSON.stringify(mockUser));
-      router.push(`/dashboard/${selectedRole}`);
-      setLoading(false);
+      showToast(`⚡ Login successful! Redirecting...`);
+      setTimeout(() => {
+        router.push(`/dashboard/${selectedRole}`);
+        setLoading(false);
+      }, 600);
     }
   };
 
@@ -193,7 +193,6 @@ export default function LoginPage() {
             <p className={styles.formSub}>Select your portal role and enter credentials to sign in.</p>
 
             {errorMessage && <div className={styles.errorAlert}>{errorMessage}</div>}
-            {successMessage && <div className={styles.successAlert}>{successMessage}</div>}
 
             <form onSubmit={handleLogin}>
               {/* Portal / Role Dropdown Selector */}

@@ -21,7 +21,12 @@ function RegisterFormContent() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(null), 3500);
+  };
 
   useEffect(() => {
     if (roleParam === 'contributor' || roleParam === 'talent' || roleParam === 'candidate' || roleParam === 'client') {
@@ -32,7 +37,6 @@ function RegisterFormContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
-    setSuccessMessage('');
 
     if (password.length < 8) {
       setErrorMessage('Password must be at least 8 characters long.');
@@ -69,7 +73,7 @@ function RegisterFormContent() {
         localStorage.setItem('scrizians_user', JSON.stringify(user));
         localStorage.setItem('scrizians_token', `token_${selectedRole}_${Date.now()}`);
 
-        setSuccessMessage('🎉 Account created successfully in MongoDB database! Redirecting to dashboard...');
+        showToast('🎉 Account registered successfully in MongoDB!');
 
         setTimeout(() => {
           if (selectedRole === 'contributor') {
@@ -82,7 +86,7 @@ function RegisterFormContent() {
             router.push('/dashboard/candidate');
           }
           setLoading(false);
-        }, 600);
+        }, 800);
       } else {
         setErrorMessage(data.error || 'Failed to create account. Please try again.');
         setLoading(false);
@@ -97,14 +101,27 @@ function RegisterFormContent() {
       };
       localStorage.setItem('scrizians_user', JSON.stringify(mockUser));
       localStorage.setItem('scrizians_token', `token_${selectedRole}_${Date.now()}`);
-      router.push(`/dashboard/${selectedRole}`);
-      setLoading(false);
+      showToast('🎉 Account created successfully!');
+      setTimeout(() => {
+        router.push(`/dashboard/${selectedRole}`);
+        setLoading(false);
+      }, 800);
     }
   };
 
   return (
     <>
       <Header />
+
+      {/* Top Right Toast Notification Tooltip */}
+      {toastMsg && (
+        <div className={styles.toastContainer}>
+          <div className={styles.toastCard}>
+            <span style={{ fontSize: '1.1rem' }}>🎉</span>
+            <span>{toastMsg}</span>
+          </div>
+        </div>
+      )}
 
       <main className={styles.registerSection}>
         {/* Main Outer Centered Card Wrapper */}
@@ -135,7 +152,6 @@ function RegisterFormContent() {
             <p className={styles.formSub}>Choose how you want to use Scrizians.</p>
 
             {errorMessage && <div className={styles.errorAlert}>{errorMessage}</div>}
-            {successMessage && <div className={styles.successAlert}>{successMessage}</div>}
 
             <form onSubmit={handleSubmit}>
               {/* Role Selector Grid */}
