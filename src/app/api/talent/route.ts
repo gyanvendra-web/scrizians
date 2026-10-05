@@ -5,6 +5,9 @@ import { initialTalentList } from '@/utils/dataSync';
 
 import { SeedMarkerModel } from '@/models/SeedMarker';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     await connectToDatabase();

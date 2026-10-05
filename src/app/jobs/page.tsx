@@ -17,7 +17,7 @@ export default function JobsPage() {
   const [dynamicJobs, setDynamicJobs] = useState<any[]>(initialJobsList);
 
   React.useEffect(() => {
-    fetch('/api/jobs')
+    fetch('/api/jobs', { cache: 'no-store' })
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {

@@ -17,7 +17,7 @@ export default function InsightsPage() {
   const ITEMS_PER_PAGE = 6;
 
   React.useEffect(() => {
-    fetch('/api/insights')
+    fetch('/api/insights', { cache: 'no-store' })
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {

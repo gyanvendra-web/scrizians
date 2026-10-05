@@ -23,7 +23,7 @@ function TalentNetworkContent() {
   const [talentList, setTalentList] = useState<any[]>(initialTalentList);
 
   React.useEffect(() => {
-    fetch('/api/talent')
+    fetch('/api/talent', { cache: 'no-store' })
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {

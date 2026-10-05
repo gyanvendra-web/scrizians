@@ -39,7 +39,7 @@ export const syncFromMongoDB = (key: string) => {
   const route = routeMap[key];
   if (!route) return;
 
-  fetch(`/api/${route}`)
+  fetch(`/api/${route}`, { cache: 'no-store' })
     .then(res => res.json())
     .then(resData => {
       if (resData.success && Array.isArray(resData.data)) {

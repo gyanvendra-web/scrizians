@@ -83,10 +83,10 @@ export default function AdminDashboardPage() {
     }
 
     const loadFromApi = () => {
-      fetch('/api/leads').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setLeads(res.data); }).catch(e => console.warn(e));
-      fetch('/api/talent').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setTalents(res.data); }).catch(e => console.warn(e));
-      fetch('/api/jobs').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setJobs(res.data); }).catch(e => console.warn(e));
-      fetch('/api/insights').then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setInsights(res.data); }).catch(e => console.warn(e));
+      fetch('/api/leads', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setLeads(res.data); }).catch(e => console.warn(e));
+      fetch('/api/talent', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setTalents(res.data); }).catch(e => console.warn(e));
+      fetch('/api/jobs', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setJobs(res.data); }).catch(e => console.warn(e));
+      fetch('/api/insights', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setInsights(res.data); }).catch(e => console.warn(e));
     };
 
     loadFromApi();

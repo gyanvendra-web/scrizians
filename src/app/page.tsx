@@ -21,7 +21,7 @@ export default function HomePage() {
   const [dynamicInsights, setDynamicInsights] = useState<any[]>([]);
 
   React.useEffect(() => {
-    fetch('/api/talent')
+    fetch('/api/talent', { cache: 'no-store' })
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {
@@ -31,7 +31,7 @@ export default function HomePage() {
       })
       .catch(err => console.warn('Homepage talent fetch error:', err));
 
-    fetch('/api/insights')
+    fetch('/api/insights', { cache: 'no-store' })
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {

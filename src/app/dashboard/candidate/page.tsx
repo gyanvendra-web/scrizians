@@ -41,7 +41,7 @@ export default function CandidateDashboardPage() {
       } catch (e) {}
     }
 
-    fetch('/api/users')
+    fetch('/api/users', { cache: 'no-store' })
       .then(r => r.json())
       .then(res => {
         if (res.success && Array.isArray(res.data)) {
