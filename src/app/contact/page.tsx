@@ -6,6 +6,7 @@ import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { LeadModal } from '@/components/LeadModal/LeadModal';
 import { addInboundLead } from '@/utils/dataSync';
+import { PhoneInputField } from '@/components/PhoneInputField/PhoneInputField';
 import styles from './Contact.module.css';
 
 export default function ContactPage() {
@@ -31,7 +32,7 @@ export default function ContactPage() {
       addInboundLead({
         name: `${firstName} ${lastName}`.trim(),
         email,
-        phone,
+        phone: phone.trim(),
         company: 'Contact Form Inquiry',
         serviceRequested: 'General Contact Inquiry',
         message
@@ -176,12 +177,10 @@ export default function ContactPage() {
 
                 <div className={styles.formGroup}>
                   <label className={styles.label}>Phone Number</label>
-                  <input 
-                    type="tel" 
-                    placeholder="+91 9876543210"
+                  <PhoneInputField
                     value={phone}
-                    onChange={e => setPhone(e.target.value)}
-                    className={styles.inputUnderline}
+                    onChange={(val) => setPhone(val)}
+                    placeholder="98765 43210"
                   />
                 </div>
               </div>

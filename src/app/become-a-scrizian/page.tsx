@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { addInboundLead } from '@/utils/dataSync';
+import { PhoneInputField } from '@/components/PhoneInputField/PhoneInputField';
 import styles from './Onboarding.module.css';
 
 export default function BecomeAScrizianPage() {
   const [step, setStep] = useState(1);
+  const [phone, setPhone] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,13 +33,14 @@ export default function BecomeAScrizianPage() {
       addInboundLead({
         name: formData.name || 'Anonymous Talent Applicant',
         email: formData.email,
-        phone: 'N/A',
+        phone: phone.trim() || 'N/A',
         company: 'Talent Network Applicant',
         serviceRequested: `Become a Scrizian (${formData.title || 'Tech Specialist'})`,
         message: `Talent Application Details: Title: ${formData.title}, Experience: ${formData.experienceYears} yrs, Skills: ${formData.skills}, Expected Rate: $${formData.expectedRateUSD}/hr`
       });
       showToast('🎉 Application Submitted to Admin CRM! Preliminary ID: SZN-DEV-PENDING');
       setStep(1);
+      setPhone('');
       setFormData({
         name: '',
         email: '',
@@ -101,6 +104,15 @@ export default function BecomeAScrizianPage() {
                   <div>
                     <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Personal Email *</label>
                     <input required type="email" style={{ width: '100%', padding: '0.7rem', border: '1px solid #CBD5E1', borderRadius: '6px', outline: 'none' }} placeholder="aarav@gmail.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700 }}>Phone / WhatsApp *</label>
+                    <PhoneInputField
+                      value={phone}
+                      onChange={(val) => setPhone(val)}
+                      placeholder="98765 43210"
+                      required
+                    />
                   </div>
                 </>
               )}

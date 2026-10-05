@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Inter, Plus_Jakarta_Sans, Manrope } from 'next/font/google';
 import '@/styles/variables.css';
+import 'react-phone-input-2/lib/style.css';
 import { CurrencyProvider } from '@/context/CurrencyContext';
 
 export const viewport: Viewport = {

@@ -6,6 +6,7 @@ import { Header } from '@/components/Header/Header';
 import { Footer } from '@/components/Footer/Footer';
 import { LeadModal } from '@/components/LeadModal/LeadModal';
 import { useCurrency } from '@/context/CurrencyContext';
+import { PhoneInputField } from '@/components/PhoneInputField/PhoneInputField';
 
 const jobsData: Record<string, any> = {
   'senior-react-developer': {
@@ -135,6 +136,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
   const [applied, setApplied] = useState(false);
   const [applicantName, setApplicantName] = useState('');
   const [applicantEmail, setApplicantEmail] = useState('');
+  const [applicantCountryCode, setApplicantCountryCode] = useState('+91');
   const [applicantPhone, setApplicantPhone] = useState('');
   const [scrizianId, setScrizianId] = useState('');
   const [resumeUrl, setResumeUrl] = useState('');
@@ -322,13 +324,11 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
 
                 <div>
                   <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.3rem' }}>Phone / WhatsApp *</label>
-                  <input 
-                    type="tel" 
-                    required 
-                    placeholder="+91 98765 43210"
+                  <PhoneInputField
                     value={applicantPhone}
-                    onChange={e => setApplicantPhone(e.target.value)}
-                    style={{ width: '100%', padding: '0.75rem', border: '1px solid #CBD5E1', borderRadius: '6px', fontSize: '0.9rem', outline: 'none' }}
+                    onChange={(val) => setApplicantPhone(val)}
+                    placeholder="98765 43210"
+                    required
                   />
                 </div>
 

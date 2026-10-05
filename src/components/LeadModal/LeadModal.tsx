@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { addInboundLead } from '@/utils/dataSync';
+import { PhoneInputField } from '@/components/PhoneInputField/PhoneInputField';
 import styles from './LeadModal.module.css';
 
 interface LeadModalProps {
@@ -34,7 +35,7 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose, prefilled
       addInboundLead({
         name: formData.name,
         email: formData.email,
-        phone: formData.phone,
+        phone: formData.phone.trim(),
         company: formData.company || 'Website Inquiry',
         serviceRequested: formData.serviceRequested,
         message: formData.message,
@@ -116,12 +117,10 @@ export const LeadModal: React.FC<LeadModalProps> = ({ isOpen, onClose, prefilled
 
             <div className={styles.inputGroup}>
               <label className={styles.label}>Phone / WhatsApp</label>
-              <input 
-                type="tel" 
-                className={styles.input} 
-                placeholder="+1 (555) 000-0000" 
+              <PhoneInputField
                 value={formData.phone}
-                onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(val) => setFormData({ ...formData, phone: val })}
+                placeholder="98765 43210"
               />
             </div>
 
