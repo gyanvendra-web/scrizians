@@ -206,6 +206,21 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
   const handleApplySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setApplied(true);
+
+    fetch('/api/applications', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jobId: params.id,
+        jobTitle: job.title,
+        applicantName,
+        applicantEmail,
+        applicantPhone,
+        scrizianId: scrizianId || 'N/A',
+        resumeUrl: resumeUrl || 'N/A',
+        status: 'Received',
+      }),
+    }).catch(err => console.warn('Application submit error:', err));
   };
 
   const jsonLd = {

@@ -52,6 +52,7 @@ export const Footer: React.FC = () => {
           <h4 className={styles.colTitle}>Company</h4>
           <ul className={styles.linkList}>
             <li><Link href="/about">About Scrizians</Link></li>
+            <li><Link href="/portfolio">Portfolio</Link></li>
             <li><Link href="/case-studies">Case Studies</Link></li>
             <li><Link href="/jobs">Jobs & Careers</Link></li>
             <li><Link href="/insights">Insights & News</Link></li>
