@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { DashboardSidebar } from '@/components/DashboardSidebar/DashboardSidebar';
 import { NotificationBell } from '@/components/NotificationBell/NotificationBell';
+import { getStoredData, saveStoredData, initialTalentList } from '@/utils/dataSync';
 import styles from './DashboardTalent.module.css';
 
 export default function TalentDashboardPage() {
@@ -16,28 +17,76 @@ export default function TalentDashboardPage() {
   const [newSkillInput, setNewSkillInput] = useState('');
   const [toastMsg, setToastMsg] = useState<string | null>(null);
 
+  useEffect(() => {
+    const list = getStoredData('scrizians_talent_list', initialTalentList);
+    const me = list.find((t: any) => t.id === 'SCR-8841' || t.scrizianId === 'SCR-8841' || t.scrizianId === 'SZN-DEV-00001');
+    if (me) {
+      if (Array.isArray(me.skills)) setSkills(me.skills);
+      if (me.hourlyRateUSD) setHourlyRate(Number(me.hourlyRateUSD));
+      if (me.availability) setIsAvailable(me.availability.toLowerCase().includes('available'));
+    }
+  }, []);
+
+  const persistProfileChange = (newSkills: string[], newAvailability: boolean, newRate: number) => {
+    const list = getStoredData('scrizians_talent_list', initialTalentList);
+    const updatedList = list.map((t: any) => {
+      if (t.id === 'SCR-8841' || t.scrizianId === 'SCR-8841' || t.scrizianId === 'SZN-DEV-00001') {
+        return {
+          ...t,
+          skills: newSkills,
+          hourlyRateUSD: newRate,
+          availability: newAvailability ? 'Available now' : 'Partially available'
+        };
+      }
+      return t;
+    });
+
+    saveStoredData('scrizians_talent_list', updatedList);
+
+    fetch('/api/talent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: 'SCR-8841',
+        scrizianId: 'SCR-8841',
+        displayName: 'Aarav M.',
+        title: 'Lead Full-Stack Architect (Next.js, Node.js & Cloud)',
+        skills: newSkills,
+        hourlyRateUSD: newRate,
+        availability: newAvailability ? 'Available now' : 'Partially available',
+        status: 'Verified'
+      })
+    }).catch(err => console.warn('Talent sync error:', err));
+  };
+
   const showToast = (msg: string) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 3000);
   };
 
   const handleToggleAvailability = () => {
-    setIsAvailable(!isAvailable);
-    showToast(`✓ Availability status updated to ${!isAvailable ? 'Available (Immediate)' : 'Occupied / On Contract'}`);
+    const nextAvailability = !isAvailable;
+    setIsAvailable(nextAvailability);
+    persistProfileChange(skills, nextAvailability, hourlyRate);
+    showToast(`✓ Availability status updated to ${nextAvailability ? 'Available (Immediate)' : 'Occupied / On Contract'}`);
   };
 
   const handleAddSkill = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newSkillInput.trim()) return;
     if (!skills.includes(newSkillInput.trim())) {
-      setSkills([...skills, newSkillInput.trim()]);
+      const nextSkills = [...skills, newSkillInput.trim()];
+      setSkills(nextSkills);
+      persistProfileChange(nextSkills, isAvailable, hourlyRate);
       showToast(`✓ Added skill: ${newSkillInput.trim()}`);
     }
     setNewSkillInput('');
   };
 
   const handleRemoveSkill = (skillToRemove: string) => {
-    setSkills(skills.filter(s => s !== skillToRemove));
+    const nextSkills = skills.filter(s => s !== skillToRemove);
+    setSkills(nextSkills);
+    persistProfileChange(nextSkills, isAvailable, hourlyRate);
     showToast(`✓ Removed skill: ${skillToRemove}`);
   };
 
