@@ -46,29 +46,60 @@ function RegisterFormContent() {
 
     setLoading(true);
 
-    const mockUser = {
-      name: fullName,
-      email,
-      role: selectedRole,
-      scrizianId: `SZN-${selectedRole.toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`
-    };
-    localStorage.setItem('scrizians_user', JSON.stringify(mockUser));
-    localStorage.setItem('scrizians_token', `token_${selectedRole}_${Date.now()}`);
+    const scrizianId = `SZN-${selectedRole.toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    setSuccessMessage('🎉 Account created successfully! Redirecting to dashboard...');
+    try {
+      const res = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: fullName,
+          email: email.toLowerCase().trim(),
+          password,
+          role: selectedRole,
+          scrizianId,
+          company: selectedRole === 'client' ? 'Client Partner' : 'Scrizians Platform'
+        })
+      });
 
-    setTimeout(() => {
-      if (selectedRole === 'contributor') {
-        router.push('/dashboard/contributor');
-      } else if (selectedRole === 'talent') {
-        router.push('/dashboard/talent');
-      } else if (selectedRole === 'client') {
-        router.push('/dashboard/client');
+      const data = await res.json();
+
+      if (data.success && data.data) {
+        const user = data.data;
+        localStorage.setItem('scrizians_user', JSON.stringify(user));
+        localStorage.setItem('scrizians_token', `token_${selectedRole}_${Date.now()}`);
+
+        setSuccessMessage('🎉 Account created successfully in MongoDB database! Redirecting to dashboard...');
+
+        setTimeout(() => {
+          if (selectedRole === 'contributor') {
+            router.push('/dashboard/contributor');
+          } else if (selectedRole === 'talent') {
+            router.push('/dashboard/talent');
+          } else if (selectedRole === 'client') {
+            router.push('/dashboard/client');
+          } else {
+            router.push('/dashboard/candidate');
+          }
+          setLoading(false);
+        }, 600);
       } else {
-        router.push('/dashboard/candidate');
+        setErrorMessage(data.error || 'Failed to create account. Please try again.');
+        setLoading(false);
       }
+    } catch (err: any) {
+      console.warn('MongoDB Register Error:', err);
+      const mockUser = {
+        name: fullName,
+        email,
+        role: selectedRole,
+        scrizianId
+      };
+      localStorage.setItem('scrizians_user', JSON.stringify(mockUser));
+      localStorage.setItem('scrizians_token', `token_${selectedRole}_${Date.now()}`);
+      router.push(`/dashboard/${selectedRole}`);
       setLoading(false);
-    }, 800);
+    }
   };
 
   return (

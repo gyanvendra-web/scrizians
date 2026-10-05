@@ -49,7 +49,11 @@ export default function PortfolioPage() {
             <div className={styles.cardBody}>
               <div>
                 <span className={styles.authorTagRed}>by SCR-8841 · Lead Architect</span>
-                <h2 className={styles.projectTitle}>Lending Platform Re-architecture</h2>
+                <h2 className={styles.projectTitle}>
+                  <Link href="/portfolio/lending-platform-re-architecture" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    Lending Platform Re-architecture →
+                  </Link>
+                </h2>
                 <p className={styles.projectSub}>Microservices migration for a US lending platform.</p>
               </div>
               <div className={styles.skillsRow}>
@@ -68,7 +72,11 @@ export default function PortfolioPage() {
             <div className={styles.cardBody}>
               <div>
                 <span className={styles.authorTagRed}>by SCR-2207 · Frontend Engineer</span>
-                <h3 className={styles.projectTitle}>D2C Storefront on Next.js</h3>
+                <h3 className={styles.projectTitle}>
+                  <Link href="/portfolio/d2c-storefront-on-nextjs" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    D2C Storefront on Next.js →
+                  </Link>
+                </h3>
                 <p className={styles.projectSub}>Headless commerce storefront with 98 Lighthouse score.</p>
               </div>
               <div className={styles.skillsRow}>
@@ -90,7 +98,11 @@ export default function PortfolioPage() {
             <div className={styles.cardBody}>
               <div>
                 <span className={styles.authorTagRed}>by SCR-3928 · Product Designer</span>
-                <h3 className={styles.projectTitle}>B2B Analytics Design System</h3>
+                <h3 className={styles.projectTitle}>
+                  <Link href="/portfolio/b2b-analytics-design-system" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    B2B Analytics Design System →
+                  </Link>
+                </h3>
                 <p className={styles.projectSub}>120-component design system adopted by 4 product teams.</p>
               </div>
               <div className={styles.skillsRow}>
@@ -108,7 +120,11 @@ export default function PortfolioPage() {
             <div className={styles.cardBody}>
               <div>
                 <span className={styles.authorTagRed}>by SCR-4416 · Mobile Developer</span>
-                <h3 className={styles.projectTitle}>Fitness Tracking Mobile App</h3>
+                <h3 className={styles.projectTitle}>
+                  <Link href="/portfolio/fitness-tracking-mobile-app" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    Fitness Tracking Mobile App →
+                  </Link>
+                </h3>
                 <p className={styles.projectSub}>Cross-platform app with wearable sync and offline mode.</p>
               </div>
               <div className={styles.skillsRow}>
@@ -129,7 +145,11 @@ export default function PortfolioPage() {
             <div className={styles.cardBody}>
               <div>
                 <span className={styles.authorTagRed}>by SCR-6102 · DevOps Engineer</span>
-                <h2 className={styles.projectTitle}>Zero-Downtime Kubernetes Platform</h2>
+                <h2 className={styles.projectTitle}>
+                  <Link href="/portfolio/zero-downtime-kubernetes-platform" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    Zero-Downtime Kubernetes Platform →
+                  </Link>
+                </h2>
                 <p className={styles.projectSub}>Multi-region GKE platform with GitOps deployments.</p>
               </div>
               <div className={styles.skillsRow}>
@@ -150,7 +170,11 @@ export default function PortfolioPage() {
             <div className={styles.cardBody}>
               <div>
                 <span className={styles.authorTagRed}>by SCR-7719 · AI Engineer</span>
-                <h3 className={styles.projectTitle}>Enterprise Document Q&A</h3>
+                <h3 className={styles.projectTitle}>
+                  <Link href="/portfolio/enterprise-document-qa" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    Enterprise Document Q&A →
+                  </Link>
+                </h3>
                 <p className={styles.projectSub}>RAG assistant over 2M documents with citations.</p>
               </div>
               <div className={styles.skillsRow}>
