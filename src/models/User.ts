@@ -8,6 +8,11 @@ export interface IUser extends Document {
   role: 'admin' | 'talent' | 'client' | 'contributor' | 'candidate';
   scrizianId?: string;
   company?: string;
+  phone?: string;
+  title?: string;
+  bio?: string;
+  skills?: string;
+  experience?: string;
   createdAt: Date;
 }
 
@@ -24,6 +29,11 @@ const UserSchema = new Schema<IUser>(
     },
     scrizianId: { type: String, default: 'N/A' },
     company: { type: String, default: 'Scrizians Platform' },
+    phone: { type: String, default: '' },
+    title: { type: String, default: '' },
+    bio: { type: String, default: '' },
+    skills: { type: String, default: '' },
+    experience: { type: String, default: '' },
   },
   { timestamps: true }
 );

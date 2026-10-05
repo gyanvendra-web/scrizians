@@ -94,10 +94,15 @@ export async function POST(request: Request) {
 
     if (existingUser) {
       existingUser.name = body.name || existingUser.name;
-      existingUser.password = body.password || existingUser.password;
+      if (body.password) existingUser.password = body.password;
       existingUser.role = body.role || existingUser.role;
       if (body.scrizianId) existingUser.scrizianId = body.scrizianId;
-      if (body.company) existingUser.company = body.company;
+      if (body.company !== undefined) existingUser.company = body.company;
+      if (body.phone !== undefined) existingUser.phone = body.phone;
+      if (body.title !== undefined) existingUser.title = body.title;
+      if (body.bio !== undefined) existingUser.bio = body.bio;
+      if (body.skills !== undefined) existingUser.skills = body.skills;
+      if (body.experience !== undefined) existingUser.experience = body.experience;
       await existingUser.save();
       return NextResponse.json({ success: true, data: existingUser, message: 'User profile updated' });
     }
@@ -111,6 +116,11 @@ export async function POST(request: Request) {
       role: body.role || 'candidate',
       scrizianId: body.scrizianId || `SZN-${(body.role || 'CAND').toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`,
       company: body.company || 'Scrizians Platform',
+      phone: body.phone || '',
+      title: body.title || '',
+      bio: body.bio || '',
+      skills: body.skills || '',
+      experience: body.experience || '',
     });
 
     console.log(`✅ Registered new user in MongoDB Atlas: ${newUser.email} (${newUser.role})`);
