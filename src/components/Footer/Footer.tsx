@@ -74,9 +74,7 @@ export const Footer: React.FC = () => {
         <div className={styles.copyText}>
           © 2026 <strong>Scriza Private Limited</strong>. All rights reserved.
         </div>
-        <div className={styles.securityBadge}>
-          <span className={styles.shieldIcon}>🔒</span> ISO & Enterprise Grade Security Verified
-        </div>
+        
         <div className={styles.policyLinks}>
           <Link href="/policies/privacy">Privacy Policy</Link>
           <Link href="/policies/terms">Terms of Service</Link>
