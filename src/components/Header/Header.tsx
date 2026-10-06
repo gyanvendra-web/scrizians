@@ -41,6 +41,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
   const navLinks = [
     { href: '/hire-talent', label: 'Hire Talent' },
     { href: '/talent', label: 'Talent Network' },
+    { href: '/pricing', label: 'Pricing' },
     { href: '/solutions', label: 'Solutions' },
     { href: '/technologies', label: 'Technologies' },
     { href: '/case-studies', label: 'Case Studies' },

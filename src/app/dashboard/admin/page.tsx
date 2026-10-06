@@ -47,6 +47,7 @@ export default function AdminDashboardPage() {
   });
 
   // Job Modal Form
+  const [leadViewMode, setLeadViewMode] = useState<'table' | 'kanban'>('table');
   const [showJobModal, setShowJobModal] = useState(false);
   const [editingJob, setEditingJob] = useState<any | null>(null);
   const [jobFormData, setJobFormData] = useState({ 
@@ -441,7 +442,6 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* TAB 1: Hiring Leads CRM Table */}
         {activeTab === 'leads' && (
           <div className={styles.card}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.2rem' }}>
@@ -451,74 +451,135 @@ export default function AdminDashboardPage() {
                   All public CTAs route through Scriza Private Limited. Manage stages, edit details, or remove leads.
                 </p>
               </div>
-              <input 
-                type="text" 
-                placeholder="Search leads..." 
-                aria-label="Search inbound hiring leads CRM"
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className={styles.formInput}
-                style={{ maxWidth: '240px', padding: '0.5rem 0.8rem', fontSize: '0.85rem' }}
-              />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', background: '#F1F5F9', padding: '0.2rem', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
+                  <button 
+                    onClick={() => setLeadViewMode('table')} 
+                    style={{ background: leadViewMode === 'table' ? '#ffffff' : 'transparent', color: leadViewMode === 'table' ? '#0F172A' : '#64748B', border: 'none', padding: '0.35rem 0.75rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+                  >
+                    📋 Table View
+                  </button>
+                  <button 
+                    onClick={() => setLeadViewMode('kanban')} 
+                    style={{ background: leadViewMode === 'kanban' ? '#ffffff' : 'transparent', color: leadViewMode === 'kanban' ? '#0F172A' : '#64748B', border: 'none', padding: '0.35rem 0.75rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+                  >
+                    📊 Kanban Board
+                  </button>
+                </div>
+                <input 
+                  type="text" 
+                  placeholder="Search leads..." 
+                  aria-label="Search inbound hiring leads CRM"
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  className={styles.formInput}
+                  style={{ maxWidth: '200px', padding: '0.45rem 0.8rem', fontSize: '0.85rem' }}
+                />
+              </div>
             </div>
 
-            <div className={styles.tableContainer}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Client / Contact</th>
-                    <th>Company</th>
-                    <th>Target Scrizian ID</th>
-                    <th>Engagement</th>
-                    <th>Pipeline Stage</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paginatedLeads.map(lead => (
-                    <tr key={lead._id}>
-                      <td style={{ whiteSpace: 'nowrap' }}>{lead.createdAt}</td>
-                      <td>
-                        <strong>{lead.name}</strong><br/>
-                        <span className={styles.subText}>{lead.email}</span>
-                      </td>
-                      <td>{lead.company}</td>
-                      <td>
-                        <span style={{ fontFamily: 'monospace', fontWeight: 800, color: '#E52B2B' }}>
-                          {lead.scrizianIdReferenced || 'N/A'}
+            {leadViewMode === 'kanban' ? (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', overflowX: 'auto', paddingBottom: '1rem' }}>
+                {['New Inbound Lead', 'Requirement Confirmed', 'Talent Shortlisted', 'Contract Sent', 'Hired / Closed'].map((colStage) => {
+                  const columnLeads = filteredLeads.filter(l => l.stage === colStage || (!l.stage && colStage === 'New Inbound Lead'));
+                  return (
+                    <div key={colStage} style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '10px', padding: '1rem', minHeight: '380px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem', paddingBottom: '0.5rem', borderBottom: '2px solid #CBD5E1' }}>
+                        <strong style={{ fontSize: '0.85rem', color: '#0F172A' }}>{colStage}</strong>
+                        <span style={{ background: '#0F172A', color: '#ffffff', borderRadius: '12px', padding: '0.1rem 0.5rem', fontSize: '0.75rem', fontWeight: 800 }}>
+                          {columnLeads.length}
                         </span>
-                      </td>
-                      <td>{lead.serviceRequested}</td>
-                      <td>
-                        <select 
-                          value={lead.stage}
-                          aria-label={`Update pipeline stage for lead ${lead.name}`}
-                          onChange={e => handleUpdateLeadStage(lead._id, e.target.value)}
-                          className={styles.selectStatus}
-                        >
-                          <option value="New Inbound Lead">New Inbound Lead</option>
-                          <option value="Talent Shortlisted">Talent Shortlisted</option>
-                          <option value="Requirement Confirmed">Requirement Confirmed</option>
-                          <option value="Contract Sent">Contract Sent</option>
-                          <option value="Hired / Closed">Hired / Closed</option>
-                        </select>
-                      </td>
-                      <td>
-                        <div className={styles.actionBtnGroup}>
-                          <button onClick={() => setSelectedLead(lead)} className={styles.btnActionView} title="View Details" aria-label={`View details for lead ${lead.name}`}>
-                            👁️
-                          </button>
-                          <button onClick={() => handleDeleteLead(lead._id)} className={styles.btnActionDelete} title="Delete Lead" aria-label={`Delete lead ${lead.name}`}>
-                            🗑️
-                          </button>
-                        </div>
-                      </td>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        {columnLeads.map(lead => (
+                          <div key={lead._id} style={{ background: '#ffffff', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '0.8rem', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                            <div style={{ fontWeight: 800, fontSize: '0.88rem', color: '#0F172A' }}>{lead.name}</div>
+                            <div style={{ fontSize: '0.78rem', color: '#64748B', margin: '0.2rem 0' }}>{lead.company} • {lead.serviceRequested}</div>
+                            {lead.scrizianIdReferenced && (
+                              <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', color: '#E52B2B', background: 'rgba(229, 43, 43, 0.08)', padding: '0.1rem 0.4rem', borderRadius: '4px' }}>
+                                {lead.scrizianIdReferenced}
+                              </span>
+                            )}
+                            <div style={{ marginTop: '0.6rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <select 
+                                value={lead.stage || 'New Inbound Lead'} 
+                                onChange={e => handleUpdateLeadStage(lead._id, e.target.value)}
+                                style={{ fontSize: '0.75rem', padding: '0.2rem 0.4rem', borderRadius: '4px', border: '1px solid #CBD5E1' }}
+                              >
+                                <option value="New Inbound Lead">New Lead</option>
+                                <option value="Requirement Confirmed">Confirmed</option>
+                                <option value="Talent Shortlisted">Shortlisted</option>
+                                <option value="Contract Sent">Contract</option>
+                                <option value="Hired / Closed">Hired</option>
+                              </select>
+                              <button onClick={() => setSelectedLead(lead)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.9rem' }}>👁️</button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className={styles.tableContainer}>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Client / Contact</th>
+                      <th>Company</th>
+                      <th>Target Scrizian ID</th>
+                      <th>Engagement</th>
+                      <th>Pipeline Stage</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {paginatedLeads.map(lead => (
+                      <tr key={lead._id}>
+                        <td style={{ whiteSpace: 'nowrap' }}>{lead.createdAt}</td>
+                        <td>
+                          <strong>{lead.name}</strong><br/>
+                          <span className={styles.subText}>{lead.email}</span>
+                        </td>
+                        <td>{lead.company}</td>
+                        <td>
+                          <span style={{ fontFamily: 'monospace', fontWeight: 800, color: '#E52B2B' }}>
+                            {lead.scrizianIdReferenced || 'N/A'}
+                          </span>
+                        </td>
+                        <td>{lead.serviceRequested}</td>
+                        <td>
+                          <select 
+                            value={lead.stage}
+                            aria-label={`Update pipeline stage for lead ${lead.name}`}
+                            onChange={e => handleUpdateLeadStage(lead._id, e.target.value)}
+                            className={styles.selectStatus}
+                          >
+                            <option value="New Inbound Lead">New Inbound Lead</option>
+                            <option value="Talent Shortlisted">Talent Shortlisted</option>
+                            <option value="Requirement Confirmed">Requirement Confirmed</option>
+                            <option value="Contract Sent">Contract Sent</option>
+                            <option value="Hired / Closed">Hired / Closed</option>
+                          </select>
+                        </td>
+                        <td>
+                          <div className={styles.actionBtnGroup}>
+                            <button onClick={() => setSelectedLead(lead)} className={styles.btnActionView} title="View Details" aria-label={`View details for lead ${lead.name}`}>
+                              👁️
+                            </button>
+                            <button onClick={() => handleDeleteLead(lead._id)} className={styles.btnActionDelete} title="Delete Lead" aria-label={`Delete lead ${lead.name}`}>
+                              🗑️
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
 
             <Pagination 
               currentPage={leadsPage}
