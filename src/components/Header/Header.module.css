@@ -157,17 +157,25 @@
 }
 
 .btnBecome {
-  color: #475569;
+  color: #0F172A;
+  background-color: transparent;
+  border: 1.5px solid #CBD5E1;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 0.88rem;
   text-decoration: none;
-  padding: 0.55rem 0.6rem;
-  transition: color 0.2s ease;
   white-space: nowrap;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btnBecome:hover {
   color: #E52B2B;
+  border-color: #E52B2B;
+  background-color: rgba(229, 43, 43, 0.04);
 }
 
 .btnHire {
