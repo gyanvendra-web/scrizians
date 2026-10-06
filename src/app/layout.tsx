@@ -44,9 +44,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Scriza Private Limited', url: 'https://scrizians.com' }],
   creator: 'Scriza Private Limited',
   icons: {
-    icon: '/images/logo.png',
-    shortcut: '/images/logo.png',
-    apple: '/images/logo.png'
+    icon: '/favicon.ico?v=2',
+    shortcut: '/favicon.ico?v=2',
+    apple: '/favicon.ico?v=2'
   },
   formatDetection: {
     telephone: true,
@@ -130,7 +130,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable} ${manrope.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/images/logo.png" as="image" type="image/png" fetchPriority="high" />
+        <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+        <link rel="shortcut icon" href="/favicon.ico?v=2" />
+        <link rel="apple-touch-icon" href="/favicon.ico?v=2" />
+        <link rel="preload" href="/images/logo-dark.png" as="image" type="image/png" fetchPriority="high" />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
