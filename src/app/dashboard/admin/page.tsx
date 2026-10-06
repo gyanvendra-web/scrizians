@@ -444,26 +444,26 @@ export default function AdminDashboardPage() {
 
         {activeTab === 'leads' && (
           <div className={styles.card}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
               <div>
-                <h3 className={styles.cardTitle} style={{ margin: 0 }}>Inbound Client Hiring Leads & CRM Pipeline</h3>
-                <p className={styles.cardSub} style={{ margin: '0.2rem 0 0 0' }}>
-                  All public CTAs route through Scriza Private Limited. Manage stages, edit details, or remove leads.
+                <h3 className={styles.cardTitle} style={{ margin: 0 }}>Hiring Leads CRM</h3>
+                <p className={styles.cardSub} style={{ margin: '0.15rem 0 0 0' }}>
+                  Manage inbound client leads & pipeline stages.
                 </p>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <div style={{ display: 'flex', background: '#F1F5F9', padding: '0.2rem', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <div style={{ display: 'flex', background: '#F1F5F9', padding: '0.15rem', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
                   <button 
                     onClick={() => setLeadViewMode('table')} 
-                    style={{ background: leadViewMode === 'table' ? '#ffffff' : 'transparent', color: leadViewMode === 'table' ? '#0F172A' : '#64748B', border: 'none', padding: '0.35rem 0.75rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+                    style={{ background: leadViewMode === 'table' ? '#ffffff' : 'transparent', color: leadViewMode === 'table' ? '#0F172A' : '#64748B', border: 'none', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.78rem', cursor: 'pointer' }}
                   >
-                    📋 Table View
+                    📋 Table
                   </button>
                   <button 
                     onClick={() => setLeadViewMode('kanban')} 
-                    style={{ background: leadViewMode === 'kanban' ? '#ffffff' : 'transparent', color: leadViewMode === 'kanban' ? '#0F172A' : '#64748B', border: 'none', padding: '0.35rem 0.75rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer' }}
+                    style={{ background: leadViewMode === 'kanban' ? '#ffffff' : 'transparent', color: leadViewMode === 'kanban' ? '#0F172A' : '#64748B', border: 'none', padding: '0.3rem 0.65rem', borderRadius: '4px', fontWeight: 700, fontSize: '0.78rem', cursor: 'pointer' }}
                   >
-                    📊 Kanban Board
+                    📊 Kanban
                   </button>
                 </div>
                 <input 
@@ -473,7 +473,7 @@ export default function AdminDashboardPage() {
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
                   className={styles.formInput}
-                  style={{ maxWidth: '200px', padding: '0.45rem 0.8rem', fontSize: '0.85rem' }}
+                  style={{ maxWidth: '180px', padding: '0.35rem 0.7rem', fontSize: '0.82rem' }}
                 />
               </div>
             </div>
