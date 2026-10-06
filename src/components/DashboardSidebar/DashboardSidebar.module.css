@@ -20,6 +20,8 @@
 .logoBox {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 0.5rem;
   margin-bottom: 1.8rem;
   padding-bottom: 1.2rem;
@@ -28,12 +30,15 @@
 
 .brandLink {
   display: inline-block;
+  text-align: center;
 }
 
 .brandImg {
   height: 38px;
   width: auto;
   object-fit: contain;
+  margin: 0 auto;
+  display: block;
 }
 
 .portalTag {
@@ -42,6 +47,7 @@
   color: #E52B2B;
   text-transform: uppercase;
   letter-spacing: 1.2px;
+  text-align: center;
 }
 
 .userCard {
