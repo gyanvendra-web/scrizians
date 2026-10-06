@@ -1,33 +1,65 @@
 .heroSection {
-  background-color: #0B172A;
+  background-color: #0A172A;
+  background-image: radial-gradient(circle at 90% 30%, rgba(229, 43, 43, 0.15) 0%, transparent 45%);
   color: #ffffff;
-  padding: 4rem 1.5rem 3.5rem;
-  text-align: center;
+  padding: 4rem 1.5rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroRingWrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heroRing {
+  position: absolute;
+  right: -140px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  border: 45px solid rgba(180, 40, 50, 0.22);
 }
 
 .heroInner {
   max-width: var(--max-width, 1240px);
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .breadcrumb {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: #94A3B8;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.breadcrumb a {
+.breadcrumbLink {
   color: #94A3B8;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.breadcrumb span {
+.breadcrumbLink:hover {
   color: #ffffff;
-  font-weight: 600;
+}
+
+.eyebrow {
+  color: #F87171;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.8rem;
 }
 
 .heroTitle {
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   font-weight: 800;
   margin-bottom: 0.8rem;
   letter-spacing: -0.5px;
@@ -37,50 +69,8 @@
   font-size: 1.1rem;
   color: #94A3B8;
   max-width: 650px;
-  margin: 0 auto 2rem;
+  margin: 0;
   line-height: 1.6;
-}
-
-.currencyToggleBox {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 0.5rem 1.2rem;
-  border-radius: 40px;
-}
-
-.toggleLabel {
-  font-size: 0.85rem;
-  color: #CBD5E1;
-  font-weight: 600;
-}
-
-.togglePill {
-  display: flex;
-  background: #070D18;
-  padding: 0.25rem;
-  border-radius: 30px;
-  gap: 0.3rem;
-}
-
-.toggleBtn {
-  background: transparent;
-  border: none;
-  color: #94A3B8;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.activeBtn {
-  background: #E52B2B;
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(229, 43, 43, 0.4);
 }
 
 .gridSection {

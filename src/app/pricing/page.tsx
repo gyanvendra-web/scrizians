@@ -10,7 +10,7 @@ import styles from './Pricing.module.css';
 
 export default function PricingPage() {
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
-  const { currency, toggleCurrency } = useCurrency();
+  const { currency } = useCurrency();
 
   const pricingModels = [
     {
@@ -134,7 +134,7 @@ export default function PricingPage() {
     },
     {
       q: 'How does currency switching work?',
-      a: 'You can toggle between USD ($) for global clients and INR (₹) for Indian enterprises. Payments can be processed in your preferred currency.'
+      a: 'You can toggle between USD ($) for global clients and INR (₹) for Indian enterprises directly in the top header bar.'
     },
     {
       q: 'Who manages the IP and code security?',
@@ -146,36 +146,22 @@ export default function PricingPage() {
     <>
       <Header onOpenLeadModal={() => setIsLeadModalOpen(true)} />
 
-      {/* Hero Section */}
+      {/* Hero Section matching standard site subpages design */}
       <section className={styles.heroSection}>
+        <div className={styles.heroRingWrapper}>
+          <div className={styles.heroRing} />
+        </div>
+
         <div className={styles.heroInner}>
           <div className={styles.breadcrumb}>
-            <Link href="/">Home</Link> / <span>Pricing & Engagement Models</span>
+            <Link href="/" className={styles.breadcrumbLink}>Home</Link> / Pricing & Engagement Models
           </div>
 
+          <span className={styles.eyebrow}>TRANSPARENT ENGAGEMENT MODELS</span>
           <h1 className={styles.heroTitle}>Flexible Engagement Models</h1>
           <p className={styles.heroSub}>
             Simple, transparent pricing tailored for startups, scaling SaaS, and enterprise engineering teams.
           </p>
-
-          {/* Currency Toggle */}
-          <div className={styles.currencyToggleBox}>
-            <span className={styles.toggleLabel}>Select Currency:</span>
-            <div className={styles.togglePill}>
-              <button 
-                className={`${styles.toggleBtn} ${currency === 'USD' ? styles.activeBtn : ''}`}
-                onClick={() => toggleCurrency('USD')}
-              >
-                🇺🇸 USD ($)
-              </button>
-              <button 
-                className={`${styles.toggleBtn} ${currency === 'INR' ? styles.activeBtn : ''}`}
-                onClick={() => toggleCurrency('INR')}
-              >
-                🇮🇳 INR (₹)
-              </button>
-            </div>
-          </div>
         </div>
       </section>
 
