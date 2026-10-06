@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { UserModel } from '@/models/User';
 import { SeedMarkerModel } from '@/models/SeedMarker';
 
+import bcrypt from 'bcryptjs';
+
 const initialUsersList = [
   {
     id: 'admin-101',
@@ -19,8 +21,12 @@ async function ensureSeeded() {
   try {
     const adminExists = await UserModel.findOne({ role: 'admin' });
     if (!adminExists) {
-      await UserModel.create(initialUsersList[0] as any);
-      console.log('✅ Auto-seeded default Super Admin account');
+      const hashedPassword = await bcrypt.hash(initialUsersList[0].password, 10);
+      await UserModel.create({
+        ...initialUsersList[0],
+        password: hashedPassword,
+      } as any);
+      console.log('✅ Auto-seeded default Super Admin account with hashed password');
     }
   } catch (e) {
     console.warn('Auto-seed check skipped/failed:', e);
@@ -58,7 +64,13 @@ export async function POST(request: Request) {
 
     if (existingUser) {
       existingUser.name = body.name || existingUser.name;
-      if (body.password) existingUser.password = body.password;
+      if (body.password) {
+        if (!body.password.startsWith('$2a$') && !body.password.startsWith('$2b$')) {
+          existingUser.password = await bcrypt.hash(body.password, 10);
+        } else {
+          existingUser.password = body.password;
+        }
+      }
       existingUser.role = body.role || existingUser.role;
       if (body.scrizianId) existingUser.scrizianId = body.scrizianId;
       if (body.company !== undefined) existingUser.company = body.company;
@@ -72,11 +84,14 @@ export async function POST(request: Request) {
     }
 
     const userId = body.id || `user-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const plainPassword = body.password || 'Default@123';
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+
     const newUser = await UserModel.create({
       id: userId,
       name: body.name || email.split('@')[0],
       email,
-      password: body.password || 'Default@123',
+      password: hashedPassword,
       role: body.role || 'candidate',
       scrizianId: body.scrizianId || `SZN-${(body.role || 'CAND').toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`,
       company: body.company || 'Scrizians Platform',

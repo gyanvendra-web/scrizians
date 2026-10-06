@@ -301,6 +301,24 @@ export default function AdminDashboardPage() {
     showToast(`🗑️ Job Opening ${id} deleted successfully`);
   };
 
+  const handleToggleJobStatus = (id: string) => {
+    const updated = jobs.map(j => {
+      if (j.id === id || j.slug === id || j._id === id) {
+        const nextStatus = (j.status === 'Active' || j.status === 'Verified') ? 'Inactive' : 'Active';
+        fetch('/api/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...j, status: nextStatus })
+        }).catch(err => console.warn('Job status error:', err));
+        return { ...j, status: nextStatus };
+      }
+      return j;
+    });
+    setJobs(updated);
+    saveStoredData('scrizians_jobs_list', updated);
+    showToast(`✓ Job Opening status updated!`);
+  };
+
   // --- INSIGHTS / ARTICLES ACTIONS ---
   const handleOpenAddInsight = () => {
     setEditingInsight(null);
@@ -671,6 +689,13 @@ export default function AdminDashboardPage() {
                       </td>
                       <td>
                         <div className={styles.actionBtnGroup}>
+                          <button 
+                            onClick={() => handleToggleJobStatus(job.id)} 
+                            style={{ background: (job.status === 'Active' || job.status === 'Verified') ? '#DCFCE7' : '#FEF3C7', color: (job.status === 'Active' || job.status === 'Verified') ? '#166534' : '#92400E', padding: '0.35rem 0.65rem', borderRadius: '4px', border: 'none', fontSize: '0.78rem', fontWeight: 800, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                            title="Toggle Job Status"
+                          >
+                            {(job.status === 'Active' || job.status === 'Verified') ? '✓ Active' : '⚡ Activate'}
+                          </button>
                           <button onClick={() => handleOpenEditJob(job)} className={styles.btnActionEdit} title="Edit Job">
                             ✏️
                           </button>

@@ -27,8 +27,9 @@ function TalentNetworkContent() {
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {
-          setTalentList(resData.data);
-          localStorage.setItem('scrizians_talent_list', JSON.stringify(resData.data));
+          const verified = resData.data.filter((item: any) => !item.status || item.status === 'Verified');
+          setTalentList(verified);
+          localStorage.setItem('scrizians_talent_list', JSON.stringify(verified));
         }
       })
       .catch(err => console.warn('Talent API fetch error:', err));

@@ -25,8 +25,9 @@ export default function HomePage() {
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {
-          setDynamicTalent(resData.data);
-          localStorage.setItem('scrizians_talent_list', JSON.stringify(resData.data));
+          const verified = resData.data.filter((item: any) => !item.status || item.status === 'Verified');
+          setDynamicTalent(verified);
+          localStorage.setItem('scrizians_talent_list', JSON.stringify(verified));
         }
       })
       .catch(err => console.warn('Homepage talent fetch error:', err));
@@ -35,8 +36,9 @@ export default function HomePage() {
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {
-          setDynamicInsights(resData.data);
-          localStorage.setItem('scrizians_insights_list', JSON.stringify(resData.data));
+          const published = resData.data.filter((item: any) => !item.status || item.status === 'Published');
+          setDynamicInsights(published);
+          localStorage.setItem('scrizians_insights_list', JSON.stringify(published));
         }
       })
       .catch(err => console.warn('Homepage insights fetch error:', err));

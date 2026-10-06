@@ -21,8 +21,9 @@ export default function JobsPage() {
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {
-          setDynamicJobs(resData.data);
-          localStorage.setItem('scrizians_jobs_list', JSON.stringify(resData.data));
+          const activeJobs = resData.data.filter((item: any) => !item.status || item.status === 'Active' || item.status === 'Verified');
+          setDynamicJobs(activeJobs);
+          localStorage.setItem('scrizians_jobs_list', JSON.stringify(activeJobs));
         }
       })
       .catch(err => console.warn('Jobs API fetch error:', err));

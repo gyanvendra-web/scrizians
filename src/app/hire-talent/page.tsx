@@ -48,8 +48,9 @@ function HireTalentContent() {
       .then(res => res.json())
       .then(resData => {
         if (resData.success && Array.isArray(resData.data)) {
-          setRawTalent(resData.data);
-          localStorage.setItem('scrizians_talent_list', JSON.stringify(resData.data));
+          const verified = resData.data.filter((item: any) => !item.status || item.status === 'Verified');
+          setRawTalent(verified);
+          localStorage.setItem('scrizians_talent_list', JSON.stringify(verified));
         }
       })
       .catch(err => console.warn('Hire Talent API fetch error:', err));

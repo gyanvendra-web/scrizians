@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { UserModel } from '@/models/User';
 import { SeedMarkerModel } from '@/models/SeedMarker';
 
+import bcrypt from 'bcryptjs';
+
 const initialUsersList = [
   {
     id: 'admin-101',
@@ -22,7 +24,11 @@ export async function POST(request: Request) {
     // Auto-seed default Super Admin if not present
     const adminExists = await UserModel.findOne({ role: 'admin' });
     if (!adminExists) {
-      await UserModel.create(initialUsersList[0] as any);
+      const hashedPassword = await bcrypt.hash(initialUsersList[0].password, 10);
+      await UserModel.create({
+        ...initialUsersList[0],
+        password: hashedPassword,
+      } as any);
     }
 
     const { email, password, role } = await request.json();
@@ -41,11 +47,25 @@ export async function POST(request: Request) {
       }, { status: 404 });
     }
 
-    if (password && user.password && user.password !== password) {
-      return NextResponse.json({
-        success: false,
-        error: 'Incorrect password. Please try again or reset your password.'
-      }, { status: 401 });
+    if (password && user.password) {
+      let isPasswordValid = false;
+      if (user.password.startsWith('$2a$') || user.password.startsWith('$2b$')) {
+        isPasswordValid = await bcrypt.compare(password, user.password);
+      } else {
+        isPasswordValid = user.password === password;
+        if (isPasswordValid) {
+          // Auto-upgrade legacy plain text password to hashed bcrypt password in MongoDB Atlas
+          user.password = await bcrypt.hash(password, 10);
+          await user.save();
+        }
+      }
+
+      if (!isPasswordValid) {
+        return NextResponse.json({
+          success: false,
+          error: 'Incorrect password. Please try again or reset your password.'
+        }, { status: 401 });
+      }
     }
 
     const authenticatedUser = {
