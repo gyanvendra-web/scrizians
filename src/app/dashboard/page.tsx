@@ -36,7 +36,7 @@ export default function DashboardRedirectPage() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0B172A', color: '#ffffff', fontFamily: 'sans-serif' }}>
       <div style={{ textAlign: 'center' }}>
-        <img src="/images/logo.png" alt="Scrizians Logo" style={{ height: '42px', marginBottom: '1rem', background: '#ffffff', padding: '0.4rem 0.8rem', borderRadius: '8px' }} />
+        <img src="/images/logo-white.png" alt="Scrizians Logo" style={{ height: '42px', marginBottom: '1rem', objectFit: 'contain' }} />
         <h2 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0.5rem 0' }}>Redirecting to Scrizians Portal...</h2>
         <p style={{ color: '#94A3B8', fontSize: '0.9rem', margin: 0 }}>Please wait while we set up your session.</p>
       </div>

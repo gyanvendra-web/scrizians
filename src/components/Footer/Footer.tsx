@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
         <div className={styles.brandCol}>
           <Link href="/" className={styles.logoRow}>
             <div className={styles.footerLogoBadge}>
-              <img src="/images/logo.png" alt="Scrizians Logo" className={styles.footerLogoImg} />
+              <img src="/images/logo-white.png" alt="Scrizians Logo" className={styles.footerLogoImg} />
             </div>
           </Link>
           <div className={styles.tagline}>Talent. Technology. Together.</div>

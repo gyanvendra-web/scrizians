@@ -84,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
       <div className={styles.mainNav}>
         <div className={styles.inner}>
           <Link href="/" className={styles.brand} aria-label="Scrizians Homepage">
-            <img src="/images/logo.png" alt="Scrizians Logo" className={styles.brandImg} width={180} height={42} fetchPriority="high" />
+            <img src="/images/logo-dark.png" alt="Scrizians Logo" className={styles.brandImg} width={180} height={42} fetchPriority="high" />
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -144,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
           />
           <div className={styles.mobileDrawer} role="dialog" aria-label="Mobile Navigation Menu">
             <div className={styles.drawerHeader}>
-              <img src="/images/logo.png" alt="Scrizians Logo" className={styles.drawerLogo} width={150} height={34} />
+              <img src="/images/logo-white.png" alt="Scrizians Logo" className={styles.drawerLogo} width={150} height={34} />
               <button 
                 type="button"
                 className={styles.drawerCloseBtn}

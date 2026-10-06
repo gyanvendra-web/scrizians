@@ -50,7 +50,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {/* Mobile Top Header Bar */}
       <div className={styles.mobileBar}>
         <div className={styles.mobileBrand}>
-          <img src="/images/logo.png" alt="Scrizians Logo" className={styles.mobileLogo} />
+          <img src="/images/logo-white.png" alt="Scrizians Logo" className={styles.mobileLogo} />
           <span className={styles.mobilePortalName}>{getRoleLabel()}</span>
         </div>
         <button 
@@ -76,7 +76,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         {/* Top Logo */}
         <div className={styles.logoBox}>
           <Link href="/" className={styles.brandLink}>
-            <img src="/images/logo.png" alt="Scrizians Logo" className={styles.brandImg} />
+            <img src="/images/logo-white.png" alt="Scrizians Logo" className={styles.brandImg} />
           </Link>
           <span className={styles.portalTag}>{getRoleLabel()}</span>
         </div>

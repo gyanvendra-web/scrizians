@@ -71,15 +71,12 @@
 }
 
 .logoBadge {
-  background: #ffffff;
-  padding: 0.45rem 0.9rem;
-  border-radius: 8px;
   display: inline-flex;
   align-items: center;
 }
 
 .logoImg {
-  height: 34px;
+  height: 38px;
   width: auto;
   object-fit: contain;
 }

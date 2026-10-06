@@ -131,7 +131,7 @@ function RegisterFormContent() {
             <div className={styles.leftTop}>
               <Link href="/" className={styles.brand}>
                 <div className={styles.logoBadge}>
-                  <img src="/images/logo.png" alt="Scrizians Logo" className={styles.logoImg} />
+                  <img src="/images/logo-white.png" alt="Scrizians Logo" className={styles.logoImg} />
                 </div>
               </Link>
 
