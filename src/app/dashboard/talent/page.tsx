@@ -198,7 +198,7 @@ export default function TalentDashboardPage() {
               </div>
               <p className={styles.cardSub}>Your verified engineering profile showcase for Scriza enterprise clients.</p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginTop: '1rem' }}>
+              <div className={styles.gridTwoCols}>
                 <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1rem', borderRadius: '8px' }}>
                   <p style={{ margin: '0.4rem 0', color: '#0F172A', fontWeight: 600 }}><strong>Full Name:</strong> {displayName}</p>
                   <p style={{ margin: '0.4rem 0', color: '#0F172A', fontWeight: 600 }}><strong>Email:</strong> {displayEmail}</p>
@@ -246,7 +246,7 @@ export default function TalentDashboardPage() {
           <div className={styles.card}>
             <h3 className={styles.cardTitle}>Earnings & Invoices</h3>
             <p className={styles.cardSub}>Summary of monthly payouts and completed milestones.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+            <div className={styles.gridThreeCols}>
               <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1rem', borderRadius: '8px', textAlign: 'center' }}>
                 <div style={{ fontSize: '0.82rem', color: '#64748B', fontWeight: 700 }}>TOTAL EARNED</div>
                 <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0F172A', marginTop: '0.3rem' }}>$14,250.00</div>
@@ -284,8 +284,10 @@ export default function TalentDashboardPage() {
             background: '#ffffff',
             borderRadius: '16px',
             maxWidth: '520px',
-            width: '100%',
-            padding: '2rem',
+            width: '95vw',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            padding: '1.5rem',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             position: 'relative',
             border: '1px solid rgba(229, 43, 43, 0.2)'
@@ -357,7 +359,7 @@ export default function TalentDashboardPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className={styles.gridTwoCols}>
                 <div>
                   <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>
                     Total Experience *

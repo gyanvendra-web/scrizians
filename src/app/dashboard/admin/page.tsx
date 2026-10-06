@@ -800,7 +800,7 @@ export default function AdminDashboardPage() {
               <span className={styles.adminBadge}>RBAC SYSTEM ONLINE</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginTop: '1rem' }}>
+            <div className={styles.gridTwoCols}>
               <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1.2rem', borderRadius: '10px' }}>
                 <h4 style={{ margin: '0 0 0.8rem 0', color: '#0F172A', fontSize: '1rem', fontWeight: 800 }}>🛡️ Mandatory 2FA & Session Security</h4>
                 <div style={{ fontSize: '0.88rem', color: '#334155', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
@@ -836,7 +836,7 @@ export default function AdminDashboardPage() {
               <span className={styles.adminBadge} style={{ background: '#0F172A' }}>AUDIT TRAIL LOGGING</span>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+            <div className={styles.gridThreeCols}>
               <div style={{ background: '#F1F5F9', padding: '1rem', borderRadius: '8px', border: '1px solid #CBD5E1' }}>
                 <div style={{ fontWeight: 800, color: '#0F172A', fontSize: '0.9rem' }}>🌐 Sitemap & Robots Status</div>
                 <div style={{ fontSize: '0.82rem', color: '#166534', fontWeight: 700, marginTop: '0.4rem' }}>✓ /sitemap.xml (Active - 28 routes)</div>
@@ -981,7 +981,7 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className={styles.gridTwoCols}>
                 <div className={styles.formGroup}>
                   <label>Hourly Rate ($ USD):</label>
                   <input 
@@ -1085,7 +1085,7 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className={styles.gridTwoCols}>
                 <div className={styles.formGroup}>
                   <label>Location:</label>
                   <input 
@@ -1165,7 +1165,7 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className={styles.gridTwoCols}>
                 <div className={styles.formGroup}>
                   <label>Category:</label>
                   <select 
@@ -1224,8 +1224,10 @@ export default function AdminDashboardPage() {
             background: '#ffffff',
             borderRadius: '16px',
             maxWidth: '520px',
-            width: '100%',
-            padding: '2rem',
+            width: '95vw',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            padding: '1.5rem',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             position: 'relative',
             border: '1px solid rgba(229, 43, 43, 0.2)'

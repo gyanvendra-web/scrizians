@@ -332,7 +332,7 @@ export default function ContributorDashboardPage() {
             <h3 className={styles.cardTitle}>Content Analytics & Reader Metrics</h3>
             <p className={styles.cardSub}>Performance overview of your published technical articles.</p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+            <div className={styles.gridThreeCols}>
               <div style={{ background: '#F1F5F9', padding: '1rem', borderRadius: '8px', textAlign: 'center' }}>
                 <div style={{ fontSize: '1.8rem', fontWeight: 900, color: '#0F172A' }}>2,450</div>
                 <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#64748B' }}>Total Article Views</div>
@@ -429,8 +429,10 @@ export default function ContributorDashboardPage() {
             background: '#ffffff',
             borderRadius: '16px',
             maxWidth: '520px',
-            width: '100%',
-            padding: '2rem',
+            width: '95vw',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            padding: '1.5rem',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             position: 'relative',
             border: '1px solid rgba(229, 43, 43, 0.2)'
@@ -488,7 +490,7 @@ export default function ContributorDashboardPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className={styles.gridTwoCols}>
                 <div>
                   <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>
                     Author Title / Role *

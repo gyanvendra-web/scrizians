@@ -229,7 +229,7 @@ export default function CandidateDashboardPage() {
             </div>
             <p className={styles.cardSub}>Update your personal background, contact info, and career preferences.</p>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginTop: '1rem' }}>
+            <div className={styles.gridTwoCols}>
               <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1rem', borderRadius: '8px' }}>
                 <p><strong>Full Name:</strong> {displayName}</p>
                 <p><strong>Email:</strong> {displayEmail}</p>
@@ -361,8 +361,10 @@ export default function CandidateDashboardPage() {
             background: '#ffffff',
             borderRadius: '16px',
             maxWidth: '520px',
-            width: '100%',
-            padding: '2rem',
+            width: '95vw',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            padding: '1.5rem',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             position: 'relative',
             border: '1px solid rgba(229, 43, 43, 0.2)'
@@ -434,7 +436,7 @@ export default function CandidateDashboardPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className={styles.gridTwoCols}>
                 <div>
                   <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>
                     Total Experience *
