@@ -69,20 +69,10 @@ export default function SitemapPage() {
       ]
     },
     {
-      categoryTitle: 'Dashboards & Portals',
-      icon: '📊',
-      links: [
-        { label: 'Client Workspace', href: '/dashboard/client', desc: 'Manage requirements, shortlists, and interviews' },
-        { label: 'Talent Dashboard', href: '/dashboard/talent', desc: 'Manage Scrizian profile, portfolio, and availability' },
-        { label: 'Author Dashboard', href: '/dashboard/contributor', desc: 'Draft, submit, and track technical articles' },
-        { label: 'Candidate Dashboard', href: '/dashboard/candidate', desc: 'Track job applications & interview schedules' },
-        { label: 'Admin Operations', href: '/dashboard/admin', desc: 'Scriza platform management, RBAC, & leads CRM' }
-      ]
-    },
-    {
-      categoryTitle: 'Legal, Security & Policies',
+      categoryTitle: 'Legal, Security & SEO Index',
       icon: '🔒',
       links: [
+        { label: 'XML Search Engine Sitemap (sitemap.xml)', href: '/sitemap.xml', desc: 'Raw XML index feed for search engine webmasters & Googlebot' },
         { label: 'Privacy Policy', href: '/policies/privacy', desc: 'Data handling, talent privacy, and protection terms' },
         { label: 'Terms of Service', href: '/policies/terms', desc: 'Platform terms and engagement agreements' },
         { label: 'Cookie Policy', href: '/policies/cookie-policy', desc: 'Cookie usage and tracking preferences' },
@@ -109,7 +99,7 @@ export default function SitemapPage() {
           <span className={styles.eyebrow}>DIRECTORY & INDEX</span>
           <h1 className={styles.heroTitle}>Scrizians Platform Sitemap</h1>
           <p className={styles.heroSub}>
-            Complete visual navigation directory of all public pages, talent categories, solutions, company profiles, careers, dashboards, and policies.
+            Complete visual navigation directory of all public pages, talent categories, solutions, company profiles, careers, and legal policies.
           </p>
         </div>
       </section>
