@@ -75,9 +75,7 @@ export const Footer: React.FC = () => {
           © 2026 <a href="https://www.scriza.in/" target="_blank" rel="noopener noreferrer" className={styles.scrizaLink}>Scriza Private Limited</a>. All rights reserved.
         </div>
         
-        <div className={styles.securityBadge}>
-          <span className={styles.shieldIcon}>🔒</span> ISO & Enterprise Grade Security Verified
-        </div>
+       
 
         <div className={styles.policyLinks}>
           <Link href="/sitemap">Sitemap</Link>
