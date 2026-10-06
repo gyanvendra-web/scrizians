@@ -14,14 +14,18 @@ export default function AboutScrizaPage() {
     <>
       <Header onOpenLeadModal={() => setIsLeadModalOpen(true)} />
 
-      {/* Hero Section */}
+      {/* Hero Section matching standard subpages theme */}
       <section className={styles.heroSection}>
+        <div className={styles.heroRingWrapper}>
+          <div className={styles.heroRing} />
+        </div>
+
         <div className={styles.heroInner}>
           <div className={styles.breadcrumb}>
-            <Link href="/">Home</Link> / <span>About Scriza</span>
+            <Link href="/" className={styles.breadcrumbLink}>Home</Link> / About Scriza
           </div>
 
-          <span className={styles.orgTag}>PARENT ORGANIZATION</span>
+          <span className={styles.eyebrow}>PARENT ORGANIZATION</span>
           <h1 className={styles.heroTitle}>About Scriza Private Limited</h1>
           <p className={styles.heroSub}>
             Global technology & software engineering ecosystem backing the Scrizians Talent Network.
