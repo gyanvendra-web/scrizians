@@ -61,6 +61,7 @@ export const Footer: React.FC = () => {
           <ul className={styles.linkList}>
             <li><Link href="/about">About Scrizians</Link></li>
             <li><Link href="/about-scriza">About Scriza (Parent Org)</Link></li>
+            <li><Link href="/portfolio">Portfolio Showcase</Link></li>
             <li><Link href="/become-a-scrizian">Join Scrizian Network</Link></li>
             <li><Link href="/jobs">Jobs & Careers</Link></li>
             <li><Link href="/insights">Insights & News</Link></li>

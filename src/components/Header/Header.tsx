@@ -44,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenLeadModal }) => {
     { href: '/pricing', label: 'Pricing' },
     { href: '/solutions', label: 'Solutions' },
     { href: '/technologies', label: 'Technologies' },
+    { href: '/portfolio', label: 'Portfolio' },
     { href: '/case-studies', label: 'Case Studies' }
   ];
 
