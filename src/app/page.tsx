@@ -138,7 +138,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className={styles.trustItem}>
-            <span className={styles.trustIcon}>✅</span>
+            <span className={styles.trustIcon}></span>
             <div>
               <strong>Curated & verified</strong>
               <p>Every profile reviewed and approved before going live.</p>

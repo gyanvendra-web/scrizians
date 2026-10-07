@@ -7,7 +7,6 @@ export interface IInsight {
   filterKey?: string;
   title: string;
   excerpt?: string;
-  content?: string;
   meta?: string;
   author?: string;
   publishedDate?: string;
@@ -25,7 +24,6 @@ const InsightSchema = new Schema<IInsight>(
     filterKey: { type: String, default: 'Hiring Guides' },
     title: { type: String, required: true },
     excerpt: { type: String, default: '' },
-    content: { type: String, default: '' },
     meta: { type: String, default: '' },
     author: { type: String, default: 'Scrizians Editorial' },
     publishedDate: { type: String, default: 'Just now' },

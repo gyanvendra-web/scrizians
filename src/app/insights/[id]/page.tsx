@@ -63,33 +63,10 @@ export default function InsightDetailPage() {
   // Find target article by id or slug
   const article = articles.find(
     a => (a.id && a.id.toLowerCase() === articleId.toLowerCase()) || 
-         (a.slug && a.slug.toLowerCase() === articleId.toLowerCase()) ||
-         (a._id && String(a._id).toLowerCase() === articleId.toLowerCase())
-  ) || initialArticlesList.find(
-    a => (a.id && a.id.toLowerCase() === articleId.toLowerCase()) || 
          (a.slug && a.slug.toLowerCase() === articleId.toLowerCase())
-  );
-
-  const tocItems = React.useMemo(() => {
-    if (!article) return [];
-    if (article.content || article.body) {
-      const text = article.content || article.body || '';
-      const lines = text.split(/\n+/).map((l: string) => l.trim()).filter(Boolean);
-      const headings = lines.filter((l: string) => /^(#|\d+\.|\bSection\b)/i.test(l));
-      if (headings.length > 0) {
-        return headings.map((h: string, idx: number) => ({
-          id: `section-${idx + 1}`,
-          title: h.replace(/^#+\s*/, '').substring(0, 35)
-        }));
-      }
-    }
-    return [
-      { id: 'section-1', title: '1. Architectural Overview' },
-      { id: 'section-2', title: '2. Strategic Implementation' },
-      { id: 'section-3', title: '3. Team & Workflow Standards' },
-      { id: 'section-4', title: '4. Scrizians Advantage' }
-    ];
-  }, [article]);
+  ) || initialArticlesList.find(
+    a => a.id.toLowerCase() === articleId.toLowerCase()
+  ) || articles[0] || initialArticlesList[0];
 
   const relatedArticles = articles
     .filter(a => a.id !== article?.id)
@@ -253,82 +230,94 @@ export default function InsightDetailPage() {
 
             {/* Main Article Body Text */}
             <div style={{ fontSize: '1.08rem', lineHeight: 1.85, color: '#334155' }}>
-              {(article.content || article.body) ? (
-                <div>
-                  {(article.content || article.body).split(/\n+/).map((para: string, idx: number) => {
-                    const trimmed = para.trim();
-                    if (!trimmed) return null;
-                    if (/^(#|\d+\.|\bSection\b)/i.test(trimmed)) {
-                      return (
-                        <h2 
-                          key={idx} 
-                          id={`section-${idx + 1}`}
-                          style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginTop: '2.5rem', marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem', scrollMarginTop: '100px' }}
-                        >
-                          {trimmed.replace(/^#+\s*/, '')}
-                        </h2>
-                      );
-                    }
-                    return (
-                      <p key={idx} style={{ marginBottom: '1.4rem' }}>
-                        {trimmed}
-                      </p>
-                    );
-                  })}
+              
+              <section id="section-1" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
+                <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
+                  1. Evaluating Technical Competency & Real-World Experience
+                </h2>
+                <p style={{ marginBottom: '1.4rem' }}>
+                  In today's fast-moving global software ecosystem, CTOs and VPs of Engineering face unprecedented pressure to build high-performance product teams while managing capital efficiency. Resumes alone rarely convey a developer's real capacity for clean architecture, component composition, and resilient database queries under load.
+                </p>
+                <p style={{ marginBottom: '1.4rem' }}>
+                  When vetting senior React, Next.js, and cloud developers from India, top tech companies shift away from trivial algorithm trivia. Instead, leading hiring managers evaluate how candidates approach state synchronization, server-side caching strategies, rate limiting, and CI/CD pipelines.
+                </p>
+
+                {/* Pro-Tip Callout Box */}
+                <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', borderLeft: '4px solid #2563EB', padding: '1.4rem 1.6rem', borderRadius: '8px', margin: '2rem 0', color: '#1E40AF' }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.95rem', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    💡 Scrizians Pro Tip for Tech Leaders
+                  </div>
+                  <div style={{ fontSize: '0.94rem', lineHeight: 1.6 }}>
+                    Always request a 30-minute live code walk-through of an existing open-source repo or past production module. Developers who can articulate their architectural decisions and trade-offs quickly demonstrate high engineering maturity.
+                  </div>
                 </div>
-              ) : (
-                <div>
-                  <section id="section-1" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
-                      1. Architectural Overview & Strategic Insights
-                    </h2>
-                    <p style={{ marginBottom: '1.4rem' }}>
-                      {article.excerpt || `In today's fast-moving software ecosystem, engineering leaders face increasing demand to deliver high-performance applications while maintaining clean code architecture and operational efficiency.`}
-                    </p>
-                    <p style={{ marginBottom: '1.4rem' }}>
-                      {`Evaluating senior engineering talent for ${article.title} requires moving beyond syntax memorization toward real-world system design, component reusability, state management, and production reliability under high load.`}
-                    </p>
-                    <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', borderLeft: '4px solid #2563EB', padding: '1.4rem 1.6rem', borderRadius: '8px', margin: '2rem 0', color: '#1E40AF' }}>
-                      <div style={{ fontWeight: 800, fontSize: '0.95rem', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        💡 Scrizians Engineering Directives
-                      </div>
-                      <div style={{ fontSize: '0.94rem', lineHeight: 1.6 }}>
-                        {`When building teams for ${article.category || 'tech innovation'}, conduct 30-minute live code walkthroughs of production modules to observe candidate problem-solving and architectural decision-making.`}
-                      </div>
-                    </div>
-                  </section>
+              </section>
 
-                  <section id="section-2" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
-                      2. Time Zone Overlap & Collaboration Best Practices
-                    </h2>
-                    <p style={{ marginBottom: '1.4rem' }}>
-                      {`Distributed development models achieve maximum throughput when teams standardize daily 4-hour synchronous overlap windows between US/European engineering leads and offshore developer squads.`}
-                    </p>
-                    <p style={{ marginBottom: '1.4rem' }}>
-                      {`During this overlap window, teams conduct daily standups, unblock PR code reviews, and clarify ticket specifications on Slack and GitHub, followed by deep focus coding shifts.`}
-                    </p>
-                  </section>
+              <section id="section-2" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
+                <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
+                  2. Configuring Time Zone Overlap for Seamless Collaboration
+                </h2>
+                <p style={{ marginBottom: '1.4rem' }}>
+                  Distributed development models only fail when communication channels breakdown. Modern high-growth startups solve geographic distance by standardizing daily 4-hour synchronous overlap windows between US/European tech leads and offshore squads.
+                </p>
+                <p style={{ marginBottom: '1.4rem' }}>
+                  During this overlap window, engineering teams conduct daily standups, unblock PR code reviews, and clarify ticket specs on Slack and GitHub. The remaining 4 hours of the offshore shift allow deep, uninterrupted focus coding, resulting in round-the-clock product iteration cycles.
+                </p>
+              </section>
 
-                  <section id="section-3" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
-                      3. Onboarding & Retaining Top Engineering Talent
-                    </h2>
-                    <p style={{ marginBottom: '1.4rem' }}>
-                      {`Structured onboarding dramatically accelerates developer velocity. Scrizians provides pre-screened senior engineers equipped with clear environment setup docs, sandbox credentials, and dedicated account managers to handle administrative compliance.`}
-                    </p>
-                  </section>
+              <section id="section-3" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
+                <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
+                  3. Structured Onboarding & Retaining Elite Developers
+                </h2>
+                <p style={{ marginBottom: '1.4rem' }}>
+                  A smooth onboarding process dramatically accelerates developer velocity. Scrizians provides pre-vetted engineers equipped with clear environment setup documentation, sandbox credentials, and dedicated account managers to handle administrative payroll, equipment, and compliance seamlessly.
+                </p>
+              </section>
 
-                  <section id="section-4" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
-                    <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
-                      4. Why Global Engineering Teams Choose Scrizians
-                    </h2>
-                    <p style={{ marginBottom: '1.6rem' }}>
-                      {`Scrizians bridges top-tier global enterprises with elite Indian developer talent through rigorous multi-stage vetting, transparent pricing, and zero-risk 14-day trials.`}
-                    </p>
-                  </section>
+              <section id="section-4" style={{ scrollMarginTop: '100px', marginBottom: '3rem' }}>
+                <h2 style={{ fontSize: '1.75rem', color: '#0F172A', fontWeight: 800, marginBottom: '1.2rem', borderBottom: '2px solid #F1F5F9', paddingBottom: '0.6rem' }}>
+                  4. Why Global Tech Brands Choose Scrizians
+                </h2>
+                <p style={{ marginBottom: '1.6rem' }}>
+                  Scrizians bridges the gap between top-tier global companies and elite Indian engineering talent through rigorous multi-stage vetting and continuous performance management.
+                </p>
+
+                {/* Comparison Table Matrix */}
+                <div style={{ overflowX: 'auto', borderRadius: '10px', border: '1px solid #E2E8F0', marginBottom: '2rem' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.92rem' }}>
+                    <thead>
+                      <tr style={{ background: '#0F172A', color: '#ffffff' }}>
+                        <th style={{ padding: '0.9rem 1.2rem' }}>Feature / Benefit</th>
+                        <th style={{ padding: '0.9rem 1.2rem', color: '#F87171' }}>Scrizians Offshore Squads</th>
+                        <th style={{ padding: '0.9rem 1.2rem', color: '#94A3B8' }}>Traditional Agency</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ background: '#ffffff', color: '#334155' }}>
+                      <tr style={{ borderBottom: '1px solid #E2E8F0' }}>
+                        <td style={{ padding: '0.85rem 1.2rem', fontWeight: 700 }}>Hiring Velocity</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#16A34A', fontWeight: 800 }}>⚡ 48 Hours</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#64748B' }}>6 to 8 Weeks</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid #E2E8F0', background: '#F8FAFC' }}>
+                        <td style={{ padding: '0.85rem 1.2rem', fontWeight: 700 }}>Vetting Standards</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#16A34A', fontWeight: 800 }}>Top 1% Senior Engineers</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#64748B' }}>Unscreened Resumes</td>
+                      </tr>
+                      <tr style={{ borderBottom: '1px solid #E2E8F0' }}>
+                        <td style={{ padding: '0.85rem 1.2rem', fontWeight: 700 }}>Cost Optimization</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#16A34A', fontWeight: 800 }}>Up to 60% Savings</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#64748B' }}>High Markup Fees</td>
+                      </tr>
+                      <tr style={{ background: '#F8FAFC' }}>
+                        <td style={{ padding: '0.85rem 1.2rem', fontWeight: 700 }}>Trial Guarantee</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#16A34A', fontWeight: 800 }}>14-Day Zero Risk Trial</td>
+                        <td style={{ padding: '0.85rem 1.2rem', color: '#64748B' }}>No Guarantees</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-              )}
+              </section>
+
             </div>
 
             {/* Article Tags */}
@@ -385,7 +374,12 @@ export default function InsightDetailPage() {
                 📑 On This Page
               </h3>
               <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.88rem' }}>
-                {tocItems.map(item => (
+                {[
+                  { id: 'section-1', title: '1. Technical Competency' },
+                  { id: 'section-2', title: '2. Time Zone Overlap' },
+                  { id: 'section-3', title: '3. Developer Retention' },
+                  { id: 'section-4', title: '4. Scrizians Advantage' }
+                ].map(item => (
                   <a 
                     key={item.id}
                     href={`#${item.id}`}

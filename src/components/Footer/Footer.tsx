@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
           <Link href="/" className={styles.logoRow}>
             <img src="/images/logo-white.png" alt="Scrizians Logo" className={styles.footerLogoImg} />
           </Link>
-          <div className={styles.tagline}>Talent. Technology. Together.</div>
+          {/* <div className={styles.tagline}>Talent. Technology. Together.</div> */}
           <p className={styles.parentText}>
             Global technology talent & managed software delivery platform powered by <a href="https://www.scriza.in/" target="_blank" rel="noopener noreferrer" className={styles.scrizaLink}>Scriza Private Limited</a>.
           </p>

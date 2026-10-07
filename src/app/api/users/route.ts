@@ -26,7 +26,7 @@ async function ensureSeeded() {
         ...initialUsersList[0],
         password: hashedPassword,
       } as any);
-      console.log('✅ Auto-seeded default Super Admin account with hashed password');
+      console.log(' Auto-seeded default Super Admin account with hashed password');
     }
   } catch (e) {
     console.warn('Auto-seed check skipped/failed:', e);
@@ -102,7 +102,7 @@ export async function POST(request: Request) {
       experience: body.experience || '',
     });
 
-    console.log(`✅ Registered new user in MongoDB Atlas: ${newUser.email} (${newUser.role})`);
+    console.log(`Registered new user in MongoDB Atlas: ${newUser.email} (${newUser.role})`);
 
     return NextResponse.json({ success: true, data: newUser, message: 'Account created successfully in database' });
   } catch (error: any) {
