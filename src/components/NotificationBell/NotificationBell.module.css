@@ -236,3 +236,28 @@
   color: #64748B;
   text-align: center;
 }
+
+@media (max-width: 640px) {
+  .dropdown {
+    position: fixed;
+    top: 75px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: calc(100vw - 24px);
+    z-index: 100000;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+  }
+
+  .list {
+    max-height: calc(75vh - 100px);
+  }
+
+  .header {
+    padding: 0.85rem 1rem;
+  }
+
+  .item {
+    padding: 0.85rem 1rem;
+  }
+}
