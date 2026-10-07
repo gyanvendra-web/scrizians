@@ -138,6 +138,14 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 <span>Job Workflows</span>
               </a>
               <a
+                href="#portfolio"
+                className={`${styles.navItem} ${activeTab === 'portfolio' ? styles.navItemActive : ''}`}
+                onClick={(e) => { e.preventDefault(); handleItemClick('portfolio'); }}
+              >
+                <span className={styles.itemIcon}>🎨</span>
+                <span>Portfolio Showcase</span>
+              </a>
+              <a
                 href="#config"
                 className={`${styles.navItem} ${activeTab === 'config' ? styles.navItemActive : ''}`}
                 onClick={(e) => { e.preventDefault(); handleItemClick('config'); }}
