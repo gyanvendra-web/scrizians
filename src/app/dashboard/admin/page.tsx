@@ -11,7 +11,7 @@ import styles from './DashboardAdmin.module.css';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'leads' | 'talent' | 'jobs' | 'insights' | 'config' | 'audit'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'talent' | 'jobs' | 'insights' | 'portfolio' | 'config' | 'audit'>('leads');
   const [searchTerm, setSearchTerm] = useState('');
   const [notification, setNotification] = useState<string | null>(null);
 
@@ -36,6 +36,22 @@ export default function AdminDashboardPage() {
   // 5. Registered System Users State for RBAC
   const [usersList, setUsersList] = useState<any[]>([]);
 
+  // 6. Portfolio Showcase State
+  const [portfolios, setPortfolios] = useState<any[]>([]);
+  const [portfolioPage, setPortfolioPage] = useState(1);
+  const [showPortfolioModal, setShowPortfolioModal] = useState(false);
+  const [editingPortfolio, setEditingPortfolio] = useState<any | null>(null);
+  const [portfolioFormData, setPortfolioFormData] = useState({
+    id: '',
+    scrizianId: '',
+    authorRole: '',
+    title: '',
+    description: '',
+    skills: '',
+    coverImageUrl: '',
+    isNdaProtected: false
+  });
+
   // Modal Editing & Adding States
   const [selectedLead, setSelectedLead] = useState<any | null>(null);
   
@@ -58,7 +74,7 @@ export default function AdminDashboardPage() {
   const [showInsightModal, setShowInsightModal] = useState(false);
   const [editingInsight, setEditingInsight] = useState<any | null>(null);
   const [insightFormData, setInsightFormData] = useState({ 
-    id: '', title: '', category: 'Hiring Guides', coverImageUrl: '/images/logo.png', readTime: '5 min read', author: 'Scrizians Editorial', status: 'Published' 
+    id: '', title: '', category: 'Hiring Guides', excerpt: '', content: '', coverImageUrl: '/images/logo.png', readTime: '5 min read', author: 'Scrizians Editorial', status: 'Published' 
   });
 
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -91,6 +107,7 @@ export default function AdminDashboardPage() {
       fetch('/api/talent', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setTalents(res.data); }).catch(e => console.warn(e));
       fetch('/api/jobs', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setJobs(res.data); }).catch(e => console.warn(e));
       fetch('/api/insights', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setInsights(res.data); }).catch(e => console.warn(e));
+      fetch('/api/portfolio', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setPortfolios(res.data); }).catch(e => console.warn(e));
       fetch('/api/users', { cache: 'no-store' }).then(r => r.json()).then(res => { if (res.success && Array.isArray(res.data)) setUsersList(res.data); }).catch(e => console.warn(e));
     };
 
@@ -323,13 +340,13 @@ export default function AdminDashboardPage() {
   // --- INSIGHTS / ARTICLES ACTIONS ---
   const handleOpenAddInsight = () => {
     setEditingInsight(null);
-    setInsightFormData({ id: `art-${insights.length + 1}`, title: '', category: 'Hiring Guides', coverImageUrl: '/images/logo.png', readTime: '5 min read', author: 'Scrizians Editorial', status: 'Published' });
+    setInsightFormData({ id: `art-${insights.length + 1}`, title: '', category: 'Hiring Guides', excerpt: '', content: '', coverImageUrl: '/images/logo.png', readTime: '5 min read', author: 'Scrizians Editorial', status: 'Published' });
     setShowInsightModal(true);
   };
 
   const handleOpenEditInsight = (art: any) => {
     setEditingInsight(art);
-    setInsightFormData({ id: art.id, title: art.title, category: art.category, coverImageUrl: art.coverImageUrl || '/images/logo.png', readTime: art.readTime, author: art.author, status: art.status });
+    setInsightFormData({ id: art.id, title: art.title, category: art.category, excerpt: art.excerpt || '', content: art.content || art.body || '', coverImageUrl: art.coverImageUrl || '/images/logo.png', readTime: art.readTime || '5 min read', author: art.author || 'Scrizians Editorial', status: art.status || 'Published' });
     setShowInsightModal(true);
   };
 
@@ -365,6 +382,101 @@ export default function AdminDashboardPage() {
     showToast('🗑️ Article deleted successfully');
   };
 
+  // --- PORTFOLIO ACTIONS ---
+  const handleOpenAddPortfolio = () => {
+    setEditingPortfolio(null);
+    setPortfolioFormData({
+      id: `port-${Math.floor(100 + Math.random() * 900)}`,
+      scrizianId: 'SCR-8841',
+      authorRole: 'Lead Architect',
+      title: '',
+      description: '',
+      skills: 'Next.js, Node.js, MongoDB',
+      coverImageUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=70',
+      isNdaProtected: false
+    });
+    setShowPortfolioModal(true);
+  };
+
+  const handleOpenEditPortfolio = (item: any) => {
+    setEditingPortfolio(item);
+    setPortfolioFormData({
+      id: item.id || item._id,
+      scrizianId: item.scrizianId || 'SCR-8841',
+      authorRole: item.authorRole || 'Architect',
+      title: item.title || '',
+      description: item.description || '',
+      skills: Array.isArray(item.skills) ? item.skills.join(', ') : (item.skills || ''),
+      coverImageUrl: item.coverImageUrl || 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=70',
+      isNdaProtected: !!item.isNdaProtected
+    });
+    setShowPortfolioModal(true);
+  };
+
+  const handleSavePortfolio = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!portfolioFormData.title) return;
+    const skillsArr = portfolioFormData.skills.split(',').map(s => s.trim()).filter(Boolean);
+    const itemData = {
+      id: portfolioFormData.id,
+      scrizianId: portfolioFormData.scrizianId,
+      authorRole: portfolioFormData.authorRole,
+      title: portfolioFormData.title,
+      description: portfolioFormData.description,
+      skills: skillsArr,
+      coverImageUrl: portfolioFormData.coverImageUrl,
+      isNdaProtected: portfolioFormData.isNdaProtected
+    };
+
+    let updated: any[];
+    if (editingPortfolio) {
+      updated = portfolios.map(p => (p.id === itemData.id || p._id === itemData.id) ? itemData : p);
+    } else {
+      updated = [itemData, ...portfolios];
+    }
+    setPortfolios(updated);
+    saveStoredData('scrizians_portfolio_list', updated);
+
+    try {
+      await fetch('/api/portfolio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(itemData)
+      });
+      showToast(editingPortfolio ? '✏️ Portfolio item updated successfully!' : '🎨 New Portfolio Showcase added!');
+    } catch (err) {
+      console.warn('Portfolio API save error:', err);
+      showToast('🎉 Portfolio saved!');
+    }
+    setShowPortfolioModal(false);
+  };
+
+  const handleDeletePortfolio = async (portId: string) => {
+    const updated = portfolios.filter(p => p.id !== portId && p._id !== portId);
+    setPortfolios(updated);
+    deleteStoredData('scrizians_portfolio_list', portId, updated);
+    try {
+      await fetch(`/api/portfolio?id=${portId}`, { method: 'DELETE' });
+    } catch (err) {
+      console.warn('Portfolio DELETE error:', err);
+    }
+    showToast('🗑️ Portfolio item deleted');
+  };
+
+  const handleToggleNDA = async (item: any) => {
+    const updatedItem = { ...item, isNdaProtected: !item.isNdaProtected };
+    const updated = portfolios.map(p => (p.id === item.id || p._id === item.id) ? updatedItem : p);
+    setPortfolios(updated);
+    try {
+      await fetch('/api/portfolio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedItem)
+      });
+      showToast(`🔒 NDA status toggled to ${updatedItem.isNdaProtected ? 'Protected' : 'Public Showcase'}`);
+    } catch (err) {}
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('scrizians_token');
     localStorage.removeItem('scrizians_user');
@@ -392,6 +504,16 @@ export default function AdminDashboardPage() {
   const INSIGHTS_PER_PAGE = 10;
   const totalInsightsPages = Math.max(1, Math.ceil(insights.length / INSIGHTS_PER_PAGE));
   const paginatedInsights = insights.slice((insightsPage - 1) * INSIGHTS_PER_PAGE, insightsPage * INSIGHTS_PER_PAGE);
+
+  const PORTFOLIO_PER_PAGE = 8;
+  const filteredPortfolios = portfolios.filter(p =>
+    (p.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (p.authorRole || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (p.scrizianId || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (Array.isArray(p.skills) ? p.skills.join(' ') : (p.skills || '')).toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const totalPortfolioPages = Math.max(1, Math.ceil(filteredPortfolios.length / PORTFOLIO_PER_PAGE));
+  const paginatedPortfolios = filteredPortfolios.slice((portfolioPage - 1) * PORTFOLIO_PER_PAGE, portfolioPage * PORTFOLIO_PER_PAGE);
 
   return (
     <div className={styles.dashboardLayout}>
@@ -877,7 +999,84 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* TAB 5: Platform Config & RBAC */}
+        {/* TAB 5: Portfolio Showcase Review & Management */}
+        {activeTab === 'portfolio' && (
+          <div className={styles.card}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '1.2rem' }}>
+              <div>
+                <h3 className={styles.cardTitle} style={{ margin: 0 }}>🎨 Portfolio Showcase & Case Studies</h3>
+                <p className={styles.cardSub} style={{ margin: '0.2rem 0 0 0' }}>
+                  Manage verified client project showcases, architecture case studies, tech stacks, and NDA permissions.
+                </p>
+              </div>
+              <button 
+                onClick={handleOpenAddPortfolio}
+                className={styles.btnPrimaryAction}
+                style={{ padding: '0.55rem 1.1rem', fontSize: '0.88rem' }}
+              >
+                ➕ Add New Portfolio Showcase
+              </button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.2rem' }}>
+              {paginatedPortfolios.map((item) => (
+                <div key={item.id || item._id} style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 12px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ height: '140px', position: 'relative', overflow: 'hidden', background: '#0F172A' }}>
+                    <img 
+                      src={item.coverImageUrl || 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=70'} 
+                      alt={item.title} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} 
+                    />
+                    <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                      <button 
+                        onClick={() => handleToggleNDA(item)}
+                        style={{ background: item.isNdaProtected ? '#FEF3C7' : '#DCFCE7', color: item.isNdaProtected ? '#92400E' : '#166534', border: 'none', padding: '0.25rem 0.65rem', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        {item.isNdaProtected ? '🔒 NDA Protected' : '✓ Public Showcase'}
+                      </button>
+                    </div>
+                    <div style={{ position: 'absolute', bottom: '8px', left: '12px', background: 'rgba(15, 23, 42, 0.85)', color: '#FFFFFF', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.72rem', fontFamily: 'monospace' }}>
+                      {item.scrizianId} • {item.authorRole}
+                    </div>
+                  </div>
+
+                  <div style={{ padding: '1.2rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
+                    <div>
+                      <h4 style={{ margin: '0 0 0.4rem 0', color: '#0F172A', fontSize: '1.05rem', fontWeight: 800 }}>{item.title}</h4>
+                      <p style={{ color: '#475569', fontSize: '0.85rem', margin: '0 0 0.8rem 0', lineHeight: 1.4 }}>{item.description}</p>
+                      
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+                        {(Array.isArray(item.skills) ? item.skills : (item.skills || '').split(',')).map((sk: string, i: number) => (
+                          <span key={i} className={styles.skillBadge} style={{ fontSize: '0.72rem' }}>{sk.trim()}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '0.6rem', borderTop: '1px solid #E2E8F0', paddingTop: '0.8rem' }}>
+                      <button onClick={() => handleOpenEditPortfolio(item)} className={styles.btnActionEdit} style={{ flex: 1, padding: '0.4rem', fontSize: '0.8rem' }}>
+                        ✏️ Edit Showcase
+                      </button>
+                      <button onClick={() => handleDeletePortfolio(item.id || item._id)} className={styles.btnActionDelete} style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem' }}>
+                        🗑️ Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <Pagination
+              currentPage={portfolioPage}
+              totalPages={totalPortfolioPages}
+              onPageChange={setPortfolioPage}
+              totalItems={filteredPortfolios.length}
+              itemsPerPage={PORTFOLIO_PER_PAGE}
+              itemLabel="portfolio showcases"
+            />
+          </div>
+        )}
+
+        {/* TAB 6: Platform Config & RBAC */}
         {activeTab === 'config' && (
           <div className={styles.card}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.8rem', marginBottom: '1.2rem' }}>
@@ -1370,11 +1569,137 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
+              <div className={styles.formGroup}>
+                <label>Article Summary / Excerpt:</label>
+                <textarea 
+                  rows={2}
+                  placeholder="Short 2-3 sentence overview shown on article cards and search results..." 
+                  value={insightFormData.excerpt}
+                  onChange={e => setInsightFormData({ ...insightFormData, excerpt: e.target.value })}
+                  className={styles.formInput}
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label>Full Article Body / Content:</label>
+                <textarea 
+                  rows={6}
+                  placeholder="Enter full article text. Use paragraphs or headings (e.g. 1. Heading Name)..." 
+                  value={insightFormData.content}
+                  onChange={e => setInsightFormData({ ...insightFormData, content: e.target.value })}
+                  className={styles.formInput}
+                />
+              </div>
+
               <div style={{ display: 'flex', gap: '0.8rem', marginTop: '1.5rem' }}>
                 <button type="submit" className={styles.btnPrimaryAction} style={{ width: '100%', justifyContent: 'center' }}>
                   ✓ {editingInsight ? 'Save Changes' : 'Publish Article'}
                 </button>
                 <button type="button" onClick={() => setShowInsightModal(false)} className={styles.btnActionEdit} style={{ padding: '0.7rem 1.4rem' }}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL 5: Add / Edit Portfolio Showcase Modal */}
+      {showPortfolioModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowPortfolioModal(false)}>
+          <div className={styles.modalContent} onClick={e => e.stopPropagation()} style={{ maxWidth: '620px' }}>
+            <button className={styles.modalClose} onClick={() => setShowPortfolioModal(false)}>×</button>
+            <h3 className={styles.cardTitle}>{editingPortfolio ? '✏️ Edit Portfolio Showcase Project' : '➕ Add New Portfolio Showcase Project'}</h3>
+            <p className={styles.cardSub}>Add client-ready project architectures, case study details, and NDA visibility status.</p>
+
+            <form onSubmit={handleSavePortfolio} style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: 800, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>Project Title:</label>
+                <input 
+                  type="text" 
+                  value={portfolioFormData.title} 
+                  onChange={e => setPortfolioFormData({ ...portfolioFormData, title: e.target.value })} 
+                  placeholder="e.g. Enterprise Microservices Architecture" 
+                  required 
+                  className={styles.formInput} 
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className={styles.formGroup}>
+                  <label style={{ fontWeight: 800, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>Target Scrizian ID:</label>
+                  <input 
+                    type="text" 
+                    value={portfolioFormData.scrizianId} 
+                    onChange={e => setPortfolioFormData({ ...portfolioFormData, scrizianId: e.target.value })} 
+                    placeholder="SCR-8841" 
+                    required 
+                    className={styles.formInput} 
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label style={{ fontWeight: 800, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>Author Role / Title:</label>
+                  <input 
+                    type="text" 
+                    value={portfolioFormData.authorRole} 
+                    onChange={e => setPortfolioFormData({ ...portfolioFormData, authorRole: e.target.value })} 
+                    placeholder="e.g. Lead Solutions Architect" 
+                    required 
+                    className={styles.formInput} 
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: 800, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>Short Description / Achievements:</label>
+                <textarea 
+                  value={portfolioFormData.description} 
+                  onChange={e => setPortfolioFormData({ ...portfolioFormData, description: e.target.value })} 
+                  placeholder="Describe key outcomes, architecture changes, scale, and client impact..." 
+                  rows={3} 
+                  required 
+                  className={styles.formInput} 
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: 800, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>Tech Stack / Skills (comma separated):</label>
+                <input 
+                  type="text" 
+                  value={portfolioFormData.skills} 
+                  onChange={e => setPortfolioFormData({ ...portfolioFormData, skills: e.target.value })} 
+                  placeholder="Next.js, Node.js, AWS ECS, MongoDB" 
+                  className={styles.formInput} 
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label style={{ fontWeight: 800, color: '#0F172A', display: 'block', marginBottom: '0.3rem' }}>Cover Image Banner URL:</label>
+                <input 
+                  type="text" 
+                  value={portfolioFormData.coverImageUrl} 
+                  onChange={e => setPortfolioFormData({ ...portfolioFormData, coverImageUrl: e.target.value })} 
+                  placeholder="https://images.unsplash.com/..." 
+                  className={styles.formInput} 
+                />
+              </div>
+
+              <div className={styles.formGroup} style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', padding: '0.8rem', borderRadius: '8px' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 800, color: '#0F172A' }}>
+                  <input 
+                    type="checkbox" 
+                    checked={portfolioFormData.isNdaProtected} 
+                    onChange={e => setPortfolioFormData({ ...portfolioFormData, isNdaProtected: e.target.checked })} 
+                  />
+                  🔒 Enable NDA Protection (Anonymize client name and sensitive business data)
+                </label>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.8rem', marginTop: '0.5rem' }}>
+                <button type="submit" className={styles.btnPrimaryAction} style={{ flex: 1 }}>
+                  {editingPortfolio ? 'Save Changes' : 'Publish Portfolio Showcase'}
+                </button>
+                <button type="button" onClick={() => setShowPortfolioModal(false)} className={styles.btnActionEdit} style={{ padding: '0.7rem 1.4rem' }}>
                   Cancel
                 </button>
               </div>
