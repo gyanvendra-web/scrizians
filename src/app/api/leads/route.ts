@@ -12,7 +12,21 @@ export async function GET() {
   try {
     await connectToDatabase();
     const leads = await LeadModel.find();
-    return NextResponse.json({ success: true, data: leads });
+    const sortedLeads = [...leads].sort((a: any, b: any) => {
+      const getTimestamp = (item: any) => {
+        if (item._id && typeof item._id === 'string' && item._id.startsWith('lead-')) {
+          const num = parseInt(item._id.replace('lead-', ''), 10);
+          if (!isNaN(num)) return num;
+        }
+        if (item.createdAt) {
+          const t = new Date(item.createdAt).getTime();
+          if (!isNaN(t)) return t;
+        }
+        return 0;
+      };
+      return getTimestamp(b) - getTimestamp(a);
+    });
+    return NextResponse.json({ success: true, data: sortedLeads });
   } catch (error: any) {
     console.error('MongoDB Leads Error:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
@@ -35,7 +49,7 @@ export async function POST(request: Request) {
       scrizianIdReferenced: body.scrizianIdReferenced || 'N/A',
       stage: body.stage || 'New Inbound Lead',
       message: body.message || 'Inbound request submitted via website.',
-      createdAt: body.createdAt || new Date().toISOString().split('T')[0]
+      createdAt: body.createdAt || new Date().toISOString()
     };
 
     const created = await LeadModel.create(newLead);

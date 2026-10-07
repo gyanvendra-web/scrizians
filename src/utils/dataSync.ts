@@ -112,7 +112,7 @@ export const addInboundLead = (leadData: Partial<typeof initialLeadsList[0]>) =>
     scrizianIdReferenced: leadData.scrizianIdReferenced || 'N/A',
     stage: 'New Inbound Lead',
     message: leadData.message || 'Inbound request submitted via website.',
-    createdAt: new Date().toISOString().split('T')[0]
+    createdAt: new Date().toISOString()
   };
 
   const updated = [newLead, ...currentLeads];
